@@ -42,4 +42,13 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+
+    // Markdown parsing
+    implementation "io.noties.markwon:core:4.6.2"
+
+    // Mediapipe api
+    implementation 'com.google.mediapipe:tasks-vision:0.10.2'
+
+    // SSH Connection
+    implementation 'com.hierynomus:sshj:0.35.0'
 }
