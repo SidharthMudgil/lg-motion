@@ -13,7 +13,11 @@ import com.sidharth.lg_motion.R
 class MapsFragment : Fragment() {
 
     private val callback = OnMapReadyCallback { googleMap ->
-
+        googleMap.setMapStyle(context?.let {
+            MapStyleOptions.loadRawResourceStyle(
+                it, R.raw.map_style_retro
+            )
+        })
     }
 
     override fun onCreateView(
