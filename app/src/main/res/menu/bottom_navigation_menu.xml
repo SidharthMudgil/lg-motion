@@ -5,8 +5,8 @@
         android:title="@string/home" />
 
     <item
-        android:id="@+id/about"
-        android:title="@string/about" />
+        android:id="@+id/maps"
+        android:title="@string/maps" />
 
     <item
         android:id="@+id/settings"
