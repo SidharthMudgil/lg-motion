@@ -15,7 +15,7 @@ class MapsFragment : Fragment() {
     private val callback = OnMapReadyCallback { googleMap ->
         googleMap.setMapStyle(context?.let {
             MapStyleOptions.loadRawResourceStyle(
-                it, R.raw.map_style_retro
+                it, R.raw.map_style_blue
             )
         })
     }
