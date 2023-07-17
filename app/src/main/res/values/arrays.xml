@@ -1,0 +1,18 @@
+<resources>
+    <string-array name="connection_types">
+        <item>automatic</item>
+        <item>manual</item>
+    </string-array>
+
+    <string-array name="map_styles">
+        <item>Standard</item>
+        <item>Dark</item>
+        <item>Light</item>
+        <item>Retro</item>
+        <item>Satellite</item>
+        <item>Blue</item>
+        <item>Green</item>
+        <item>Night</item>
+        <item>Silver</item>
+    </string-array>
+</resources>

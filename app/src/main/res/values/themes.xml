@@ -1,9 +1,19 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.Lgmotion" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="materialAlertDialogTheme">@style/ThemeOverlay.App.MaterialAlertDialog</item>
+        <item name="alertDialogTheme">@style/ThemeOverlay.App.MaterialAlertDialog</item>
+        <item name="switchStyle">@style/Widget.Material3.CompoundButton.MaterialSwitch</item>
     </style>
 
     <style name="Theme.Lgmotion" parent="Base.Theme.Lgmotion" />
+
+    <style name="ThemeOverlay.App.MaterialAlertDialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">
+        <item name="colorOnSurface">?attr/colorPrimary</item>
+        <item name="dialogCornerRadius">15dp</item>
+        <item name="backgroundTint">?colorBackgroundFloating</item>
+        <item name="android:background">?colorBackgroundFloating</item>
+
+    </style>
+
 </resources>

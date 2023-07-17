@@ -1,0 +1,138 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:key="connection_category"
+        android:title="Connection Settings"
+        app:iconSpaceReserved="false">
+
+        <EditTextPreference
+            android:defaultValue=""
+            android:dialogTitle="Enter Liquid Galaxy Rig Username"
+            android:key="username"
+            app:useSimpleSummaryProvider="true"
+            android:summary="Username of the Liquid Galaxy rig"
+            android:title="Username"
+            app:iconSpaceReserved="false" />
+
+        <EditTextPreference
+            android:defaultValue=""
+            android:dialogTitle="Enter Liquid Galaxy Rig IP Address"
+            android:key="ip_address"
+            android:summary="IP address of the Liquid Galaxy rig"
+            android:title="IP Address"
+            app:iconSpaceReserved="false" />
+
+        <EditTextPreference
+            android:defaultValue=""
+            android:dialogTitle="Enter Liquid Galaxy Rig Password"
+            android:key="password"
+            android:inputType="textPassword"
+            android:summary="Password for the Liquid Galaxy rig"
+            android:title="Password"
+            app:iconSpaceReserved="false" />
+
+        <SeekBarPreference
+            android:dialogTitle="Enter Total Number of Screens"
+            android:key="total_screens"
+            app:seekBarIncrement="1"
+            android:max="10"
+            app:min="3"
+            app:showSeekBarValue="true"
+            android:summary="Total number of screens in the Liquid Galaxy rig"
+            android:title="Total Screens"
+            app:iconSpaceReserved="false" />
+
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="auto_connect"
+            android:summary="Automatically connect to the Liquid Galaxy rig on startup"
+            android:title="Connect Automatically"
+            app:iconSpaceReserved="false" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="liquid_galaxy_category"
+        android:title="Liquid Galaxy Options"
+        app:iconSpaceReserved="false">
+
+        <Preference
+            android:key="lg_clear_kml"
+            android:summary="Clear all KML data and return to default state"
+            android:title="Clear KML and Reset"
+            app:iconSpaceReserved="false" />
+
+        <Preference
+            android:key="lg_relaunch"
+            android:summary="Relaunch the Liquid Galaxy application"
+            android:title="Relaunch Application"
+            app:iconSpaceReserved="false" />
+
+        <Preference
+            android:key="lg_reboot"
+            android:summary="Reboot the Liquid Galaxy system"
+            android:title="Reboot System"
+            app:iconSpaceReserved="false" />
+
+        <Preference
+            android:key="lg_poweroff"
+            android:summary="Power off the Liquid Galaxy system"
+            android:title="Power Off System"
+            app:iconSpaceReserved="false" />
+
+        <Preference
+            android:key="lg_set_slave_refresh"
+            android:summary="Set the refresh rate for slave screens"
+            android:title="Set Slave Refresh Rate"
+            app:iconSpaceReserved="false" />
+
+        <Preference
+            android:key="lg_reset_slave_refresh"
+            android:summary="Reset the refresh rate for slave screens to default"
+            android:title="Reset Slave Refresh Rate"
+            app:iconSpaceReserved="false" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="general_category"
+        android:title="General Settings"
+        app:iconSpaceReserved="false">
+
+        <ListPreference
+            android:defaultValue="standard"
+            android:entries="@array/map_styles"
+            android:entryValues="@array/map_styles"
+            android:key="general_map_style"
+            android:summary="Choose the map style for the application"
+            android:title="Map Style"
+            app:iconSpaceReserved="false" />
+
+        <Preference
+            android:key="about"
+            android:summary="Current version of the application"
+            android:title="About"
+            app:iconSpaceReserved="false" />
+
+        <Preference
+            android:key="license"
+            android:summary="Current version of the application"
+            android:title="License"
+            app:iconSpaceReserved="false" />
+
+        <Preference
+            android:key="privacy_policy"
+            android:summary="Current version of the application"
+            android:title="Privacy Policy"
+            app:iconSpaceReserved="false" />
+
+    </PreferenceCategory>
+
+    <Preference
+        android:key="app_version"
+        android:summary="Current version of the application"
+        android:title="App Version"
+        app:iconSpaceReserved="false" />
+
+</PreferenceScreen>
