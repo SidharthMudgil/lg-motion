@@ -1,138 +1,157 @@
-<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <PreferenceCategory
         android:key="connection_category"
-        android:title="Connection Settings"
+        android:title="@string/connection"
         app:iconSpaceReserved="false">
 
         <EditTextPreference
-            android:defaultValue=""
+            android:defaultValue="lg"
             android:dialogTitle="Enter Liquid Galaxy Rig Username"
             android:key="username"
-            app:useSimpleSummaryProvider="true"
-            android:summary="Username of the Liquid Galaxy rig"
-            android:title="Username"
-            app:iconSpaceReserved="false" />
+            android:singleLine="true"
+            android:title="@string/username"
+            app:iconSpaceReserved="false"
+            app:useSimpleSummaryProvider="true" />
 
         <EditTextPreference
-            android:defaultValue=""
+            android:defaultValue="lg"
+            android:dialogTitle="Enter Liquid Galaxy Rig Password"
+            android:inputType="textPassword"
+            android:key="password"
+            android:singleLine="true"
+            android:title="Password"
+            app:iconSpaceReserved="false"
+            app:useSimpleSummaryProvider="true" />
+
+        <EditTextPreference
+            android:defaultValue="127.0.0.1"
             android:dialogTitle="Enter Liquid Galaxy Rig IP Address"
             android:key="ip_address"
-            android:summary="IP address of the Liquid Galaxy rig"
-            android:title="IP Address"
-            app:iconSpaceReserved="false" />
+            android:singleLine="true"
+            android:title="@string/ip_address"
+            app:iconSpaceReserved="false"
+            app:useSimpleSummaryProvider="true" />
 
         <EditTextPreference
-            android:defaultValue=""
-            android:dialogTitle="Enter Liquid Galaxy Rig Password"
-            android:key="password"
-            android:inputType="textPassword"
-            android:summary="Password for the Liquid Galaxy rig"
-            android:title="Password"
-            app:iconSpaceReserved="false" />
+            android:dialogTitle="Enter Liquid Galaxy Rig IP Address"
+            android:key="port_number"
+            android:singleLine="true"
+            android:title="@string/port_number"
+            app:defaultValue="80"
+            app:iconSpaceReserved="false"
+            app:useSimpleSummaryProvider="true" />
 
         <SeekBarPreference
             android:dialogTitle="Enter Total Number of Screens"
             android:key="total_screens"
-            app:seekBarIncrement="1"
             android:max="10"
+            android:summary="@string/total_screens_summary"
+            android:title="@string/total_screens_title"
+            app:iconSpaceReserved="false"
             app:min="3"
-            app:showSeekBarValue="true"
-            android:summary="Total number of screens in the Liquid Galaxy rig"
-            android:title="Total Screens"
-            app:iconSpaceReserved="false" />
+            app:seekBarIncrement="1"
+            app:showSeekBarValue="true" />
 
         <SwitchPreferenceCompat
             android:defaultValue="false"
             android:key="auto_connect"
-            android:summary="Automatically connect to the Liquid Galaxy rig on startup"
-            android:title="Connect Automatically"
+            android:summaryOff="@string/connection_method_summary_off"
+            android:summaryOn="@string/connection_method_summary_on"
+            android:title="@string/connection_method"
             app:iconSpaceReserved="false" />
 
     </PreferenceCategory>
 
     <PreferenceCategory
         android:key="liquid_galaxy_category"
-        android:title="Liquid Galaxy Options"
+        android:title="@string/liquid_galaxy"
         app:iconSpaceReserved="false">
 
         <Preference
-            android:key="lg_clear_kml"
-            android:summary="Clear all KML data and return to default state"
-            android:title="Clear KML and Reset"
+            android:key="clear_kml"
+            android:summary="@string/clear_kml_summary"
+            android:title="@string/clear_kml_title"
             app:iconSpaceReserved="false" />
 
         <Preference
-            android:key="lg_relaunch"
-            android:summary="Relaunch the Liquid Galaxy application"
-            android:title="Relaunch Application"
+            android:key="set_refresh"
+            android:summary="@string/set_refresh_summary"
+            android:title="@string/set_refresh_title"
             app:iconSpaceReserved="false" />
 
         <Preference
-            android:key="lg_reboot"
-            android:summary="Reboot the Liquid Galaxy system"
-            android:title="Reboot System"
+            android:key="reset_refresh"
+            android:summary="@string/reset_refresh_summary"
+            android:title="@string/reset_refresh_title"
             app:iconSpaceReserved="false" />
 
         <Preference
-            android:key="lg_poweroff"
-            android:summary="Power off the Liquid Galaxy system"
-            android:title="Power Off System"
+            android:key="relaunch"
+            android:summary="@string/relaunch_summary"
+            android:title="@string/relaunch_title"
             app:iconSpaceReserved="false" />
 
         <Preference
-            android:key="lg_set_slave_refresh"
-            android:summary="Set the refresh rate for slave screens"
-            android:title="Set Slave Refresh Rate"
+            android:key="restart"
+            android:summary="@string/restart_summary"
+            android:title="@string/restart_title"
             app:iconSpaceReserved="false" />
 
         <Preference
-            android:key="lg_reset_slave_refresh"
-            android:summary="Reset the refresh rate for slave screens to default"
-            android:title="Reset Slave Refresh Rate"
+            android:key="shutdown"
+            android:summary="@string/shutdown_summary"
+            android:title="@string/shutdown_title"
             app:iconSpaceReserved="false" />
 
     </PreferenceCategory>
 
     <PreferenceCategory
         android:key="general_category"
-        android:title="General Settings"
+        android:title="@string/appearance"
         app:iconSpaceReserved="false">
 
         <ListPreference
             android:defaultValue="standard"
             android:entries="@array/map_styles"
             android:entryValues="@array/map_styles"
-            android:key="general_map_style"
-            android:summary="Choose the map style for the application"
-            android:title="Map Style"
-            app:iconSpaceReserved="false" />
+            android:key="map_style"
+            android:title="@string/map_style"
+            app:iconSpaceReserved="false"
+            app:useSimpleSummaryProvider="true" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="other_category"
+        android:title="@string/other"
+        app:iconSpaceReserved="false">
 
         <Preference
             android:key="about"
-            android:summary="Current version of the application"
-            android:title="About"
+            android:summary="@string/about_summary"
+            android:title="@string/about_title"
             app:iconSpaceReserved="false" />
 
         <Preference
-            android:key="license"
-            android:summary="Current version of the application"
-            android:title="License"
+            android:key="opensource_license"
+            android:summary="@string/open_source_license_summary"
+            android:title="@string/open_source_license_title"
             app:iconSpaceReserved="false" />
 
         <Preference
             android:key="privacy_policy"
-            android:summary="Current version of the application"
-            android:title="Privacy Policy"
+            android:summary="@string/privacy_policy_summary"
+            android:title="@string/privacy_policy_title"
+            app:iconSpaceReserved="false" />
+
+        <Preference
+            android:key="app_version"
+            android:summary="@string/app_version_summary"
+            android:title="@string/app_version_title"
             app:iconSpaceReserved="false" />
 
     </PreferenceCategory>
-
-    <Preference
-        android:key="app_version"
-        android:summary="Current version of the application"
-        android:title="App Version"
-        app:iconSpaceReserved="false" />
 
 </PreferenceScreen>

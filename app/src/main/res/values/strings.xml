@@ -8,26 +8,44 @@
     <string name="maps">Maps</string>
     <string name="developer">Developer</string>
     <string name="organization_contact_social">Organization Contact/Social</string>
-
-    <string name="shutdown">Shutdown</string>
-    <string name="set">Set</string>
-    <string name="clear">Clear</string>
-    <string name="restart">Restart</string>
-    <string name="relaunch">Relaunch</string>
-    <string name="reset">Reset</string>
-    <!-- Preference Titles -->
-    <string name="messages_header">Messages</string>
-    <string name="sync_header">Sync</string>
-
-    <!-- Messages Preferences -->
-    <string name="signature_title">Your signature</string>
-    <string name="reply_title">Default reply action</string>
-
-    <!-- Sync Preferences -->
-    <string name="sync_title">Sync email periodically</string>
-    <string name="attachment_title">Download incoming attachments</string>
-    <string name="attachment_summary_on">Automatically download attachments for incoming emails
-    </string>
-    <string name="attachment_summary_off">Only download attachments when manually requested</string>
     <string name="organization">Organization</string>
+
+    <!-- Preferences   -->
+    <string name="connection">Connection</string>
+    <string name="username">Username</string>
+    <string name="ip_address">IP Address</string>
+    <string name="port_number">Port Number</string>
+    <string name="connection_method">Connection Method</string>
+    <string name="connection_method_summary_off">Automatically connect to the Liquid Galaxy</string>
+    <string name="connection_method_summary_on">Manually connect to the Liquid Galaxy</string>
+
+    <string name="liquid_galaxy">Liquid Galaxy</string>
+    <string name="clear_kml_title">Clear KML</string>
+    <string name="clear_kml_summary">Remove KML data or overlays from display.</string>
+    <string name="total_screens_title">Total Screens</string>
+    <string name="total_screens_summary">Total number of screens in the Liquid Galaxy rig</string>
+    <string name="set_refresh_title">Set Refresh</string>
+    <string name="set_refresh_summary">Set the slaves refresh rate</string>
+    <string name="reset_refresh_title">Reset Refresh</string>
+    <string name="reset_refresh_summary">Reset the slaves refresh rate to default</string>
+    <string name="relaunch_title">Relaunch</string>
+    <string name="relaunch_summary">Relaunch the Liquid Galaxy application</string>
+    <string name="restart_title">Restart</string>
+    <string name="restart_summary">Restart the Liquid Galaxy application</string>
+    <string name="shutdown_title">Shutdown</string>
+    <string name="shutdown_summary">Shutdown the Liquid Galaxy application</string>
+
+    <string name="appearance">Appearance</string>
+    <string name="map_style">Map Style</string>
+
+    <string name="other">Other</string>
+    <string name="about_title">About</string>
+    <string name="about_summary">App details and version information</string>
+    <string name="open_source_license_title">Open Source License</string>
+    <string name="open_source_license_summary">Terms of app source code usage</string>
+    <string name="privacy_policy_title">Privacy Policy</string>
+    <string name="privacy_policy_summary">Data collection and usage information</string>
+    <string name="app_version_title">App Version</string>
+    <string name="app_version_summary">Current app version installed</string>
+
 </resources>
