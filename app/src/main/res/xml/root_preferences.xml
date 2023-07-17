@@ -28,7 +28,7 @@
         <EditTextPreference
             android:defaultValue="127.0.0.1"
             android:dialogTitle="Enter Liquid Galaxy Rig IP Address"
-            android:key="ip_address"
+            android:key="ip"
             android:singleLine="true"
             android:title="@string/ip_address"
             app:iconSpaceReserved="false"
@@ -36,7 +36,7 @@
 
         <EditTextPreference
             android:dialogTitle="Enter Liquid Galaxy Rig IP Address"
-            android:key="port_number"
+            android:key="port"
             android:singleLine="true"
             android:title="@string/port_number"
             app:defaultValue="80"
@@ -45,8 +45,9 @@
 
         <SeekBarPreference
             android:dialogTitle="Enter Total Number of Screens"
-            android:key="total_screens"
+            android:key="screens"
             android:max="10"
+            app:defaultValue="3"
             android:summary="@string/total_screens_summary"
             android:title="@string/total_screens_title"
             app:iconSpaceReserved="false"
@@ -113,7 +114,7 @@
         app:iconSpaceReserved="false">
 
         <ListPreference
-            android:defaultValue="standard"
+            app:defaultValue="Standard"
             android:entries="@array/map_styles"
             android:entryValues="@array/map_styles"
             android:key="map_style"
