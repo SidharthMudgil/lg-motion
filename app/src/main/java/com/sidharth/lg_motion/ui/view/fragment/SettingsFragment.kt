@@ -1,7 +1,9 @@
 package com.sidharth.lg_motion.ui.view.fragment
 
 import android.os.Bundle
+import android.text.InputFilter
 import android.text.InputType
+import android.text.Spanned
 import androidx.preference.EditTextPreference
 import androidx.preference.ListPreference
 import androidx.preference.Preference
@@ -9,6 +11,7 @@ import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SeekBarPreference
 import androidx.preference.SwitchPreferenceCompat
 import com.sidharth.lg_motion.R
+import com.sidharth.lg_motion.util.RangeInputFilter
 
 class SettingsFragment : PreferenceFragmentCompat() {
 
@@ -33,10 +36,13 @@ class SettingsFragment : PreferenceFragmentCompat() {
         val privacyPolicy = findPreference<Preference>("privacy_policy")
         val appVersion = findPreference<Preference>("app_version")
 
+        val inputFilter = InputFilter.LengthFilter(30)
+
         username?.apply {
             setOnBindEditTextListener { editText ->
                 editText.isSingleLine = true
                 editText.inputType = InputType.TYPE_CLASS_TEXT
+                editText.filters = arrayOf(inputFilter)
             }
         }
 
@@ -44,6 +50,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
             setOnBindEditTextListener { editText ->
                 editText.isSingleLine = true
                 editText.inputType = InputType.TYPE_TEXT_VARIATION_PASSWORD
+                editText.filters = arrayOf(inputFilter)
             }
         }
 
@@ -51,6 +58,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
             setOnBindEditTextListener { editText ->
                 editText.isSingleLine = true
                 editText.inputType = InputType.TYPE_CLASS_TEXT
+                editText.filters = arrayOf(inputFilter)
             }
         }
 
@@ -58,6 +66,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
             setOnBindEditTextListener { editText ->
                 editText.isSingleLine = true
                 editText.inputType = InputType.TYPE_CLASS_NUMBER
+                editText.filters = arrayOf(RangeInputFilter(max = 65536))
             }
         }
     }
