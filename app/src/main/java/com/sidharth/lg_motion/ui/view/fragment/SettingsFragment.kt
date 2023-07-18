@@ -3,7 +3,6 @@ package com.sidharth.lg_motion.ui.view.fragment
 import android.os.Bundle
 import android.text.InputFilter
 import android.text.InputType
-import android.text.Spanned
 import androidx.preference.EditTextPreference
 import androidx.preference.ListPreference
 import androidx.preference.Preference
@@ -12,6 +11,7 @@ import androidx.preference.SeekBarPreference
 import androidx.preference.SwitchPreferenceCompat
 import com.sidharth.lg_motion.R
 import com.sidharth.lg_motion.util.RangeInputFilter
+import com.sidharth.lg_motion.util.ToastUtil
 
 class SettingsFragment : PreferenceFragmentCompat() {
 
@@ -68,6 +68,19 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 editText.inputType = InputType.TYPE_CLASS_NUMBER
                 editText.filters = arrayOf(RangeInputFilter(max = 65536))
             }
+        }
+
+        appVersion?.setOnPreferenceClickListener {
+            ToastUtil.showToast(
+                requireContext(),
+                "version ${
+                    requireContext().packageManager.getPackageInfo(
+                        requireContext().packageName,
+                        0
+                    ).versionName
+                }"
+            )
+            true
         }
     }
 }
