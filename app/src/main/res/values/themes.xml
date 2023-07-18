@@ -13,7 +13,6 @@
         <item name="dialogCornerRadius">15dp</item>
         <item name="backgroundTint">?colorBackgroundFloating</item>
         <item name="android:background">?colorBackgroundFloating</item>
-
     </style>
 
 </resources>

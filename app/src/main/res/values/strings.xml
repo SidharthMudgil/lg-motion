@@ -13,8 +13,13 @@
     <!-- Preferences   -->
     <string name="connection">Connection</string>
     <string name="username">Username</string>
+    <string name="username_dialog_title">Liquid Galaxy Username</string>
+    <string name="password_title">Password</string>
+    <string name="password_dialog_title">Liquid Galaxy Password</string>
     <string name="ip_address">IP Address</string>
+    <string name="ip_dialog_title">Liquid Galaxy IP Address</string>
     <string name="port_number">Port Number</string>
+    <string name="port_dialog_title">Liquid Galaxy Port Number</string>
     <string name="connection_method">Connection Method</string>
     <string name="connection_method_summary_off">Automatically connect to the Liquid Galaxy</string>
     <string name="connection_method_summary_on">Manually connect to the Liquid Galaxy</string>

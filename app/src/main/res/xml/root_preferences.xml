@@ -8,7 +8,7 @@
 
         <EditTextPreference
             android:defaultValue="lg"
-            android:dialogTitle="Enter Liquid Galaxy Rig Username"
+            android:dialogTitle="@string/username_dialog_title"
             android:key="username"
             android:singleLine="true"
             android:title="@string/username"
@@ -17,17 +17,17 @@
 
         <EditTextPreference
             android:defaultValue="lg"
-            android:dialogTitle="Enter Liquid Galaxy Rig Password"
+            android:dialogTitle="@string/password_dialog_title"
             android:inputType="textPassword"
             android:key="password"
             android:singleLine="true"
-            android:title="Password"
+            android:title="@string/password_title"
             app:iconSpaceReserved="false"
             app:useSimpleSummaryProvider="true" />
 
         <EditTextPreference
             android:defaultValue="127.0.0.1"
-            android:dialogTitle="Enter Liquid Galaxy Rig IP Address"
+            android:dialogTitle="@string/ip_dialog_title"
             android:key="ip"
             android:singleLine="true"
             android:title="@string/ip_address"
@@ -35,7 +35,7 @@
             app:useSimpleSummaryProvider="true" />
 
         <EditTextPreference
-            android:dialogTitle="Enter Liquid Galaxy Rig IP Address"
+            android:dialogTitle="@string/port_dialog_title"
             android:key="port"
             android:singleLine="true"
             android:title="@string/port_number"
@@ -44,7 +44,6 @@
             app:useSimpleSummaryProvider="true" />
 
         <SeekBarPreference
-            android:dialogTitle="Enter Total Number of Screens"
             android:key="screens"
             android:max="10"
             app:defaultValue="3"
