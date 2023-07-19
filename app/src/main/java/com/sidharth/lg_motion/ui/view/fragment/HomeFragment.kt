@@ -1,9 +1,13 @@
 package com.sidharth.lg_motion.ui.view.fragment
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -44,8 +48,6 @@ class HomeFragment : Fragment(), OnFunActivityClickCallback, OnFeatureClickCallb
     }
 
     override fun onFeatureClick(type: Feature.Type) {
-        val action = HomeFragmentDirections.actionHomeFragmentToCameraFragment()
-        view?.findNavController()?.navigate(action)
         when (type) {
             Feature.Type.FACE -> {
 
@@ -66,6 +68,18 @@ class HomeFragment : Fragment(), OnFunActivityClickCallback, OnFeatureClickCallb
             Feature.Type.OBJECT -> {
 
             }
+        }
+        val action = HomeFragmentDirections.actionHomeFragmentToCameraFragment()
+        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA)
+            == PackageManager.PERMISSION_GRANTED
+        ) {
+            view?.findNavController()?.navigate(action)
+        } else {
+            ActivityCompat.requestPermissions(
+                requireActivity(),
+                arrayOf(Manifest.permission.CAMERA),
+                100
+            )
         }
     }
 
@@ -100,6 +114,16 @@ class HomeFragment : Fragment(), OnFunActivityClickCallback, OnFeatureClickCallb
             }
         }
         val action = HomeFragmentDirections.actionHomeFragmentToCameraFragment()
-        view?.findNavController()?.navigate(action)
+        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA)
+            == PackageManager.PERMISSION_GRANTED
+        ) {
+            view?.findNavController()?.navigate(action)
+        } else {
+            ActivityCompat.requestPermissions(
+                requireActivity(),
+                arrayOf(Manifest.permission.CAMERA),
+                100
+            )
+        }
     }
 }
