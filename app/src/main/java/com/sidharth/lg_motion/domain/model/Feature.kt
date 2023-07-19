@@ -9,6 +9,6 @@ data class Feature(
     val type: Type
 ) {
     enum class Type {
-        FACE, HAND, AUDIO, POSE, OBJECT
+        FACE, HAND, VOICE, POSE, OBJECT
     }
 }

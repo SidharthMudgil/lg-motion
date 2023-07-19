@@ -22,7 +22,7 @@ object Constants {
             title = "Voice Activated",
             cover = R.drawable.ic_launcher_foreground,
             description = "Interact with Liquid Galaxy using voice commands and audio input",
-            type = Feature.Type.AUDIO
+            type = Feature.Type.VOICE
         ),
         Feature(
             title = "Pose Recognition",
