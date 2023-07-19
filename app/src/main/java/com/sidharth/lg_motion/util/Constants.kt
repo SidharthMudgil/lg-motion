@@ -32,7 +32,7 @@ object Constants {
         Feature(
             title = "Object Manipulation",
             cover = R.drawable.ic_launcher_foreground,
-            description = "Interact with Liquid Galaxy by detecting and manipulating physical objects. Harnesses the power of MediaPipe's object detection for object recognition and control.",
+            description = "Interact with Liquid Galaxy by detecting and manipulating physical objects. Utilizes MediaPipe's object detection for object recognition and control.",
             type = Feature.Type.OBJECT
         )
     )

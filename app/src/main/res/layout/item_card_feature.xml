@@ -27,6 +27,7 @@
         android:layout_margin="10dp"
         android:layout_height="match_parent"
         android:background="@mipmap/ic_launcher"
+        android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="@id/feature_card"
         app:layout_constraintDimensionRatio=".7"
         app:layout_constraintEnd_toEndOf="@id/feature_card"

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.carousel.MaskableFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="300dp"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    android:backgroundTint="@color/black"
+    android:layout_marginStart="4dp"
+    android:layout_marginEnd="4dp"
+    app:shapeAppearance="@style/RoundedImageView">
+
+    <ImageView
+        android:id="@+id/cover"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:contentDescription="@null"
+        android:scaleType="centerCrop"
+        tools:src="@mipmap/ic_launcher" />
+
+</com.google.android.material.carousel.MaskableFrameLayout>
