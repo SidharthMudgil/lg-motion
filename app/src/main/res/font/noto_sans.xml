@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<font-family xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!-- Black -->
+    <font
+        app:font="@font/noto_sans_black"
+        app:fontStyle="normal"
+        app:fontWeight="900" />
+
+    <!-- Black Italic -->
+    <font
+        app:font="@font/noto_sans_black_italic"
+        app:fontStyle="italic"
+        app:fontWeight="900" />
+
+    <!-- Extra Bold -->
+    <font
+        app:font="@font/noto_sans_extra_bold"
+        app:fontStyle="normal"
+        app:fontWeight="800" />
+
+    <!-- Extra Bold Italic -->
+    <font
+        app:font="@font/noto_sans_extra_bold_italic"
+        app:fontStyle="italic"
+        app:fontWeight="800" />
+
+    <!-- Bold -->
+    <font
+        app:font="@font/noto_sans_bold"
+        app:fontStyle="normal"
+        app:fontWeight="700" />
+
+    <!-- Bold Italic -->
+    <font
+        app:font="@font/noto_sans_bold_italic"
+        app:fontStyle="italic"
+        app:fontWeight="700" />
+
+    <!-- Semi Bold -->
+    <font
+        app:font="@font/noto_sans_semi_bold"
+        app:fontStyle="normal"
+        app:fontWeight="600" />
+
+    <!-- Semi Bold Italic -->
+    <font
+        app:font="@font/noto_sans_semi_bold_italic"
+        app:fontStyle="italic"
+        app:fontWeight="600" />
+
+    <!-- Medium -->
+    <font
+        app:font="@font/noto_sans_medium"
+        app:fontStyle="normal"
+        app:fontWeight="500" />
+
+    <!-- Medium Italic -->
+    <font
+        app:font="@font/noto_sans_medium_italic"
+        app:fontStyle="italic"
+        app:fontWeight="500" />
+
+    <!-- Regular -->
+    <font
+        app:font="@font/noto_sans_regular"
+        app:fontStyle="normal"
+        app:fontWeight="400" />
+
+    <!-- Italic -->
+    <font
+        app:font="@font/noto_sans_italic"
+        app:fontStyle="italic"
+        app:fontWeight="400" />
+
+    <!-- Light -->
+    <font
+        app:font="@font/noto_sans_light"
+        app:fontStyle="normal"
+        app:fontWeight="300" />
+
+    <!-- Light Italic -->
+    <font
+        app:font="@font/noto_sans_light_italic"
+        app:fontStyle="italic"
+        app:fontWeight="300" />
+
+    <!-- Extra Light -->
+    <font
+        app:font="@font/noto_sans_extra_light"
+        app:fontStyle="normal"
+        app:fontWeight="200" />
+
+    <!-- Extra Light Italic -->
+    <font
+        app:font="@font/noto_sans_extra_light_italic"
+        app:fontStyle="italic"
+        app:fontWeight="200" />
+
+    <!-- Thin -->
+    <font
+        app:font="@font/noto_sans_thin"
+        app:fontStyle="normal"
+        app:fontWeight="100" />
+
+    <!-- Thin Italic -->
+    <font
+        app:font="@font/noto_sans_thin_italic"
+        app:fontStyle="italic"
+        app:fontWeight="100" />
+
+</font-family>
