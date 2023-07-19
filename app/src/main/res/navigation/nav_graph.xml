@@ -18,15 +18,54 @@
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.sidharth.lg_motion.ui.view.fragment.SettingsFragment"
-        android:label="fragment_settings"
-        tools:layout="@layout/fragment_settings" >
+        android:label="fragment_settings" >
         <action
             android:id="@+id/action_settingsFragment_to_aboutFragment"
             app:destination="@id/aboutFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_cameraFragment"
+            app:destination="@id/cameraFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_privacyPolicyFragment"
+            app:destination="@id/privacyPolicyFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_openSourceLicenseFragment"
+            app:destination="@id/openSourceLicenseFragment" />
     </fragment>
     <fragment
         android:id="@+id/aboutFragment"
         android:name="com.sidharth.lg_motion.ui.view.fragment.AboutFragment"
         android:label="fragment_about"
-        tools:layout="@layout/fragment_about" />
+        tools:layout="@layout/fragment_about" >
+        <action
+            android:id="@+id/action_aboutFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/cameraFragment"
+        android:name="com.sidharth.lg_motion.ui.view.fragment.CameraFragment"
+        android:label="fragment_camera"
+        tools:layout="@layout/fragment_camera" >
+        <action
+            android:id="@+id/action_cameraFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/privacyPolicyFragment"
+        android:name="com.sidharth.lg_motion.ui.view.fragment.PrivacyPolicyFragment"
+        android:label="fragment_privacy_policy"
+        tools:layout="@layout/fragment_privacy_policy" >
+        <action
+            android:id="@+id/action_privacyPolicyFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/openSourceLicenseFragment"
+        android:name="com.sidharth.lg_motion.ui.view.fragment.OpenSourceLicenseFragment"
+        android:label="fragment_open_source_license"
+        tools:layout="@layout/fragment_open_source_license" >
+        <action
+            android:id="@+id/action_openSourceLicenseFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+    </fragment>
 </navigation>
