@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="130dp"
+    android:layout_height="110dp"
     android:layout_marginBottom="10dp"
     app:layout_constraintHeight_percent=".5">
 
@@ -11,7 +11,7 @@
         android:id="@+id/feature_card"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:cardBackgroundColor="#998399"
+        app:cardBackgroundColor="#B6D5E6"
         android:elevation="0dp"
         app:cardCornerRadius="15dp"
         android:clickable="true"
@@ -26,10 +26,9 @@
         android:layout_width="0dp"
         android:layout_margin="10dp"
         android:layout_height="match_parent"
-        android:background="@mipmap/ic_launcher"
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="@id/feature_card"
-        app:layout_constraintDimensionRatio=".7"
+        app:layout_constraintDimensionRatio=".8"
         app:layout_constraintEnd_toEndOf="@id/feature_card"
         app:layout_constraintHorizontal_bias="0"
         app:layout_constraintStart_toStartOf="@id/feature_card"
@@ -43,6 +42,8 @@
         android:layout_height="wrap_content"
         android:ellipsize="end"
         android:maxLength="50"
+        android:textSize="18sp"
+        android:textStyle="bold"
         android:maxLines="1"
         tools:text="Face Controller" />
 
@@ -51,7 +52,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:ellipsize="end"
-        android:maxLines="4"
+        android:textSize="16sp"
+        android:maxLines="2"
         tools:text="To make the TextViews wrap to the next line instead of overflowing horizontally, you can modify the layout_width attribute of the TextViews. Currently, both TextViews have" />
 
     <androidx.constraintlayout.helper.widget.Flow

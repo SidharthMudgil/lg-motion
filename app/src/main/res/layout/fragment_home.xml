@@ -12,11 +12,11 @@
         tools:context=".ui.view.fragment.HomeFragment">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/games_rv"
+            android:id="@+id/activities_rv"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="10dp"
-            app:layout_constraintHeight_percent=".15"
+            app:layout_constraintHeight_percent=".2"
             android:clipChildren="false"
             android:clipToPadding="false"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -25,7 +25,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0"
-            tools:listitem="@layout/item_card_game" />
+            tools:listitem="@layout/item_card_fun_activity" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/features_rv"
@@ -39,7 +39,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/games_rv"
+            app:layout_constraintTop_toBottomOf="@+id/activities_rv"
             tools:listitem="@layout/item_card_feature" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
