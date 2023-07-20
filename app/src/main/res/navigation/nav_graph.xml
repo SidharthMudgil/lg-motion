@@ -9,7 +9,7 @@
         android:id="@+id/homeFragment"
         android:name="com.sidharth.lg_motion.ui.view.fragment.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" >
+        tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_homeFragment_to_cameraFragment"
             app:destination="@id/cameraFragment" />
@@ -22,7 +22,7 @@
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.sidharth.lg_motion.ui.view.fragment.SettingsFragment"
-        android:label="fragment_settings" >
+        android:label="fragment_settings">
         <action
             android:id="@+id/action_settingsFragment_to_aboutFragment"
             app:destination="@id/aboutFragment" />
@@ -37,16 +37,27 @@
         android:id="@+id/aboutFragment"
         android:name="com.sidharth.lg_motion.ui.view.fragment.AboutFragment"
         android:label="fragment_about"
-        tools:layout="@layout/fragment_about" >
+        tools:layout="@layout/fragment_about">
         <action
             android:id="@+id/action_aboutFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />
+
+        <argument
+            android:name="feature_type"
+            android:defaultValue="@null"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="activity_name"
+            android:defaultValue="@null"
+            app:argType="string"
+            app:nullable="true" />
     </fragment>
     <fragment
         android:id="@+id/cameraFragment"
         android:name="com.sidharth.lg_motion.ui.view.fragment.CameraFragment"
         android:label="fragment_camera"
-        tools:layout="@layout/fragment_camera" >
+        tools:layout="@layout/fragment_camera">
         <action
             android:id="@+id/action_cameraFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
@@ -55,7 +66,7 @@
         android:id="@+id/privacyPolicyFragment"
         android:name="com.sidharth.lg_motion.ui.view.fragment.PrivacyPolicyFragment"
         android:label="fragment_privacy_policy"
-        tools:layout="@layout/fragment_privacy_policy" >
+        tools:layout="@layout/fragment_privacy_policy">
         <action
             android:id="@+id/action_privacyPolicyFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />
@@ -64,7 +75,7 @@
         android:id="@+id/openSourceLicenseFragment"
         android:name="com.sidharth.lg_motion.ui.view.fragment.OpenSourceLicenseFragment"
         android:label="fragment_open_source_license"
-        tools:layout="@layout/fragment_open_source_license" >
+        tools:layout="@layout/fragment_open_source_license">
         <action
             android:id="@+id/action_openSourceLicenseFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />

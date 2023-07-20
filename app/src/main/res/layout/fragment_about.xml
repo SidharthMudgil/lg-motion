@@ -18,7 +18,7 @@
         app:layout_constraintVertical_bias="0"
         app:layout_constraintWidth_percent=".5" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/app_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -29,7 +29,7 @@
         app:layout_constraintVertical_bias="0"
         tools:text="LG Motion" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/app_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -40,7 +40,7 @@
         app:layout_constraintVertical_bias="0"
         tools:text="This is description" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/label1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -51,7 +51,7 @@
         app:layout_constraintTop_toBottomOf="@+id/app_description"
         app:layout_constraintVertical_bias="0" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/dev_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -95,7 +95,7 @@
         app:layout_constraintTop_toBottomOf="@+id/dev_name"
         app:layout_constraintVertical_bias="0" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/label2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -106,7 +106,7 @@
         app:layout_constraintTop_toBottomOf="@+id/flow1"
         app:layout_constraintVertical_bias="0" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/org_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -117,7 +117,7 @@
         app:layout_constraintVertical_bias="0"
         tools:text="This is description" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/label3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -185,7 +185,7 @@
         app:layout_constraintTop_toBottomOf="@+id/label3"
         app:layout_constraintVertical_bias="0" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/app_version"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
