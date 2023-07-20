@@ -44,6 +44,8 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 editText.isSingleLine = true
                 editText.inputType = InputType.TYPE_CLASS_TEXT
                 editText.filters = arrayOf(inputFilter)
+                editText.hint = "lg"
+                editText.setSelection(editText.text.length)
             }
         }
 
@@ -52,6 +54,8 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 editText.isSingleLine = true
                 editText.inputType = InputType.TYPE_TEXT_VARIATION_PASSWORD
                 editText.filters = arrayOf(inputFilter)
+                editText.hint = "lg"
+                editText.setSelection(editText.text.length)
             }
         }
 
@@ -60,6 +64,8 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 editText.isSingleLine = true
                 editText.inputType = InputType.TYPE_CLASS_TEXT
                 editText.filters = arrayOf(inputFilter)
+                editText.hint = "127.0.0.1"
+                editText.setSelection(editText.text.length)
             }
         }
 
@@ -68,6 +74,8 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 editText.isSingleLine = true
                 editText.inputType = InputType.TYPE_CLASS_NUMBER
                 editText.filters = arrayOf(RangeInputFilter(max = 65536))
+                editText.hint = "22"
+                editText.setSelection(editText.text.length)
             }
         }
 
