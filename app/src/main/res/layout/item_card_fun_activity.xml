@@ -7,7 +7,7 @@
     android:clickable="true"
     android:layout_marginStart="4dp"
     android:layout_marginEnd="4dp"
-    app:shapeAppearance="@style/RoundedImageView">
+    app:shapeAppearance="@style/ShapeOverlayRoundedImageView">
 
     <ImageView
         android:id="@+id/cover"

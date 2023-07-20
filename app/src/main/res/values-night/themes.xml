@@ -1,7 +1,31 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.Lgmotion" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+        <item name="colorPrimary">@color/base_theme_dark_primary</item>
+        <item name="colorOnPrimary">@color/base_theme_dark_onPrimary</item>
+        <item name="colorPrimaryContainer">@color/base_theme_dark_primaryContainer</item>
+        <item name="colorOnPrimaryContainer">@color/base_theme_dark_onPrimaryContainer</item>
+        <item name="colorSecondary">@color/base_theme_dark_secondary</item>
+        <item name="colorOnSecondary">@color/base_theme_dark_onSecondary</item>
+        <item name="colorSecondaryContainer">@color/base_theme_dark_secondaryContainer</item>
+        <item name="colorOnSecondaryContainer">@color/base_theme_dark_onSecondaryContainer</item>
+        <item name="colorTertiary">@color/base_theme_dark_tertiary</item>
+        <item name="colorOnTertiary">@color/base_theme_dark_onTertiary</item>
+        <item name="colorTertiaryContainer">@color/base_theme_dark_tertiaryContainer</item>
+        <item name="colorOnTertiaryContainer">@color/base_theme_dark_onTertiaryContainer</item>
+        <item name="colorError">@color/base_theme_dark_error</item>
+        <item name="colorErrorContainer">@color/base_theme_dark_errorContainer</item>
+        <item name="colorOnError">@color/base_theme_dark_onError</item>
+        <item name="colorOnErrorContainer">@color/base_theme_dark_onErrorContainer</item>
+        <item name="android:colorBackground">@color/base_theme_dark_background</item>
+        <item name="colorOnBackground">@color/base_theme_dark_onBackground</item>
+        <item name="colorSurface">@color/base_theme_dark_surface</item>
+        <item name="colorOnSurface">@color/base_theme_dark_onSurface</item>
+        <item name="colorSurfaceVariant">@color/base_theme_dark_surfaceVariant</item>
+        <item name="colorOnSurfaceVariant">@color/base_theme_dark_onSurfaceVariant</item>
+        <item name="colorOutline">@color/base_theme_dark_outline</item>
+        <item name="colorOnSurfaceInverse">@color/base_theme_dark_inverseOnSurface</item>
+        <item name="colorSurfaceInverse">@color/base_theme_dark_inverseSurface</item>
+        <item name="colorPrimaryInverse">@color/base_theme_dark_inversePrimary</item>
     </style>
 </resources>
