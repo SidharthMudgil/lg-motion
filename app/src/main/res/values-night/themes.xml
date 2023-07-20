@@ -27,5 +27,7 @@
         <item name="colorOnSurfaceInverse">@color/base_theme_dark_inverseOnSurface</item>
         <item name="colorSurfaceInverse">@color/base_theme_dark_inverseSurface</item>
         <item name="colorPrimaryInverse">@color/base_theme_dark_inversePrimary</item>
+        <item name="android:statusBarColor">@color/base_theme_dark_background</item>
+        <item name="android:windowLightStatusBar">false</item>
     </style>
 </resources>

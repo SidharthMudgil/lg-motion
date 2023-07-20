@@ -28,6 +28,8 @@
         <item name="colorSurfaceInverse">@color/base_theme_light_inverseSurface</item>
         <item name="colorPrimaryInverse">@color/base_theme_light_inversePrimary</item>
         <item name="fontFamily">@font/noto_sans</item>
+        <item name="android:statusBarColor">@color/base_theme_light_background</item>
+        <item name="android:windowLightStatusBar">true</item>
     </style>
 
     <style name="Theme.Lgmotion" parent="Base.Theme.Lgmotion">
