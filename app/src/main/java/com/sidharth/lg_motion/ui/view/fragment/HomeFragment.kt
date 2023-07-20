@@ -23,6 +23,7 @@ import com.sidharth.lg_motion.ui.view.adapter.FunActivitiesAdapter
 import com.sidharth.lg_motion.util.Constants
 
 class HomeFragment : Fragment(), OnFunActivityClickCallback, OnFeatureClickCallback {
+    private val cameraPermissionRequestCode = 100
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -48,28 +49,10 @@ class HomeFragment : Fragment(), OnFunActivityClickCallback, OnFeatureClickCallb
     }
 
     override fun onFeatureClick(type: Feature.Type) {
-        when (type) {
-            Feature.Type.FACE -> {
+        val action = HomeFragmentDirections.actionHomeFragmentToCameraFragment(
+            feature = type.name
+        )
 
-            }
-
-            Feature.Type.HAND -> {
-
-            }
-
-            Feature.Type.VOICE -> {
-
-            }
-
-            Feature.Type.POSE -> {
-
-            }
-
-            Feature.Type.OBJECT -> {
-
-            }
-        }
-        val action = HomeFragmentDirections.actionHomeFragmentToCameraFragment()
         if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA)
             == PackageManager.PERMISSION_GRANTED
         ) {
@@ -83,37 +66,11 @@ class HomeFragment : Fragment(), OnFunActivityClickCallback, OnFeatureClickCallb
         }
     }
 
-    override fun onFunActivityClick(name: String) {
-        when (name) {
-            FunActivity.Activity.ASTEROIDS.name -> {
+    override fun onFunActivityClick(name: FunActivity.Activity) {
+        val action = HomeFragmentDirections.actionHomeFragmentToCameraFragment(
+            activity = name.name
+        )
 
-            }
-
-            FunActivity.Activity.SNAKE.name -> {
-
-            }
-
-            FunActivity.Activity.PACMAN.name -> {
-
-            }
-
-            FunActivity.Activity.TETRIS.name -> {
-
-            }
-
-            FunActivity.Activity.MARIO.name -> {
-
-            }
-
-            FunActivity.Activity.FACE_MASK.name -> {
-
-            }
-
-            FunActivity.Activity.DINO_RUN.name -> {
-
-            }
-        }
-        val action = HomeFragmentDirections.actionHomeFragmentToCameraFragment()
         if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA)
             == PackageManager.PERMISSION_GRANTED
         ) {
@@ -122,7 +79,7 @@ class HomeFragment : Fragment(), OnFunActivityClickCallback, OnFeatureClickCallb
             ActivityCompat.requestPermissions(
                 requireActivity(),
                 arrayOf(Manifest.permission.CAMERA),
-                100
+                cameraPermissionRequestCode,
             )
         }
     }

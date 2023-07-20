@@ -41,31 +41,31 @@ object Constants {
     val funActivities = listOf(
         FunActivity(
             cover = R.drawable.ic_launcher_foreground,
-            name = "face_masks"
+            name = FunActivity.Activity.FACE_MASK
         ),
         FunActivity(
             cover = R.drawable.ic_launcher_foreground,
-            name = "snakes"
+            name = FunActivity.Activity.SNAKE
         ),
         FunActivity(
             cover = R.drawable.ic_launcher_foreground,
-            name = "asteroids"
+            name = FunActivity.Activity.ASTEROIDS
         ),
         FunActivity(
             cover = R.drawable.ic_launcher_foreground,
-            name = "dino_run"
+            name = FunActivity.Activity.DINO_RUN
         ),
         FunActivity(
             cover = R.drawable.ic_launcher_foreground,
-            name = "mario"
+            name = FunActivity.Activity.MARIO
         ),
         FunActivity(
             cover = R.drawable.ic_launcher_foreground,
-            name = "pacman"
+            name = FunActivity.Activity.PACMAN
         ),
         FunActivity(
             cover = R.drawable.ic_launcher_foreground,
-            name = "tetris"
+            name = FunActivity.Activity.TETRIS
         ),
     )
 }

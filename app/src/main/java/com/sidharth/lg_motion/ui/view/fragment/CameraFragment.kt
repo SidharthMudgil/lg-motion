@@ -3,7 +3,6 @@ package com.sidharth.lg_motion.ui.view.fragment
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,12 +13,17 @@ import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.navArgs
 import com.sidharth.lg_motion.databinding.FragmentCameraBinding
+import com.sidharth.lg_motion.util.ToastUtil
 
 class CameraFragment : Fragment() {
     companion object {
         private const val TAG = "Face Landmarker"
     }
+
+    val cameraFragmentArgs: CameraFragmentArgs by navArgs()
 
     private var _fragmentCameraBinding: FragmentCameraBinding? = null
     private var preview: Preview? = null
@@ -32,16 +36,13 @@ class CameraFragment : Fragment() {
         get() = _fragmentCameraBinding!!
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _fragmentCameraBinding = FragmentCameraBinding.inflate(inflater)
-
+        val message = cameraFragmentArgs.activity ?: cameraFragmentArgs.feature ?: ""
+        ToastUtil.showToast(requireContext(), message)
 
         return fragmentCameraBinding.root
     }
@@ -94,7 +95,7 @@ class CameraFragment : Fragment() {
                 .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
                 .setOutputImageFormat(ImageAnalysis.OUTPUT_IMAGE_FORMAT_RGBA_8888)
                 .build()
-                // The analyzer can then be assigned to the instance
+        // The analyzer can then be assigned to the instance
 //                .also {
 //                    it.setAnalyzer(backgroundExecutor) { image ->
 //                        detectFace(image)
