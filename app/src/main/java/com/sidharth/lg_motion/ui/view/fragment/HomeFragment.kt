@@ -38,7 +38,6 @@ class HomeFragment : Fragment(), OnFunActivityClickCallback, OnFeatureClickCallb
         )
         LinearSnapHelper().attachToRecyclerView(binding.activitiesRv)
 
-        binding.featuresRv.layoutManager = LinearLayoutManager(requireContext())
         binding.featuresRv.adapter = FeaturesListAdapter(
             context = requireContext(),
             features = Constants.featureList,

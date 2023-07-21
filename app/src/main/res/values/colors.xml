@@ -30,6 +30,7 @@
     <color name="base_theme_light_surfaceTint">#00629D</color>
     <color name="base_theme_light_outlineVariant">#C2C7CF</color>
     <color name="base_theme_light_scrim">#000000</color>
+
     <color name="base_theme_dark_primary">#99CBFF</color>
     <color name="base_theme_dark_onPrimary">#003355</color>
     <color name="base_theme_dark_primaryContainer">#004A78</color>
