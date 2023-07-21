@@ -1,7 +1,6 @@
 package com.sidharth.lg_motion
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -25,7 +24,6 @@ class MainActivity : AppCompatActivity() {
     private fun setupBottomNavigation() {
         navHostFragment?.findNavController()?.apply {
             activityMainBinding.bottomNavigationView?.setupWithNavController(this)
-
             this.addOnDestinationChangedListener { _, destination, _ ->
                 checkBottomNavigationViewMenuItem(destination.id)
             }
@@ -35,10 +33,7 @@ class MainActivity : AppCompatActivity() {
     private fun setupRailViewNavigation() {
         navHostFragment?.findNavController()?.apply {
             activityMainBinding.navigationRailView?.setupWithNavController(this)
-
             this.addOnDestinationChangedListener { _, destination, _ ->
-                Log.d("destination", destination.id.toString())
-
                 checkBottomNavigationViewMenuItem(destination.id)
             }
         }
@@ -47,12 +42,17 @@ class MainActivity : AppCompatActivity() {
     private fun checkBottomNavigationViewMenuItem(id: Int) {
         when (id) {
             R.id.cameraFragment -> {
-                activityMainBinding.bottomNavigationView?.menu?.findItem(R.id.homeFragment)?.isChecked = true
-                activityMainBinding.navigationRailView?.menu?.findItem(R.id.homeFragment)?.isChecked = true
+                activityMainBinding.bottomNavigationView?.menu?.findItem(R.id.homeFragment)?.isChecked =
+                    true
+                activityMainBinding.navigationRailView?.menu?.findItem(R.id.homeFragment)?.isChecked =
+                    true
             }
+
             R.id.aboutFragment, R.id.openSourceLicenseFragment, R.id.privacyPolicyFragment -> {
-                activityMainBinding.bottomNavigationView?.menu?.findItem(R.id.settingsFragment)?.isChecked = true
-                activityMainBinding.navigationRailView?.menu?.findItem(R.id.settingsFragment)?.isChecked = true
+                activityMainBinding.bottomNavigationView?.menu?.findItem(R.id.settingsFragment)?.isChecked =
+                    true
+                activityMainBinding.navigationRailView?.menu?.findItem(R.id.settingsFragment)?.isChecked =
+                    true
             }
         }
     }

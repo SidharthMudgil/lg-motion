@@ -73,7 +73,9 @@ dependencies {
     implementation 'com.google.mediapipe:tasks-vision:0.10.2'
 
     // SSH Connection
-    implementation 'com.hierynomus:sshj:0.35.0'
+    implementation 'com.github.mwiede:jsch:0.2.9'
+//    implementation 'com.hierynomus:sshj:0.35.0'  <-- second most popular light weight
+//    implementation 'com.jcraft:jsch:0.1.55'   <-- most popular and oldest
 
     // Dagger
     implementation 'com.google.dagger:dagger:2.47'
