@@ -21,6 +21,7 @@ import com.sidharth.lg_motion.domain.model.FunActivity
 import com.sidharth.lg_motion.ui.view.adapter.FeaturesListAdapter
 import com.sidharth.lg_motion.ui.view.adapter.FunActivitiesAdapter
 import com.sidharth.lg_motion.util.Constants
+import com.sidharth.lg_motion.util.DialogUtils
 
 class HomeFragment : Fragment(), OnFunActivityClickCallback, OnFeatureClickCallback {
     private val cameraPermissionRequestCode = 100
@@ -55,7 +56,8 @@ class HomeFragment : Fragment(), OnFunActivityClickCallback, OnFeatureClickCallb
         if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA)
             == PackageManager.PERMISSION_GRANTED
         ) {
-            view?.findNavController()?.navigate(action)
+            DialogUtils.show(requireContext())
+//            view?.findNavController()?.navigate(action)
         } else {
             ActivityCompat.requestPermissions(
                 requireActivity(),
@@ -73,7 +75,8 @@ class HomeFragment : Fragment(), OnFunActivityClickCallback, OnFeatureClickCallb
         if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA)
             == PackageManager.PERMISSION_GRANTED
         ) {
-            view?.findNavController()?.navigate(action)
+            DialogUtils.show(requireContext())
+//            view?.findNavController()?.navigate(action)
         } else {
             ActivityCompat.requestPermissions(
                 requireActivity(),

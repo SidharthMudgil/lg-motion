@@ -53,4 +53,6 @@
     <string name="app_version_title">App Version</string>
     <string name="app_version_summary">Current app version installed</string>
 
+    <string name="connect">Connect</string>
+
 </resources>
