@@ -19,6 +19,7 @@ class LiquidGalaxyController(
     enum class State(val key: String) {
         IDLE("idle"),
         FLY_TO("idle"),
+        PLANET("idle"),
         MOVE_NORTH("Up"),
         MOVE_SOUTH("Down"),
         MOVE_EAST("Right"),
@@ -26,7 +27,7 @@ class LiquidGalaxyController(
         ROTATE_LEFT("ctrl+Left"),
         ROTATE_RIGHT("ctrl+Right"),
         ZOOM_IN("equal"),
-        ZOOM_OUT("minus")
+        ZOOM_OUT("minus"),
     }
 
     private var lastState = State.IDLE
@@ -226,6 +227,7 @@ class LiquidGalaxyController(
             execute("""$focusWindow keyup ${lastState.key}""")
         }
         val command = when (state) {
+            State.PLANET -> """$focusWindow && echo 'planet=$direction' > /tmp/query.txt`"""
             State.FLY_TO -> """$focusWindow && echo 'search=$direction' > /tmp/query.txt"""
             else -> "$focusWindow keydown ${state.key}"
         }
