@@ -10,7 +10,7 @@ import com.sidharth.lg_motion.R
 object DialogUtils {
     private var dialog: Dialog? = null
 
-    private fun init(context: Context) {
+    private fun init(context: Context, callback: () -> Unit) {
         val view = LayoutInflater.from(context).inflate(R.layout.connection_dialog, null)
         dialog = MaterialAlertDialogBuilder(context)
             .setView(view)
@@ -20,15 +20,15 @@ object DialogUtils {
                 dialog.dismiss()
             }
             .setPositiveButton("Connect") { dialog, _ ->
+                callback()
                 dialog.dismiss()
-                // TODO()
             }.create()
         dialog?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
     }
 
-    fun show(context: Context) {
+    fun show(context: Context, callback: () -> Unit) {
         if (dialog == null) {
-            init(context)
+            init(context, callback)
         }
         dialog?.show()
     }

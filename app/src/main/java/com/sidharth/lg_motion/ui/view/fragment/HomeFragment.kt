@@ -60,7 +60,10 @@ class HomeFragment : Fragment(), OnFunActivityClickCallback, OnFeatureClickCallb
             if (NetworkUtils.isNetworkConnected(requireContext())) {
                 view?.findNavController()?.navigate(action)
             } else {
-                DialogUtils.show(requireContext())
+                DialogUtils.show(requireContext()) {
+                    ToastUtil.showToast(requireContext(), "Asdas")
+                    TODO()
+                }
             }
         } else {
             ActivityCompat.requestPermissions(

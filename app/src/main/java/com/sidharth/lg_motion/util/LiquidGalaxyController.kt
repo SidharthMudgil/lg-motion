@@ -4,6 +4,7 @@ import com.jcraft.jsch.ChannelExec
 import com.jcraft.jsch.ChannelSftp
 import com.jcraft.jsch.JSch
 import com.jcraft.jsch.Session
+import kotlinx.coroutines.GlobalScope
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.util.Properties
@@ -17,17 +18,12 @@ class LiquidGalaxyController(
     private val screens: Int,
 ) {
     enum class State(val key: String) {
-        IDLE("idle"),
-        FLY_TO("idle"),
-        PLANET("idle"),
-        MOVE_NORTH("Up"),
-        MOVE_SOUTH("Down"),
-        MOVE_EAST("Right"),
-        MOVE_WEST("Left"),
-        ROTATE_LEFT("ctrl+Left"),
-        ROTATE_RIGHT("ctrl+Right"),
-        ZOOM_IN("equal"),
-        ZOOM_OUT("minus"),
+        IDLE("idle"), FLY_TO("idle"), PLANET("idle"), MOVE_NORTH("Up"), MOVE_SOUTH("Down"), MOVE_EAST(
+            "Right"
+        ),
+        MOVE_WEST("Left"), ROTATE_LEFT("ctrl+Left"), ROTATE_RIGHT("ctrl+Right"), ZOOM_IN("equal"), ZOOM_OUT(
+            "minus"
+        ),
     }
 
     private var lastState = State.IDLE
@@ -49,11 +45,7 @@ class LiquidGalaxyController(
             return session?.isConnected ?: false
         }
 
-    init {
-        setupNewSession()
-    }
-
-    private fun setupNewSession() {
+    private suspend fun setupNewSession() {
         val jSch = JSch()
         session = jSch.getSession(username, host, port)
         session?.setPassword(password)
@@ -63,7 +55,7 @@ class LiquidGalaxyController(
         session?.connect()
     }
 
-    private fun execute(command: String) {
+    private suspend fun execute(command: String) {
         if (session != null && connected) {
             val channel = session?.openChannel("exec") as ChannelExec
             channel.outputStream = ByteArrayOutputStream()
@@ -73,30 +65,33 @@ class LiquidGalaxyController(
         }
     }
 
-    fun connect(): Boolean {
-        if (session == null || connected.not()) {
-            setupNewSession()
-            displayLogos()
-        } else {
-            session?.sendKeepAliveMsg()
+    suspend fun connect(): Boolean {
+        return try {
+            if (session == null || connected.not()) {
+                setupNewSession()
+                displayLogos()
+            } else {
+                session?.sendKeepAliveMsg()
+            }
+            true
+        } catch (e: Exception) {
+            false
         }
-
-        return true // TODO(return correct value using try-catch)
     }
 
-    fun disconnect() {
+    suspend fun disconnect() {
         if (session != null) {
             session?.disconnect()
         }
         session = null
     }
 
-    private fun displayLogos() {
+    private suspend fun displayLogos() {
         val command = ""
         execute(command)
     }
 
-    fun hideLogos() {
+    suspend fun hideLogos() {
         val command = """
             chmod 777 /var/www/html/kml/$logoSlaves.kml; echo '
             <kml xmlns="http://www.opengis.net/kml/2.2"
@@ -112,20 +107,20 @@ class LiquidGalaxyController(
     }
 
 
-    //    fun cleanSlaves() {
+    //    suspend fun cleanSlaves() {
 //        for (i in 2..screens) {
 //            execute("echo '' > /var/www/html/kml/slave_$i.kml")
 //        }
 //    }
-    fun sendKmlInSlave(slave: Int, kml: String) {
+    suspend fun sendKmlInSlave(slave: Int, kml: String) {
         execute("echo '$kml' > /var/www/html/kml/slave_$slave.kml")
     }
 
-    fun sendKml(name: String) {
+    suspend fun sendKml(name: String) {
         execute("echo '\nhttp://lg1:81/$name.kml' > /var/www/html/kmls.txt")
     }
 
-    fun clearKml() {
+    suspend fun clearKml() {
         for (i in 2..screens) {
             execute("echo '' > /var/www/html/kml/slave_$i.kml")
         }
@@ -134,35 +129,46 @@ class LiquidGalaxyController(
         execute("echo '' > /var/www/html/kmls.txt")
     }
 
-    fun uploadFile(name: String, file: File) {
+    suspend fun uploadFile(name: String, file: File) {
         if (session != null && connected) {
             val channel = session?.openChannel("sftp") as ChannelSftp
-            channel.outputStream = ByteArrayOutputStream()
-            // TODO(main logic left)
             channel.connect()
-            channel.disconnect()
+            try {
+                val remotePath = "/var/www/html/$name.kml"
+                channel.put(file.absolutePath, remotePath)
+                channel.chmod(644, remotePath)
+            } catch (e: Exception) {
+                e.printStackTrace()
+                channel.disconnect()
+            } finally {
+                channel.disconnect()
+            }
         }
     }
 
-    fun deleteFile(name: String) {
+    suspend fun deleteFile(name: String) {
         if (session != null && connected) {
             val channel = session?.openChannel("sftp") as ChannelSftp
-            channel.outputStream = ByteArrayOutputStream()
-            channel.rm("/var/www/html/$name")
             channel.connect()
-            channel.disconnect()
+            try {
+                channel.rm("/var/www/html/$name")
+            } catch (e: Exception) {
+                e.printStackTrace()
+            } finally {
+                channel.disconnect()
+            }
         }
     }
 
-    fun startOrbit() {
+    suspend fun startOrbit() {
         execute("""echo "playtour=Orbit" > /tmp/query.txt""")
     }
 
-    fun stopOrbit() {
+    suspend fun stopOrbit() {
         execute("""echo "exittour=true" > /tmp/query.txt""")
     }
 
-    fun setRefresh() {
+    suspend fun setRefresh() {
         for (i in 2..screens) {
             val search = "<href>##LG_PHPIFACE##kml/slave_$i.kml</href>"
             val replace =
@@ -172,7 +178,7 @@ class LiquidGalaxyController(
         }
     }
 
-    fun resetRefresh() {
+    suspend fun resetRefresh() {
         for (i in 2..screens) {
             val search =
                 "<href>##LG_PHPIFACE##kml\\/slave_$i.kml<\\/href><refreshMode>onInterval<\\/refreshMode><refreshInterval>2<\\/refreshInterval>"
@@ -187,7 +193,7 @@ class LiquidGalaxyController(
         }
     }
 
-    fun relaunch() {
+    suspend fun relaunch() {
         for (i in 1..screens) {
             val command = """RELAUNCH_CMD="\\
                 if [ -f /etc/init/lxdm.conf ]; then
@@ -209,19 +215,19 @@ class LiquidGalaxyController(
         }
     }
 
-    fun restart() {
+    suspend fun restart() {
         for (i in 1..screens) {
             execute("""sshpass -p $password ssh -t lg$i "echo $password | sudo -S reboot"""")
         }
     }
 
-    fun shutdown() {
+    suspend fun shutdown() {
         for (i in 1..screens) {
             execute("""sshpass -p $password ssh -t lg$i "echo $password | sudo -S poweroff"""")
         }
     }
 
-    fun performAction(state: State, direction: String?) {
+    suspend fun performAction(state: State, direction: String?) {
         val focusWindow = """xdotool windowfocus $(xdotool search --name "Google Earth Pro")"""
         if (lastState != State.IDLE) {
             execute("""$focusWindow keyup ${lastState.key}""")
@@ -233,5 +239,34 @@ class LiquidGalaxyController(
         }
         execute(command)
         lastState = state
+    }
+
+    companion object {
+        @Volatile
+        private var INSTANCE: LiquidGalaxyController? = null
+
+        fun updateInstance(
+            username: String,
+            password: String,
+            host: String,
+            port: Int,
+            screens: Int,
+        ) {
+            synchronized(this) {
+                INSTANCE = LiquidGalaxyController(
+                    username = username,
+                    password = password,
+                    host = host,
+                    port = port,
+                    screens = screens,
+                ).also {
+                    INSTANCE = it
+                }
+            }
+        }
+
+        fun getInstance(): LiquidGalaxyController? {
+            return INSTANCE
+        }
     }
 }

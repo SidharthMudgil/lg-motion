@@ -109,7 +109,7 @@
         app:iconSpaceReserved="false">
 
         <ListPreference
-            app:defaultValue="Standard"
+            app:defaultValue="Blue"
             android:entries="@array/map_styles"
             android:entryValues="@array/map_styles"
             android:key="map_style"
