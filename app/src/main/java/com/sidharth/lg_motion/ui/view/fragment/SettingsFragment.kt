@@ -11,7 +11,6 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SeekBarPreference
 import androidx.preference.SwitchPreferenceCompat
-import com.google.android.gms.maps.GoogleMap
 import com.sidharth.lg_motion.R
 import com.sidharth.lg_motion.util.LiquidGalaxyController
 import com.sidharth.lg_motion.util.NetworkUtils
@@ -184,25 +183,10 @@ class SettingsFragment : PreferenceFragmentCompat() {
         }
 
         mapStylePreference.setOnPreferenceChangeListener { _, newValue ->
-            val mapStyle = when (newValue.toString()) {
-                "Standard" -> R.raw.map_style_standard
-                "Dark" -> R.raw.map_style_dark
-                "Retro" -> R.raw.map_style_retro
-                "Blue" -> R.raw.map_style_blue
-                "Green" -> R.raw.map_style_green
-                "Night" -> R.raw.map_style_night
-                "Silver" -> R.raw.map_style_silver
-                else -> R.raw.map_style_blue
-            }
-            val mapType = when (newValue.toString()) {
-                "Satellite" -> GoogleMap.MAP_TYPE_SATELLITE
-                else -> GoogleMap.MAP_TYPE_NORMAL
-            }
-
-            val mapsFragment =
-                childFragmentManager.findFragmentByTag("mapsFragment") as MapsFragment?
-            mapsFragment?.setMapStyle(mapStyle, mapType)
-
+            val action = SettingsFragmentDirections.actionSettingsFragmentToMapsFragment(
+                style = newValue as String
+            )
+            view?.findNavController()?.navigate(action)
             true
         }
 

@@ -62,7 +62,7 @@ class HomeFragment : Fragment(), OnFunActivityClickCallback, OnFeatureClickCallb
             } else {
                 DialogUtils.show(requireContext()) {
                     ToastUtil.showToast(requireContext(), "Asdas")
-                    TODO()
+//                    TODO()
                 }
             }
         } else {

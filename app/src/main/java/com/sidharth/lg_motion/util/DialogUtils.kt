@@ -20,8 +20,8 @@ object DialogUtils {
                 dialog.dismiss()
             }
             .setPositiveButton("Connect") { dialog, _ ->
-                callback()
                 dialog.dismiss()
+                callback()
             }.create()
         dialog?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
     }

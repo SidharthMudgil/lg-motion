@@ -23,7 +23,7 @@ class CameraFragment : Fragment() {
         private const val TAG = "Face Landmarker"
     }
 
-    val cameraFragmentArgs: CameraFragmentArgs by navArgs()
+    private val cameraFragmentArgs: CameraFragmentArgs by navArgs()
 
     private var _fragmentCameraBinding: FragmentCameraBinding? = null
     private var preview: Preview? = null
