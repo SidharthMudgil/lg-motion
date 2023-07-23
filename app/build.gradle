@@ -66,9 +66,6 @@ dependencies {
     // Google Maps
     implementation 'com.google.android.gms:play-services-maps:18.1.0'
 
-    // Markdown parsing
-    implementation "io.noties.markwon:core:4.6.2"
-
     // Mediapipe api
     implementation 'com.google.mediapipe:tasks-vision:0.10.2'
 

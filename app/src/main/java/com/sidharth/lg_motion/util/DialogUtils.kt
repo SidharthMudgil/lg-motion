@@ -11,10 +11,11 @@ object DialogUtils {
     private var dialog: Dialog? = null
 
     private fun init(context: Context) {
-        val view = LayoutInflater.from(context).inflate(R.layout.no_connection_dialog, null)
+        val view = LayoutInflater.from(context).inflate(R.layout.connection_dialog, null)
         dialog = MaterialAlertDialogBuilder(context)
             .setView(view)
-            .setTitle("Liquid Galaxy Connection")
+            .setTitle(context.getString(R.string.connection_dialog_title))
+            .setMessage(context.getString(R.string.connection_dialog_message))
             .setNegativeButton("Cancel") { dialog, _ ->
                 dialog.dismiss()
             }
@@ -30,5 +31,11 @@ object DialogUtils {
             init(context)
         }
         dialog?.show()
+    }
+
+    fun dismiss() {
+        if (dialog != null && dialog?.isShowing == true) {
+            dialog?.dismiss()
+        }
     }
 }

@@ -10,7 +10,6 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSnapHelper
 import com.google.android.material.carousel.CarouselLayoutManager
 import com.sidharth.lg_motion.databinding.FragmentHomeBinding
@@ -22,6 +21,8 @@ import com.sidharth.lg_motion.ui.view.adapter.FeaturesListAdapter
 import com.sidharth.lg_motion.ui.view.adapter.FunActivitiesAdapter
 import com.sidharth.lg_motion.util.Constants
 import com.sidharth.lg_motion.util.DialogUtils
+import com.sidharth.lg_motion.util.NetworkUtils
+import com.sidharth.lg_motion.util.ToastUtil
 
 class HomeFragment : Fragment(), OnFunActivityClickCallback, OnFeatureClickCallback {
     private val cameraPermissionRequestCode = 100
@@ -56,33 +57,26 @@ class HomeFragment : Fragment(), OnFunActivityClickCallback, OnFeatureClickCallb
         if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA)
             == PackageManager.PERMISSION_GRANTED
         ) {
-            DialogUtils.show(requireContext())
-//            view?.findNavController()?.navigate(action)
+            if (NetworkUtils.isNetworkConnected(requireContext())) {
+                view?.findNavController()?.navigate(action)
+            } else {
+                DialogUtils.show(requireContext())
+            }
         } else {
             ActivityCompat.requestPermissions(
                 requireActivity(),
                 arrayOf(Manifest.permission.CAMERA),
-                100
+                cameraPermissionRequestCode
             )
         }
     }
 
     override fun onFunActivityClick(name: FunActivity.Activity) {
-        val action = HomeFragmentDirections.actionHomeFragmentToCameraFragment(
-            activity = name.name
-        )
+        ToastUtil.showToast(requireContext(), "Coming Soon")
+    }
 
-        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA)
-            == PackageManager.PERMISSION_GRANTED
-        ) {
-            DialogUtils.show(requireContext())
-//            view?.findNavController()?.navigate(action)
-        } else {
-            ActivityCompat.requestPermissions(
-                requireActivity(),
-                arrayOf(Manifest.permission.CAMERA),
-                cameraPermissionRequestCode,
-            )
-        }
+    override fun onPause() {
+        super.onPause()
+        DialogUtils.dismiss()
     }
 }
