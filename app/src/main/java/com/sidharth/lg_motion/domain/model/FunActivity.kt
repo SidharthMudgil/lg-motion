@@ -7,6 +7,6 @@ data class FunActivity(
     val name: Activity,
 ) {
     enum class Activity {
-        SNAKE, ASTEROIDS, PACMAN, TETRIS, DINO_RUN, FACE_MASK, MARIO
+        SNAKE, SPACE_INVADER, PACMAN, TETRIS, DINO_RUN, FACE_MASK, MARIO
     }
 }
