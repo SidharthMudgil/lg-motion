@@ -50,25 +50,31 @@ class HomeFragment : Fragment(), OnFunActivityClickCallback, OnFeatureClickCallb
     }
 
     override fun onFeatureClick(type: Feature.Type) {
-        val action = HomeFragmentDirections.actionHomeFragmentToCameraFragment(
-            feature = type.name
-        )
+        val permission = when (type) {
+            Feature.Type.VOICE -> Manifest.permission.RECORD_AUDIO
+            else -> Manifest.permission.CAMERA
+        }
 
-        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA)
+        val action = when (type) {
+            Feature.Type.VOICE -> HomeFragmentDirections.actionHomeFragmentToAudioFragment()
+            else -> HomeFragmentDirections.actionHomeFragmentToCameraFragment(feature = type.name)
+        }
+
+        if (ContextCompat.checkSelfPermission(requireContext(), permission)
             == PackageManager.PERMISSION_GRANTED
         ) {
             if (NetworkUtils.isNetworkConnected(requireContext())) {
                 view?.findNavController()?.navigate(action)
             } else {
                 DialogUtils.show(requireContext()) {
-                    ToastUtil.showToast(requireContext(), "Asdas")
+                    ToastUtil.showToast(requireContext(), "krte h jugad")
 //                    TODO()
                 }
             }
         } else {
             ActivityCompat.requestPermissions(
                 requireActivity(),
-                arrayOf(Manifest.permission.CAMERA),
+                arrayOf(permission),
                 cameraPermissionRequestCode
             )
         }

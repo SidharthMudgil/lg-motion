@@ -63,9 +63,6 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.1'
     implementation 'androidx.fragment:fragment-ktx:1.6.0'
 
-    // Markwon
-    implementation 'io.noties.markwon:core:4.6.2'
-
     // Google Maps
     implementation 'com.google.android.gms:play-services-maps:18.1.0'
 
@@ -83,4 +80,7 @@ dependencies {
 
     // Palette
     implementation 'androidx.palette:palette:1.0.0'
+
+    // Lottie
+    implementation 'com.airbnb.android:lottie:6.1.0'
 }

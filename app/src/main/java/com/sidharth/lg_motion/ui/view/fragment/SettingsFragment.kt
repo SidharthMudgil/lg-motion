@@ -183,10 +183,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
         }
 
         mapStylePreference.setOnPreferenceChangeListener { _, newValue ->
-            val action = SettingsFragmentDirections.actionSettingsFragmentToMapsFragment(
-                style = newValue as String
-            )
-            view?.findNavController()?.navigate(action)
             true
         }
 

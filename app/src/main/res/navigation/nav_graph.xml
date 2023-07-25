@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_homeFragment_to_cameraFragment"
             app:destination="@id/cameraFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_audioFragment"
+            app:destination="@id/audioFragment" />
     </fragment>
     <fragment
         android:id="@+id/mapsFragment"
@@ -37,9 +40,6 @@
         <action
             android:id="@+id/action_settingsFragment_to_openSourceLicenseFragment"
             app:destination="@id/openSourceLicenseFragment" />
-        <action
-            android:id="@+id/action_settingsFragment_to_mapsFragment"
-            app:destination="@id/mapsFragment" />
     </fragment>
     <fragment
         android:id="@+id/cameraFragment"
@@ -72,4 +72,9 @@
         android:name="com.sidharth.lg_motion.ui.view.fragment.OpenSourceLicenseFragment"
         android:label="fragment_open_source_license"
         tools:layout="@layout/fragment_open_source_license" />
+    <fragment
+        android:id="@+id/audioFragment"
+        android:name="com.sidharth.lg_motion.ui.view.fragment.AudioFragment"
+        android:label="fragment_audio"
+        tools:layout="@layout/fragment_audio" />
 </navigation>
