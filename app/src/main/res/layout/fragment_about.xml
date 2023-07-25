@@ -34,8 +34,9 @@
             android:includeFontPadding="false"
             android:text="@string/app_name"
             android:textAlignment="center"
+            android:textColor="@color/base_theme_light_onPrimaryContainer"
             android:textFontWeight="800"
-            android:textSize="24sp"
+            android:textSize="28sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -46,7 +47,8 @@
             android:id="@+id/divider1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="25dp"
+            app:dividerColor="@color/base_theme_light_onPrimaryContainer"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -58,12 +60,13 @@
             android:id="@+id/dev_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="25dp"
             android:includeFontPadding="false"
             android:text="@string/dev_label"
             android:textAlignment="center"
-            android:textFontWeight="700"
-            android:textSize="16sp"
+            android:textColor="@color/base_theme_light_onPrimaryContainer"
+            android:textFontWeight="800"
+            android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -78,6 +81,7 @@
             android:includeFontPadding="false"
             android:text="@string/dev_name"
             android:textAlignment="center"
+            android:textColor="@color/base_theme_light_onPrimaryContainer"
             android:textFontWeight="500"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -92,7 +96,8 @@
             android:layout_height="28dp"
             android:background="@null"
             android:contentDescription="@null"
-            android:src="@drawable/ic_email" />
+            android:src="@drawable/ic_email"
+            app:tint="@color/base_theme_light_onPrimaryContainer" />
 
         <ImageButton
             android:id="@+id/dev_github"
@@ -100,7 +105,8 @@
             android:layout_height="28dp"
             android:background="@null"
             android:contentDescription="@null"
-            android:src="@drawable/ic_github" />
+            android:src="@drawable/ic_github"
+            app:tint="@color/base_theme_light_onPrimaryContainer" />
 
         <ImageButton
             android:id="@+id/dev_linkedin"
@@ -108,7 +114,8 @@
             android:layout_height="28dp"
             android:background="@null"
             android:contentDescription="@null"
-            android:src="@drawable/ic_linkedin" />
+            android:src="@drawable/ic_linkedin"
+            app:tint="@color/base_theme_light_onPrimaryContainer" />
 
         <ImageButton
             android:id="@+id/dev_stackoverflow"
@@ -116,17 +123,18 @@
             android:layout_height="28dp"
             android:background="@null"
             android:contentDescription="@null"
-            android:src="@drawable/ic_stackoverflow" />
+            android:src="@drawable/ic_stackoverflow"
+            app:tint="@color/base_theme_light_onPrimaryContainer" />
 
         <androidx.constraintlayout.helper.widget.Flow
             android:id="@+id/flow1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="10dp"
             app:constraint_referenced_ids="dev_email,dev_github,dev_linkedin,dev_stackoverflow"
             app:flow_firstHorizontalStyle="packed"
             app:flow_horizontalAlign="center"
-            app:flow_horizontalGap="10dp"
+            app:flow_horizontalGap="15dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -140,6 +148,7 @@
             android:layout_marginTop="5dp"
             android:includeFontPadding="false"
             android:textAlignment="center"
+            android:textColor="@color/base_theme_light_onPrimaryContainer"
             android:textFontWeight="500"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -152,7 +161,7 @@
             android:id="@+id/org_logo"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="35dp"
             android:clickable="false"
             android:scaleType="fitCenter"
             android:src="@drawable/img_hand"
@@ -169,23 +178,24 @@
             android:id="@+id/org_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="35dp"
             android:includeFontPadding="false"
             android:textAlignment="center"
+            android:textColor="@color/base_theme_light_onPrimaryContainer"
             android:textFontWeight="500"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/org_logo"
-            app:layout_constraintVertical_bias="0"
-            tools:text=" e hi fdsfhsud fi ug" />
+            app:layout_constraintVertical_bias="0" />
 
         <com.google.android.material.divider.MaterialDivider
             android:id="@+id/divider2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="25dp"
+            app:dividerColor="@color/base_theme_light_onPrimaryContainer"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -197,12 +207,13 @@
             android:id="@+id/org_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="25dp"
             android:includeFontPadding="false"
             android:text="@string/org_label"
             android:textAlignment="center"
-            android:textFontWeight="700"
-            android:textSize="16sp"
+            android:textColor="@color/base_theme_light_onPrimaryContainer"
+            android:textFontWeight="800"
+            android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -217,6 +228,7 @@
             android:includeFontPadding="false"
             android:text="@string/org_name"
             android:textAlignment="center"
+            android:textColor="@color/base_theme_light_onPrimaryContainer"
             android:textFontWeight="500"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -231,7 +243,8 @@
             android:layout_height="28dp"
             android:background="@null"
             android:contentDescription="@null"
-            android:src="@drawable/ic_website" />
+            android:src="@drawable/ic_website"
+            app:tint="@color/base_theme_light_onPrimaryContainer" />
 
         <ImageButton
             android:id="@+id/org_email"
@@ -239,7 +252,8 @@
             android:layout_height="28dp"
             android:background="@null"
             android:contentDescription="@null"
-            android:src="@drawable/ic_email" />
+            android:src="@drawable/ic_email"
+            app:tint="@color/base_theme_light_onPrimaryContainer" />
 
         <ImageButton
             android:id="@+id/org_github"
@@ -247,7 +261,8 @@
             android:layout_height="28dp"
             android:background="@null"
             android:contentDescription="@null"
-            android:src="@drawable/ic_github" />
+            android:src="@drawable/ic_github"
+            app:tint="@color/base_theme_light_onSecondaryContainer" />
 
         <ImageButton
             android:id="@+id/org_discord"
@@ -255,7 +270,8 @@
             android:layout_height="28dp"
             android:background="@null"
             android:contentDescription="@null"
-            android:src="@drawable/ic_discord" />
+            android:src="@drawable/ic_discord"
+            app:tint="@color/base_theme_light_onPrimaryContainer" />
 
         <ImageButton
             android:id="@+id/org_linkedin"
@@ -263,7 +279,8 @@
             android:layout_height="28dp"
             android:background="@null"
             android:contentDescription="@null"
-            android:src="@drawable/ic_linkedin" />
+            android:src="@drawable/ic_linkedin"
+            app:tint="@color/base_theme_light_onPrimaryContainer" />
 
         <ImageButton
             android:id="@+id/org_twitter"
@@ -271,7 +288,8 @@
             android:layout_height="28dp"
             android:background="@null"
             android:contentDescription="@null"
-            android:src="@drawable/ic_twitter" />
+            android:src="@drawable/ic_twitter"
+            app:tint="@color/base_theme_light_onPrimaryContainer" />
 
         <ImageButton
             android:id="@+id/org_instagram"
@@ -279,7 +297,8 @@
             android:layout_height="28dp"
             android:background="@null"
             android:contentDescription="@null"
-            android:src="@drawable/ic_instagram" />
+            android:src="@drawable/ic_instagram"
+            app:tint="@color/base_theme_light_onPrimaryContainer" />
 
         <ImageButton
             android:id="@+id/org_playstore"
@@ -287,17 +306,18 @@
             android:layout_height="28dp"
             android:background="@null"
             android:contentDescription="@null"
-            android:src="@drawable/ic_playstore" />
+            android:src="@drawable/ic_playstore"
+            app:tint="@color/base_theme_light_onPrimaryContainer" />
 
         <androidx.constraintlayout.helper.widget.Flow
             android:id="@+id/flow2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            app:constraint_referenced_ids="org_website,org_email,org_github,org_instagram,org_linkedin,org_twitter,org_discord,org_playstore"
+            android:layout_marginTop="10dp"
+            app:constraint_referenced_ids="org_email,org_website,org_github,org_instagram,org_linkedin,org_twitter,org_discord,org_playstore"
             app:flow_firstHorizontalStyle="packed"
             app:flow_horizontalAlign="center"
-            app:flow_horizontalGap="10dp"
+            app:flow_horizontalGap="15dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -311,6 +331,7 @@
             android:layout_marginTop="25dp"
             android:includeFontPadding="false"
             android:textAlignment="center"
+            android:textColor="@color/base_theme_light_onPrimaryContainer"
             android:textFontWeight="600"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
