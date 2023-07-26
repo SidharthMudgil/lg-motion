@@ -36,7 +36,7 @@ class FaceLandmarkerHelper(
 
     fun setupFaceLandmarker() {
         val baseOptionBuilder = BaseOptions.builder()
-            .setDelegate(DELEGATE_CPU)
+            .setDelegate(DELEGATE)
             .setModelAssetPath(MP_FACE_LANDMARKER_TASK)
 
         try {
@@ -48,7 +48,7 @@ class FaceLandmarkerHelper(
                 .setMinTrackingConfidence(MIN_FACE_TRACKING_CONFIDENCE)
                 .setMinFacePresenceConfidence(MIN_FACE_PRESENCE_CONFIDENCE)
                 .setNumFaces(MAX_NUM_FACES)
-                .setRunningMode(MODE_LIVE_STREAM)
+                .setRunningMode(RUNNING_MODE)
                 .setResultListener(this::returnLivestreamResult)
                 .setErrorListener(this::returnLivestreamError)
                 .build()
@@ -149,22 +149,12 @@ class FaceLandmarkerHelper(
         const val MAX_NUM_FACES = 1
         const val OTHER_ERROR = 0
         const val GPU_ERROR = 1
-        val DELEGATE_CPU = Delegate.CPU
-        val DELEGATE_GPU = Delegate.GPU
-        val MODE_IMAGE = RunningMode.IMAGE
-        val MODE_VIDEO = RunningMode.VIDEO
-        val MODE_LIVE_STREAM = RunningMode.LIVE_STREAM
+        val DELEGATE = Delegate.CPU
+        val RUNNING_MODE = RunningMode.LIVE_STREAM
     }
 
     data class ResultBundle(
         val result: FaceLandmarkerResult,
-        val inferenceTime: Long,
-        val inputImageHeight: Int,
-        val inputImageWidth: Int,
-    )
-
-    data class VideoResultBundle(
-        val results: List<FaceLandmarkerResult>,
         val inferenceTime: Long,
         val inputImageHeight: Int,
         val inputImageWidth: Int,
