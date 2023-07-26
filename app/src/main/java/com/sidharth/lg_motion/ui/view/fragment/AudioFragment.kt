@@ -32,7 +32,7 @@ class AudioFragment : Fragment(), LottieSpeechAnimator.OnSpeechRecognitionListen
         ROTATE_RIGHT(listOf("right", "rotate right", "clockwise", "rotate clockwise")),
         ZOOM_IN(listOf("zoom in", "zoomin", "plus")),
         ZOOM_OUT(listOf("zoom out", "zoomout", "minus")),
-        FLY_TO(listOf("fly to", "flyto", "flight", "goto", "go to")),
+        FLY_TO(listOf("fly to", "flyto", "flight to", "goto", "go to")),
         CHANGE_PLANET(listOf("planet", "change planet")),
     }
 
@@ -69,65 +69,67 @@ class AudioFragment : Fragment(), LottieSpeechAnimator.OnSpeechRecognitionListen
     }
 
     override fun onSpeechRecognitionResult(result: String) {
-        val flyToPattern = Regex("${COMMAND.FLY_TO.keys.joinToString("|")}\\s+to\\s+(.+)")
-        val planetPattern =
-            Regex("${COMMAND.CHANGE_PLANET.keys.joinToString("|")}\\s+(earth|mars|moon)")
+        Log.d("result", result)
 
-        when (result) {
-            in COMMAND.MOVE_NORTH.keys -> {
-                ToastUtil.showToast(requireContext(), "MOVING NORTH")
-                execute(LiquidGalaxyController.State.MOVE_NORTH, null)
+        val flyToPattern = Regex("\\b(${COMMAND.FLY_TO.keys.joinToString("|")})\\s+(\\w+)")
+        val planetPattern = Regex("\\b(${COMMAND.CHANGE_PLANET.keys.joinToString("|")})\\s+(earth|mars|moon)")
+
+        when {
+            result in COMMAND.MOVE_NORTH.keys -> {
+                showToastAndExecute("MOVING NORTH", LiquidGalaxyController.State.MOVE_NORTH, null)
             }
 
-            in COMMAND.MOVE_SOUTH.keys -> {
-                ToastUtil.showToast(requireContext(), "MOVING SOUTH")
-                execute(LiquidGalaxyController.State.MOVE_SOUTH, null)
+            result in COMMAND.MOVE_SOUTH.keys -> {
+                showToastAndExecute("MOVING SOUTH", LiquidGalaxyController.State.MOVE_SOUTH, null)
             }
 
-            in COMMAND.MOVE_EAST.keys -> {
-                ToastUtil.showToast(requireContext(), "MOVING EAST")
-                execute(LiquidGalaxyController.State.MOVE_EAST, null)
+            result in COMMAND.MOVE_EAST.keys -> {
+                showToastAndExecute("MOVING EAST", LiquidGalaxyController.State.MOVE_EAST, null)
             }
 
-            in COMMAND.MOVE_WEST.keys -> {
-                ToastUtil.showToast(requireContext(), "MOVING WEST")
-                execute(LiquidGalaxyController.State.MOVE_WEST, null)
+            result in COMMAND.MOVE_WEST.keys -> {
+                showToastAndExecute("MOVING WEST", LiquidGalaxyController.State.MOVE_WEST, null)
             }
 
-            in COMMAND.ROTATE_LEFT.keys -> {
-                ToastUtil.showToast(requireContext(), "ROTATING LEFT")
-                execute(LiquidGalaxyController.State.ROTATE_LEFT, null)
+            result in COMMAND.ROTATE_LEFT.keys -> {
+                showToastAndExecute("ROTATING LEFT", LiquidGalaxyController.State.ROTATE_LEFT, null)
             }
 
-            in COMMAND.ROTATE_RIGHT.keys -> {
-                ToastUtil.showToast(requireContext(), "ROTATING RIGHT")
-                execute(LiquidGalaxyController.State.ROTATE_RIGHT, null)
+            result in COMMAND.ROTATE_RIGHT.keys -> {
+                showToastAndExecute(
+                    "ROTATING RIGHT",
+                    LiquidGalaxyController.State.ROTATE_RIGHT,
+                    null
+                )
             }
 
-            in COMMAND.ZOOM_IN.keys -> {
-                ToastUtil.showToast(requireContext(), "ZOOMING IN")
-                execute(LiquidGalaxyController.State.ZOOM_IN, null)
+            result in COMMAND.ZOOM_IN.keys -> {
+                showToastAndExecute("ZOOMING IN", LiquidGalaxyController.State.ZOOM_IN, null)
             }
 
-            in COMMAND.ZOOM_OUT.keys -> {
-                ToastUtil.showToast(requireContext(), "ZOOMING OUT")
-                execute(LiquidGalaxyController.State.ZOOM_OUT, null)
+            result in COMMAND.ZOOM_OUT.keys -> {
+                showToastAndExecute("ZOOMING OUT", LiquidGalaxyController.State.ZOOM_OUT, null)
             }
-        }
 
-        if (flyToPattern.matches(result)) {
-            val destination = flyToPattern.find(result)?.groupValues?.get(1)
-            if (!destination.isNullOrBlank()) {
-                ToastUtil.showToast(requireContext(), "FLYING TO ${destination.uppercase()}")
-                execute(LiquidGalaxyController.State.FLY_TO, destination)
+            flyToPattern.matches(result) -> {
+                val destination = flyToPattern.find(result)?.groupValues?.get(2)
+                if (!destination.isNullOrBlank()) {
+                    showToastAndExecute(
+                        "FLYING TO ${destination.uppercase()}",
+                        LiquidGalaxyController.State.FLY_TO,
+                        destination
+                    )
+                }
             }
-        }
 
-        if (planetPattern.matches(result)) {
-            when (val planet = planetPattern.find(result)?.groupValues?.get(1)) {
-                "earth", "moon", "mars" -> {
-                    ToastUtil.showToast(requireContext(), "PLANET ${planet.uppercase()}")
-                    execute(LiquidGalaxyController.State.PLANET, planet)
+            planetPattern.matches(result) -> {
+                val planet = planetPattern.find(result)?.groupValues?.get(2)
+                if (!planet.isNullOrBlank()) {
+                    showToastAndExecute(
+                        "PLANET ${planet.uppercase()}",
+                        LiquidGalaxyController.State.PLANET,
+                        planet
+                    )
                 }
             }
         }
@@ -135,6 +137,15 @@ class AudioFragment : Fragment(), LottieSpeechAnimator.OnSpeechRecognitionListen
 
     override fun onSpeechRecognitionError(errorMessage: String) {
         Log.e("LottieSpeechAnimator", errorMessage)
+    }
+
+    private fun showToastAndExecute(
+        message: String,
+        state: LiquidGalaxyController.State,
+        parameter: String?
+    ) {
+        ToastUtil.showToast(requireContext(), message)
+        execute(state, parameter)
     }
 
     private fun execute(state: LiquidGalaxyController.State, direction: String?) {
