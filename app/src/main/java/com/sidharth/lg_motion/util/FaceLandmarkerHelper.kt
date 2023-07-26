@@ -81,10 +81,7 @@ class FaceLandmarkerHelper(
         imageProxy.close()
 
         val matrix = Matrix().apply {
-            // Rotate the frame received from the camera to be in the same direction as it'll be shown
             postRotate(imageProxy.imageInfo.rotationDegrees.toFloat())
-
-            // flip image if user use front camera
             if (isFrontCamera) {
                 postScale(
                     -1f,
@@ -99,18 +96,13 @@ class FaceLandmarkerHelper(
             matrix, true
         )
 
-        // Convert the input Bitmap object to an MPImage object to run inference
         val mpImage = BitmapImageBuilder(rotatedBitmap).build()
-
         detectAsync(mpImage, frameTime)
     }
 
-    // Run face face landmark using MediaPipe Face Landmarker API
     @VisibleForTesting
     fun detectAsync(mpImage: MPImage, frameTime: Long) {
         faceLandmarker?.detectAsync(mpImage, frameTime)
-        // As we're using running mode LIVE_STREAM, the landmark result will
-        // be returned in returnLivestreamResult function
     }
 
     private fun returnLivestreamResult(
