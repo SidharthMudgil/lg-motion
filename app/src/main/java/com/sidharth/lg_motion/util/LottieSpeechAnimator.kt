@@ -56,6 +56,7 @@ class LottieSpeechAnimator(
     fun stop() {
         speechRecognizer?.stopListening()
         speechRecognizer?.destroy()
+        speechRecognizer = null
     }
 
     private inner class SpeechRecognitionListener : RecognitionListener {
@@ -71,7 +72,7 @@ class LottieSpeechAnimator(
         override fun onRmsChanged(rmsdB: Float) {
             val rms = cleanUpSignal(rmsdB)
             val progress = getProgress(rms)
-            with(animator){
+            with(animator) {
                 cancel()
                 val currentStop = animatedValue as Float
                 val maxStop = progress.coerceAtMost(1.0).toFloat()
@@ -81,34 +82,34 @@ class LottieSpeechAnimator(
         }
 
         override fun onBufferReceived(p0: ByteArray?) {
-            TODO("Not yet implemented")
         }
 
         override fun onPartialResults(partialResults: Bundle?) {
             val results = partialResults?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
             results?.get(0)?.let { result ->
-                listener?.onSpeechRecognitionResult(result)
+                listener?.onSpeechRecognitionResult(result.lowercase())
             }
         }
 
         override fun onResults(results: Bundle?) {
             val matches = results?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
             matches?.get(0)?.let { result ->
-                listener?.onSpeechRecognitionResult(result)
+                listener?.onSpeechRecognitionResult(result.lowercase())
+                stop()
+                start()
             }
         }
 
         override fun onError(error: Int) {
             listener?.onSpeechRecognitionError("Speech recognition error occurred.")
-        }
-
-        override fun onEndOfSpeech() {
             stop()
             start()
         }
 
+        override fun onEndOfSpeech() {
+        }
+
         override fun onEvent(eventType: Int, params: Bundle?) {
-            // Optional: Provides additional information about the recognition process.
         }
     }
 
