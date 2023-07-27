@@ -1,4 +1,4 @@
-package com.sidharth.lg_motion.ui.view.fragment
+package com.sidharth.lg_motion.ui.settings.fragment
 
 import android.os.Bundle
 import android.text.InputFilter
@@ -12,6 +12,7 @@ import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SeekBarPreference
 import androidx.preference.SwitchPreferenceCompat
 import com.sidharth.lg_motion.R
+import com.sidharth.lg_motion.ui.view.fragment.SettingsFragmentDirections
 import com.sidharth.lg_motion.util.LiquidGalaxyController
 import com.sidharth.lg_motion.util.NetworkUtils
 import com.sidharth.lg_motion.util.RangeInputFilter

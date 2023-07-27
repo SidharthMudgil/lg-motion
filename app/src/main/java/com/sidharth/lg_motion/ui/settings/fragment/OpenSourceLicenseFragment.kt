@@ -1,4 +1,4 @@
-package com.sidharth.lg_motion.ui.view.fragment
+package com.sidharth.lg_motion.ui.settings.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater

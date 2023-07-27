@@ -1,4 +1,4 @@
-package com.sidharth.lg_motion.ui.view.fragment
+package com.sidharth.lg_motion.ui.home.fragment
 
 import android.Manifest
 import android.content.pm.PackageManager
@@ -17,8 +17,9 @@ import com.sidharth.lg_motion.domain.callback.OnFeatureClickCallback
 import com.sidharth.lg_motion.domain.callback.OnFunActivityClickCallback
 import com.sidharth.lg_motion.domain.model.Feature
 import com.sidharth.lg_motion.domain.model.FunActivity
-import com.sidharth.lg_motion.ui.view.adapter.FeaturesListAdapter
-import com.sidharth.lg_motion.ui.view.adapter.FunActivitiesAdapter
+import com.sidharth.lg_motion.ui.home.adapter.FeaturesListAdapter
+import com.sidharth.lg_motion.ui.home.adapter.FunActivitiesAdapter
+import com.sidharth.lg_motion.ui.view.fragment.HomeFragmentDirections
 import com.sidharth.lg_motion.util.Constants
 import com.sidharth.lg_motion.util.DialogUtils
 import com.sidharth.lg_motion.util.NetworkUtils

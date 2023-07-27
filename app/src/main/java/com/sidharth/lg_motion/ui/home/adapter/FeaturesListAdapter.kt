@@ -1,4 +1,4 @@
-package com.sidharth.lg_motion.ui.view.adapter
+package com.sidharth.lg_motion.ui.home.adapter
 
 import android.content.Context
 import android.graphics.BitmapFactory
