@@ -35,12 +35,11 @@ class FaceLandmarkerHelper(
     }
 
     fun setupFaceLandmarker() {
-        val baseOptionBuilder = BaseOptions.builder()
-            .setDelegate(DELEGATE)
-            .setModelAssetPath(MP_FACE_LANDMARKER_TASK)
-
         try {
-            val baseOptions = baseOptionBuilder.build()
+            val baseOptions = BaseOptions.builder()
+                .setDelegate(DELEGATE)
+                .setModelAssetPath(MP_FACE_LANDMARKER_TASK)
+                .build()
 
             val options = FaceLandmarker.FaceLandmarkerOptions.builder()
                 .setBaseOptions(baseOptions)
@@ -58,7 +57,10 @@ class FaceLandmarkerHelper(
             faceLandmarkerHelperListener?.onError("Face Landmarker failed to initialize")
             Log.e(TAG, "MediaPipe failed to load the task with error: " + e.message)
         } catch (e: RuntimeException) {
-            faceLandmarkerHelperListener?.onError("Face Landmarker failed to initialize", GPU_ERROR)
+            faceLandmarkerHelperListener?.onError(
+                "Face Landmarker failed to initialize",
+                GPU_ERROR
+            )
             Log.e(TAG, "Face Landmarker failed to load model with error: " + e.message)
         }
     }
@@ -122,7 +124,7 @@ class FaceLandmarkerHelper(
                 )
             )
         } else {
-            faceLandmarkerHelperListener?.onEmpty()
+            faceLandmarkerHelperListener?.onNoResults()
         }
     }
 
@@ -155,6 +157,6 @@ class FaceLandmarkerHelper(
     interface LandmarkerListener {
         fun onError(error: String, errorCode: Int = OTHER_ERROR)
         fun onResults(resultBundle: ResultBundle)
-        fun onEmpty() {}
+        fun onNoResults()
     }
 }

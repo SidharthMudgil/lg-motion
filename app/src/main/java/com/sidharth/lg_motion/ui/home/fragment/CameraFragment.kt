@@ -1,6 +1,7 @@
 package com.sidharth.lg_motion.ui.home.fragment
 
 import android.annotation.SuppressLint
+import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -38,7 +39,9 @@ class CameraFragment : Fragment() {
     private lateinit var handLandmarkerHelper: HandLandmarkerHelper
     private lateinit var poseLandmarkerHelper: PoseLandmarkerHelper
     private lateinit var objectDetectorHelper: ObjectDetectorHelper
+
     private var _fragmentCameraBinding: FragmentCameraBinding? = null
+
     private var preview: Preview? = null
     private var imageAnalyzer: ImageAnalysis? = null
     private var camera: Camera? = null
@@ -147,8 +150,10 @@ class CameraFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         backgroundExecutor = Executors.newSingleThreadExecutor()
-        fragmentCameraBinding.viewFinder.post {
-            setUpCamera()
+        if (args.feature != Feature.Type.OBJECT.name) {
+            fragmentCameraBinding.viewFinder.post {
+                setUpCamera()
+            }
         }
         backgroundExecutor.execute {
             when (args.feature) {
@@ -178,6 +183,10 @@ class CameraFragment : Fragment() {
                         context = requireContext(),
                         objectDetectorListener = objectDetectorListener,
                     )
+
+                    fragmentCameraBinding.viewFinder.post {
+                        setUpCamera()
+                    }
                 }
             }
         }
@@ -234,7 +243,7 @@ class CameraFragment : Fragment() {
                     Feature.Type.OBJECT.name -> {
 //                        it.setAnalyzer(
 //                            backgroundExecutor,
-//                            objectDetectorHelper::detectLivestreamFrame
+//                            objectDetectorHelper::detectLivestream
 //                        )
                         it.setAnalyzer(backgroundExecutor) { image ->
                             detectObject(image)
@@ -258,6 +267,11 @@ class CameraFragment : Fragment() {
         } catch (exc: Exception) {
             Log.e(TAG, "Use case binding failed", exc)
         }
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        imageAnalyzer?.targetRotation = fragmentCameraBinding.viewFinder.display.rotation
     }
 
     private fun detectFace(imageProxy: ImageProxy) {
@@ -300,6 +314,8 @@ class CameraFragment : Fragment() {
                 Log.d("result", resultBundle.result.toString())
             }
         }
+
+        override fun onNoResults() {}
     }
 
     private val handLandmarkerListener = object : HandLandmarkerHelper.LandmarkerListener {
@@ -314,6 +330,8 @@ class CameraFragment : Fragment() {
                 Log.d("result", resultBundle.results.toString())
             }
         }
+
+        override fun onNoResults() {}
     }
 
     private val poseLandMarkerListener = object : PoseLandmarkerHelper.LandmarkerListener {
@@ -328,6 +346,8 @@ class CameraFragment : Fragment() {
                 Log.d("result", resultBundle.results.toString())
             }
         }
+
+        override fun onNoResults() {}
     }
 
     private val objectDetectorListener = object : ObjectDetectorHelper.DetectorListener {
@@ -339,8 +359,10 @@ class CameraFragment : Fragment() {
 
         override fun onResults(resultBundle: ObjectDetectorHelper.ResultBundle) {
             activity?.runOnUiThread {
-                Log.d("ObjectDetector", resultBundle.results.toString())
+                Log.d("result", resultBundle.results.toString())
             }
         }
+
+        override fun onNoResults() {}
     }
 }

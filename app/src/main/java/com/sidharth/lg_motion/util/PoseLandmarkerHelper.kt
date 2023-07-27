@@ -36,12 +36,12 @@ class PoseLandmarkerHelper(
     }
 
     fun setupPoseLandmarker() {
-        val baseOptionBuilder = BaseOptions.builder()
-            .setDelegate(DELEGATE)
-            .setModelAssetPath(MODEL_NAME)
-
         try {
-            val baseOptions = baseOptionBuilder.build()
+            val baseOptions = BaseOptions.builder()
+                .setDelegate(DELEGATE)
+                .setModelAssetPath(MODEL_NAME)
+                .build()
+
             val options = PoseLandmarker.PoseLandmarkerOptions.builder()
                 .setBaseOptions(baseOptions)
                 .setMinPoseDetectionConfidence(MIN_POSE_DETECTION_CONFIDENCE)
@@ -109,17 +109,21 @@ class PoseLandmarkerHelper(
         result: PoseLandmarkerResult,
         input: MPImage
     ) {
-        val finishTimeMs = SystemClock.uptimeMillis()
-        val inferenceTime = finishTimeMs - result.timestampMs()
+        if (result.landmarks().size > 0) {
+            val finishTimeMs = SystemClock.uptimeMillis()
+            val inferenceTime = finishTimeMs - result.timestampMs()
 
-        poseLandmarkerHelperListener?.onResults(
-            ResultBundle(
-                listOf(result),
-                inferenceTime,
-                input.height,
-                input.width
+            poseLandmarkerHelperListener?.onResults(
+                ResultBundle(
+                    listOf(result),
+                    inferenceTime,
+                    input.height,
+                    input.width
+                )
             )
-        )
+        } else {
+            poseLandmarkerHelperListener?.onNoResults()
+        }
     }
 
     private fun returnLivestreamError(error: RuntimeException) {
@@ -153,5 +157,6 @@ class PoseLandmarkerHelper(
     interface LandmarkerListener {
         fun onError(error: String, errorCode: Int = OTHER_ERROR)
         fun onResults(resultBundle: ResultBundle)
+        fun onNoResults()
     }
 }

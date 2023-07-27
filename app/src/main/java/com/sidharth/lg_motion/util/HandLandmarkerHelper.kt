@@ -36,12 +36,11 @@ class HandLandmarkerHelper(
     }
 
     fun setupHandLandmarker() {
-        val baseOptionBuilder = BaseOptions.builder()
-            .setDelegate(DELEGATE)
-            .setModelAssetPath(MP_HAND_LANDMARKER_TASK)
-
         try {
-            val baseOptions = baseOptionBuilder.build()
+            val baseOptions = BaseOptions.builder()
+                .setDelegate(DELEGATE)
+                .setModelAssetPath(MP_HAND_LANDMARKER_TASK)
+                .build()
 
             val options = HandLandmarker.HandLandmarkerOptions.builder()
                 .setBaseOptions(baseOptions)
@@ -109,17 +108,21 @@ class HandLandmarkerHelper(
         result: HandLandmarkerResult,
         input: MPImage
     ) {
-        val finishTimeMs = SystemClock.uptimeMillis()
-        val inferenceTime = finishTimeMs - result.timestampMs()
+        if (result.landmarks().size > 0) {
+            val finishTimeMs = SystemClock.uptimeMillis()
+            val inferenceTime = finishTimeMs - result.timestampMs()
 
-        handLandmarkerHelperListener?.onResults(
-            ResultBundle(
-                listOf(result),
-                inferenceTime,
-                input.height,
-                input.width
+            handLandmarkerHelperListener?.onResults(
+                ResultBundle(
+                    listOf(result),
+                    inferenceTime,
+                    input.height,
+                    input.width
+                )
             )
-        )
+        } else {
+            handLandmarkerHelperListener?.onNoResults()
+        }
     }
 
     private fun returnLivestreamError(error: RuntimeException) {
@@ -151,5 +154,6 @@ class HandLandmarkerHelper(
     interface LandmarkerListener {
         fun onError(error: String, errorCode: Int = OTHER_ERROR)
         fun onResults(resultBundle: ResultBundle)
+        fun onNoResults()
     }
 }
