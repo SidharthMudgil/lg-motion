@@ -32,20 +32,20 @@ class ObjectDetectorHelper(
     }
 
     fun setupObjectDetector() {
-        val baseOptionsBuilder = BaseOptions.builder()
-            .setDelegate(DELEGATE)
-            .setModelAssetPath(MODEL_NAME)
-
         try {
-            val options =
-                ObjectDetector.ObjectDetectorOptions.builder()
-                    .setBaseOptions(baseOptionsBuilder.build())
-                    .setScoreThreshold(THRESHOLD)
-                    .setRunningMode(RUNNING_MODE)
-                    .setMaxResults(MAX_RESULTS)
-                    .setResultListener(this::returnLivestreamResult)
-                    .setErrorListener(this::returnLivestreamError)
-                    .build()
+            val baseOptions = BaseOptions.builder()
+                .setDelegate(DELEGATE)
+                .setModelAssetPath(MODEL_NAME)
+                .build()
+
+            val options = ObjectDetector.ObjectDetectorOptions.builder()
+                .setBaseOptions(baseOptions)
+                .setScoreThreshold(THRESHOLD)
+                .setRunningMode(RUNNING_MODE)
+                .setMaxResults(MAX_RESULTS)
+                .setResultListener(this::returnLivestreamResult)
+                .setErrorListener(this::returnLivestreamError)
+                .build()
 
             objectDetector = ObjectDetector.createFromOptions(context, options)
         } catch (e: IllegalStateException) {
@@ -107,17 +107,21 @@ class ObjectDetectorHelper(
         result: ObjectDetectorResult,
         input: MPImage
     ) {
-        val finishTimeMs = SystemClock.uptimeMillis()
-        val inferenceTime = finishTimeMs - result.timestampMs()
+        if (result.detections().size > 0) {
+            val finishTimeMs = SystemClock.uptimeMillis()
+            val inferenceTime = finishTimeMs - result.timestampMs()
 
-        objectDetectorListener?.onResults(
-            ResultBundle(
-                listOf(result),
-                inferenceTime,
-                input.height,
-                input.width
+            objectDetectorListener?.onResults(
+                ResultBundle(
+                    listOf(result),
+                    inferenceTime,
+                    input.height,
+                    input.width
+                )
             )
-        )
+        } else {
+            objectDetectorListener?.onNoResults()
+        }
     }
 
     private fun returnLivestreamError(error: RuntimeException) {
@@ -134,8 +138,8 @@ class ObjectDetectorHelper(
     )
 
     companion object {
-        private const val MODEL_EFFICIENTDETV0 = "efficientdet-lite0.tflite"
-        private const val MODEL_EFFICIENTDETV2 = "efficientdet-lite2.tflite"
+        private const val MODEL_EFFICIENTDETV0 = "efficientdet_lite0.tflite"
+        private const val MODEL_EFFICIENTDETV2 = "efficientdet_lite2.tflite"
         const val MAX_RESULTS = 3
         const val THRESHOLD = 0.5F
         const val OTHER_ERROR = 0
@@ -149,5 +153,6 @@ class ObjectDetectorHelper(
     interface DetectorListener {
         fun onError(error: String, errorCode: Int = OTHER_ERROR)
         fun onResults(resultBundle: ResultBundle)
+        fun onNoResults()
     }
 }
