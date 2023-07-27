@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.sidharth.lg_motion.ui.view.fragment.HomeFragment"
+        android:name="com.sidharth.lg_motion.ui.home.fragment.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home">
         <action
@@ -19,7 +19,7 @@
     </fragment>
     <fragment
         android:id="@+id/mapsFragment"
-        android:name="com.sidharth.lg_motion.ui.view.fragment.MapsFragment"
+        android:name="com.sidharth.lg_motion.ui.maps.fragment.MapsFragment"
         android:label="fragment_maps"
         tools:layout="@layout/fragment_maps">
         <argument
@@ -29,7 +29,7 @@
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="com.sidharth.lg_motion.ui.view.fragment.SettingsFragment"
+        android:name="com.sidharth.lg_motion.ui.settings.fragment.SettingsFragment"
         android:label="fragment_settings">
         <action
             android:id="@+id/action_settingsFragment_to_aboutFragment"
@@ -43,7 +43,7 @@
     </fragment>
     <fragment
         android:id="@+id/cameraFragment"
-        android:name="com.sidharth.lg_motion.ui.view.fragment.CameraFragment"
+        android:name="com.sidharth.lg_motion.ui.home.fragment.CameraFragment"
         android:label="fragment_camera"
         tools:layout="@layout/fragment_camera">
         <argument
@@ -51,30 +51,25 @@
             android:defaultValue="@null"
             app:argType="string"
             app:nullable="true" />
-        <argument
-            android:name="activity"
-            android:defaultValue="@null"
-            app:argType="string"
-            app:nullable="true" />
     </fragment>
     <fragment
         android:id="@+id/aboutFragment"
-        android:name="com.sidharth.lg_motion.ui.view.fragment.AboutFragment"
+        android:name="com.sidharth.lg_motion.ui.settings.fragment.AboutFragment"
         android:label="fragment_about"
         tools:layout="@layout/fragment_about" />
     <fragment
         android:id="@+id/privacyPolicyFragment"
-        android:name="com.sidharth.lg_motion.ui.view.fragment.PrivacyPolicyFragment"
+        android:name="com.sidharth.lg_motion.ui.settings.fragment.PrivacyPolicyFragment"
         android:label="fragment_privacy_policy"
         tools:layout="@layout/fragment_privacy_policy" />
     <fragment
         android:id="@+id/openSourceLicenseFragment"
-        android:name="com.sidharth.lg_motion.ui.view.fragment.OpenSourceLicenseFragment"
+        android:name="com.sidharth.lg_motion.ui.settings.fragment.OpenSourceLicenseFragment"
         android:label="fragment_open_source_license"
         tools:layout="@layout/fragment_open_source_license" />
     <fragment
         android:id="@+id/audioFragment"
-        android:name="com.sidharth.lg_motion.ui.view.fragment.AudioFragment"
+        android:name="com.sidharth.lg_motion.ui.home.fragment.AudioFragment"
         android:label="fragment_audio"
         tools:layout="@layout/fragment_audio" />
 </navigation>

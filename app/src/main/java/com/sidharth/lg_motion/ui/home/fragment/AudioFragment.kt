@@ -1,4 +1,4 @@
-package com.sidharth.lg_motion.ui.view.fragment
+package com.sidharth.lg_motion.ui.home.fragment
 
 import android.content.Context
 import android.media.AudioManager

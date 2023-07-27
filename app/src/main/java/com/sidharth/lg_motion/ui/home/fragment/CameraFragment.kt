@@ -1,4 +1,4 @@
-package com.sidharth.lg_motion.ui.view.fragment
+package com.sidharth.lg_motion.ui.home.fragment
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -15,7 +15,9 @@ import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.navArgs
 import com.sidharth.lg_motion.databinding.FragmentCameraBinding
+import com.sidharth.lg_motion.ui.view.fragment.CameraFragmentArgs
 import com.sidharth.lg_motion.util.FaceLandmarkerHelper
 import com.sidharth.lg_motion.util.ToastUtil
 import java.util.concurrent.ExecutorService
@@ -27,6 +29,7 @@ class CameraFragment : Fragment(), FaceLandmarkerHelper.LandmarkerListener {
         private const val TAG = "Face Landmarker"
     }
 
+    private val args: CameraFragmentArgs by navArgs()
     private lateinit var faceLandmarkerHelper: FaceLandmarkerHelper
     private var _fragmentCameraBinding: FragmentCameraBinding? = null
     private var preview: Preview? = null

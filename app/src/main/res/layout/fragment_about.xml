@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="15dp"
-        tools:context=".ui.view.fragment.AboutFragment">
+        tools:context=".ui.settings.fragment.AboutFragment">
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/app_logo"
