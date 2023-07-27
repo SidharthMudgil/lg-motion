@@ -136,7 +136,7 @@ class FaceLandmarkerHelper(
 
     companion object {
         const val TAG = "FaceLandmarkerHelper"
-        private const val MP_FACE_LANDMARKER_TASK = "face_landmarker.task"
+        const val MP_FACE_LANDMARKER_TASK = "face_landmarker.task"
         const val MIN_FACE_DETECTION_CONFIDENCE = 0.5F
         const val MIN_FACE_TRACKING_CONFIDENCE = 0.5F
         const val MIN_FACE_PRESENCE_CONFIDENCE = 0.5F

@@ -133,7 +133,7 @@ class HandLandmarkerHelper(
 
     companion object {
         const val TAG = "HandLandmarkerHelper"
-        private const val MP_HAND_LANDMARKER_TASK = "hand_landmarker.task"
+        const val MP_HAND_LANDMARKER_TASK = "hand_landmarker.task"
         const val MIN_HAND_DETECTION_CONFIDENCE = 0.5F
         const val MIN_HAND_TRACKING_CONFIDENCE = 0.5F
         const val MIN_HAND_PRESENCE_CONFIDENCE = 0.5F
