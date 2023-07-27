@@ -35,7 +35,7 @@ class ObjectDetectorHelper(
         try {
             val baseOptions = BaseOptions.builder()
                 .setDelegate(DELEGATE)
-                .setModelAssetPath(MODEL_NAME)
+                .setModelAssetPath(MODEL_EFFICIENT_DET_LITE2)
                 .build()
 
             val options = ObjectDetector.ObjectDetectorOptions.builder()
@@ -138,14 +138,12 @@ class ObjectDetectorHelper(
     )
 
     companion object {
-        private const val MODEL_EFFICIENTDETV0 = "efficientdet_lite0.tflite"
-        private const val MODEL_EFFICIENTDETV2 = "efficientdet_lite2.tflite"
+        const val TAG = "ObjectDetectorHelper"
+        const val MODEL_EFFICIENT_DET_LITE2 = "efficientdet_lite2.tflite"
         const val MAX_RESULTS = 3
         const val THRESHOLD = 0.5F
         const val OTHER_ERROR = 0
         const val GPU_ERROR = 1
-        const val TAG = "ObjectDetectorHelper"
-        const val MODEL_NAME = MODEL_EFFICIENTDETV2
         val DELEGATE = Delegate.CPU
         val RUNNING_MODE = RunningMode.LIVE_STREAM
     }

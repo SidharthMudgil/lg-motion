@@ -39,7 +39,7 @@ class PoseLandmarkerHelper(
         try {
             val baseOptions = BaseOptions.builder()
                 .setDelegate(DELEGATE)
-                .setModelAssetPath(MODEL_NAME)
+                .setModelAssetPath(MODEL_POSE_LANDMARKER_FULL)
                 .build()
 
             val options = PoseLandmarker.PoseLandmarkerOptions.builder()
@@ -133,16 +133,13 @@ class PoseLandmarkerHelper(
     }
 
     companion object {
-        private const val MODEL_POSE_LANDMARKER_FULL = "pose_landmarker_full.task"
-        private const val MODEL_POSE_LANDMARKER_LITE = "pose_landmarker_lite.task"
-        private const val MODEL_POSE_LANDMARKER_HEAVY = "pose_landmarker_heavy.task"
         const val TAG = "PoseLandmarkerHelper"
+        private const val MODEL_POSE_LANDMARKER_FULL = "pose_landmarker_full.task"
         const val MIN_POSE_DETECTION_CONFIDENCE = 0.5F
         const val MIN_POSE_TRACKING_CONFIDENCE = 0.5F
         const val MIN_POSE_PRESENCE_CONFIDENCE = 0.5F
         const val OTHER_ERROR = 0
         const val GPU_ERROR = 1
-        const val MODEL_NAME = MODEL_POSE_LANDMARKER_FULL
         val DELEGATE = Delegate.CPU
         val RUNNING_MODE = RunningMode.LIVE_STREAM
     }

@@ -241,10 +241,6 @@ class CameraFragment : Fragment() {
                     }
 
                     Feature.Type.OBJECT.name -> {
-//                        it.setAnalyzer(
-//                            backgroundExecutor,
-//                            objectDetectorHelper::detectLivestream
-//                        )
                         it.setAnalyzer(backgroundExecutor) { image ->
                             detectObject(image)
                         }
