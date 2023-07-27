@@ -19,7 +19,6 @@ import com.sidharth.lg_motion.domain.model.Feature
 import com.sidharth.lg_motion.domain.model.FunActivity
 import com.sidharth.lg_motion.ui.home.adapter.FeaturesListAdapter
 import com.sidharth.lg_motion.ui.home.adapter.FunActivitiesAdapter
-import com.sidharth.lg_motion.ui.view.fragment.HomeFragmentDirections
 import com.sidharth.lg_motion.util.Constants
 import com.sidharth.lg_motion.util.DialogUtils
 import com.sidharth.lg_motion.util.NetworkUtils

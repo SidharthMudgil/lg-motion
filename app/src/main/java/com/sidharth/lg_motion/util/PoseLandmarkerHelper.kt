@@ -3,8 +3,6 @@ package com.sidharth.lg_motion.util
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Matrix
-import android.media.MediaMetadataRetriever
-import android.net.Uri
 import android.os.SystemClock
 import android.util.Log
 import androidx.annotation.VisibleForTesting
@@ -138,7 +136,6 @@ class PoseLandmarkerHelper(
         const val MIN_POSE_DETECTION_CONFIDENCE = 0.5F
         const val MIN_POSE_TRACKING_CONFIDENCE = 0.5F
         const val MIN_POSE_PRESENCE_CONFIDENCE = 0.5F
-        const val MAX_NUM_POSES = 1
         const val OTHER_ERROR = 0
         const val GPU_ERROR = 1
         const val MODEL_NAME = MODEL_POSE_LANDMARKER_FULL

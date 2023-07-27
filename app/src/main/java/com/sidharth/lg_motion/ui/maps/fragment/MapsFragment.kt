@@ -11,7 +11,6 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.sidharth.lg_motion.R
-import com.sidharth.lg_motion.ui.view.fragment.MapsFragmentArgs
 
 class MapsFragment : Fragment() {
     private val mapsFragmentArgs: MapsFragmentArgs by navArgs()

@@ -12,8 +12,8 @@ import com.google.mediapipe.framework.image.MPImage
 import com.google.mediapipe.tasks.core.BaseOptions
 import com.google.mediapipe.tasks.core.Delegate
 import com.google.mediapipe.tasks.vision.core.RunningMode
-import com.google.mediapipe.tasks.vision.objectdetector.ObjectDetectionResult
 import com.google.mediapipe.tasks.vision.objectdetector.ObjectDetector
+import com.google.mediapipe.tasks.vision.objectdetector.ObjectDetectorResult
 
 class ObjectDetectorHelper(
     val context: Context,
@@ -57,11 +57,14 @@ class ObjectDetectorHelper(
         }
     }
 
-    fun isClosed(): Boolean {
+    fun isClose(): Boolean {
         return objectDetector == null
     }
 
-    fun detectLivestreamFrame(imageProxy: ImageProxy) {
+    fun detectLivestream(
+        imageProxy: ImageProxy,
+        isFrontCamera: Boolean
+    ) {
         val frameTime = SystemClock.uptimeMillis()
 
         val bitmapBuffer = Bitmap.createBitmap(
@@ -71,20 +74,24 @@ class ObjectDetectorHelper(
         )
         imageProxy.use { bitmapBuffer.copyPixelsFromBuffer(imageProxy.planes[0].buffer) }
         imageProxy.close()
+
         val matrix = Matrix().apply {
             postRotate(imageProxy.imageInfo.rotationDegrees.toFloat())
+
+            if (isFrontCamera) {
+                postScale(
+                    -1f,
+                    1f,
+                    imageProxy.width.toFloat(),
+                    imageProxy.height.toFloat()
+                )
+            }
         }
 
-        val rotatedBitmap =
-            Bitmap.createBitmap(
-                bitmapBuffer,
-                0,
-                0,
-                bitmapBuffer.width,
-                bitmapBuffer.height,
-                matrix,
-                true
-            )
+        val rotatedBitmap = Bitmap.createBitmap(
+            bitmapBuffer, 0, 0, bitmapBuffer.width, bitmapBuffer.height,
+            matrix, true
+        )
 
         val mpImage = BitmapImageBuilder(rotatedBitmap).build()
 
@@ -97,7 +104,7 @@ class ObjectDetectorHelper(
     }
 
     private fun returnLivestreamResult(
-        result: ObjectDetectionResult,
+        result: ObjectDetectorResult,
         input: MPImage
     ) {
         val finishTimeMs = SystemClock.uptimeMillis()
@@ -120,7 +127,7 @@ class ObjectDetectorHelper(
     }
 
     data class ResultBundle(
-        val results: List<ObjectDetectionResult>,
+        val results: List<ObjectDetectorResult>,
         val inferenceTime: Long,
         val inputImageHeight: Int,
         val inputImageWidth: Int,
@@ -134,7 +141,7 @@ class ObjectDetectorHelper(
         const val OTHER_ERROR = 0
         const val GPU_ERROR = 1
         const val TAG = "ObjectDetectorHelper"
-        const val MODEL_NAME = MODEL_EFFICIENTDETV0
+        const val MODEL_NAME = MODEL_EFFICIENTDETV2
         val DELEGATE = Delegate.CPU
         val RUNNING_MODE = RunningMode.LIVE_STREAM
     }
