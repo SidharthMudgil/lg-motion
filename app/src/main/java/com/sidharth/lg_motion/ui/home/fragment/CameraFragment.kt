@@ -46,7 +46,7 @@ class CameraFragment : Fragment() {
     private var imageAnalyzer: ImageAnalysis? = null
     private var camera: Camera? = null
     private var cameraProvider: ProcessCameraProvider? = null
-    private var cameraFacing = CameraSelector.LENS_FACING_BACK
+    private var cameraFacing = CameraSelector.LENS_FACING_FRONT
 
     private lateinit var backgroundExecutor: ExecutorService
 
@@ -307,7 +307,12 @@ class CameraFragment : Fragment() {
 
         override fun onResults(resultBundle: FaceLandmarkerHelper.ResultBundle) {
             activity?.runOnUiThread {
-                Log.d("result", resultBundle.result.toString())
+                val blendshapes = resultBundle.result.faceBlendshapes().get()[0].apply {
+                    sortByDescending { it.score() }
+                }.take(5).map {
+                    "${it.categoryName()}:${it.score()}"
+                }
+                Log.d("result", blendshapes.toString())
             }
         }
 

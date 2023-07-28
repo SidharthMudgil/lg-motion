@@ -48,6 +48,7 @@ class FaceLandmarkerHelper(
                 .setMinFacePresenceConfidence(MIN_FACE_PRESENCE_CONFIDENCE)
                 .setNumFaces(MAX_NUM_FACES)
                 .setRunningMode(RUNNING_MODE)
+                .setOutputFaceBlendshapes(true)
                 .setResultListener(this::returnLivestreamResult)
                 .setErrorListener(this::returnLivestreamError)
                 .build()
