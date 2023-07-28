@@ -16,14 +16,19 @@ import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import com.sidharth.lg_motion.databinding.FragmentCameraBinding
 import com.sidharth.lg_motion.domain.model.Feature
 import com.sidharth.lg_motion.util.FaceLandmarkerHelper
 import com.sidharth.lg_motion.util.HandLandmarkerHelper
+import com.sidharth.lg_motion.util.LiquidGalaxyController
+import com.sidharth.lg_motion.util.LiquidGalaxyStateUtil
+import com.sidharth.lg_motion.util.NetworkUtils
 import com.sidharth.lg_motion.util.ObjectDetectorHelper
 import com.sidharth.lg_motion.util.PoseLandmarkerHelper
 import com.sidharth.lg_motion.util.ToastUtil
+import kotlinx.coroutines.launch
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
@@ -299,71 +304,96 @@ class CameraFragment : Fragment() {
     }
 
     private val faceLandMarkerListener = object : FaceLandmarkerHelper.LandmarkerListener {
-        override fun onError(error: String, errorCode: Int) {
-            activity?.runOnUiThread {
-                ToastUtil.showToast(requireContext(), error)
-            }
-        }
-
         override fun onResults(resultBundle: FaceLandmarkerHelper.ResultBundle) {
-            activity?.runOnUiThread {
-                val blendshapes = resultBundle.result.faceBlendshapes().get()[0].apply {
-                    sortByDescending { it.score() }
-                }.take(5).map {
-                    "${it.categoryName()}:${it.score()}"
-                }
-                Log.d("result", blendshapes.toString())
-            }
+            execute(
+                LiquidGalaxyStateUtil.getStateFromFaceLandmarkerResult(resultBundle), null
+            )
         }
 
-        override fun onNoResults() {}
+        override fun onError(error: String, errorCode: Int) {
+            showError(error)
+        }
+
+        override fun onNoResults() {
+            idleState()
+        }
     }
 
     private val handLandmarkerListener = object : HandLandmarkerHelper.LandmarkerListener {
-        override fun onError(error: String, errorCode: Int) {
-            activity?.runOnUiThread {
-                ToastUtil.showToast(requireContext(), error)
-            }
-        }
-
         override fun onResults(resultBundle: HandLandmarkerHelper.ResultBundle) {
-            activity?.runOnUiThread {
-                Log.d("result", resultBundle.results.toString())
-            }
+            execute(
+                LiquidGalaxyStateUtil.getStateFromHandLandmarkerResult(resultBundle), null
+            )
         }
 
-        override fun onNoResults() {}
+        override fun onError(error: String, errorCode: Int) {
+            showError(error)
+        }
+
+
+        override fun onNoResults() {
+            idleState()
+        }
     }
 
     private val poseLandMarkerListener = object : PoseLandmarkerHelper.LandmarkerListener {
-        override fun onError(error: String, errorCode: Int) {
-            activity?.runOnUiThread {
-                ToastUtil.showToast(requireContext(), error)
-            }
-        }
-
         override fun onResults(resultBundle: PoseLandmarkerHelper.ResultBundle) {
-            activity?.runOnUiThread {
-                Log.d("result", resultBundle.results.toString())
-            }
+            execute(
+                LiquidGalaxyStateUtil.getStateFromPoseLandmarkerResult(resultBundle), null
+            )
         }
 
-        override fun onNoResults() {}
+        override fun onError(error: String, errorCode: Int) {
+            showError(error)
+        }
+
+        override fun onNoResults() {
+            idleState()
+        }
     }
 
     private val objectDetectorListener = object : ObjectDetectorHelper.DetectorListener {
-        override fun onError(error: String, errorCode: Int) {
-            activity?.runOnUiThread {
-                ToastUtil.showToast(requireContext(), error)
-            }
-        }
-
         override fun onResults(resultBundle: ObjectDetectorHelper.ResultBundle) {
-            activity?.runOnUiThread {
-                Log.d("result", resultBundle.results.toString())
-            }
+            execute(
+                LiquidGalaxyStateUtil.getStateFromObjectDetectorResult(resultBundle), null
+            )
         }
 
-        override fun onNoResults() {}
+        override fun onError(error: String, errorCode: Int) {
+            showError(error)
+        }
+
+        override fun onNoResults() {
+            idleState()
+        }
+    }
+
+    private fun showError(error: String) {
+        activity?.runOnUiThread {
+            ToastUtil.showToast(requireContext(), error)
+        }
+    }
+
+    private fun idleState() {
+        lifecycleScope.launch {
+            LiquidGalaxyController.getInstance()?.performAction(
+                LiquidGalaxyController.State.IDLE, null
+            )
+        }
+    }
+
+    @Suppress("SameParameterValue")
+    private fun execute(state: LiquidGalaxyController.State, direction: String?) {
+        activity?.runOnUiThread {
+            ToastUtil.showToast(requireContext(), state.name)
+        }
+        if (NetworkUtils.isNetworkConnected(requireContext())) {
+            lifecycleScope.launch {
+                LiquidGalaxyController.getInstance()?.performAction(
+                    state = state,
+                    direction = direction
+                )
+            }
+        }
     }
 }
