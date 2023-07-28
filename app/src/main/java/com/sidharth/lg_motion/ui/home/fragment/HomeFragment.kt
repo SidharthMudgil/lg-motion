@@ -6,9 +6,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.app.ActivityCompat
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavDirections
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearSnapHelper
 import com.google.android.material.carousel.CarouselLayoutManager
@@ -25,7 +26,19 @@ import com.sidharth.lg_motion.util.NetworkUtils
 import com.sidharth.lg_motion.util.ToastUtil
 
 class HomeFragment : Fragment(), OnFunActivityClickCallback, OnFeatureClickCallback {
-    private val cameraPermissionRequestCode = 100
+    private var action: NavDirections? = null
+
+    private val requestPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { isGranted: Boolean ->
+        if (isGranted) {
+            action?.let {
+                view?.findNavController()?.navigate(it)
+            }
+        } else {
+            ToastUtil.showToast(requireContext(), "Feature requires permission")
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -55,28 +68,35 @@ class HomeFragment : Fragment(), OnFunActivityClickCallback, OnFeatureClickCallb
             else -> Manifest.permission.CAMERA
         }
 
-        val action = when (type) {
+        action = when (type) {
             Feature.Type.VOICE -> HomeFragmentDirections.actionHomeFragmentToAudioFragment()
             else -> HomeFragmentDirections.actionHomeFragmentToCameraFragment(feature = type.name)
         }
 
-        if (ContextCompat.checkSelfPermission(requireContext(), permission)
-            == PackageManager.PERMISSION_GRANTED
-        ) {
-            if (NetworkUtils.isNetworkConnected(requireContext())) {
-                view?.findNavController()?.navigate(action)
-            } else {
-                DialogUtils.show(requireContext()) {
-                    ToastUtil.showToast(requireContext(), "krte h jugad")
+        when {
+            ContextCompat.checkSelfPermission(
+                requireContext(),
+                permission
+            ) == PackageManager.PERMISSION_GRANTED -> {
+                if (NetworkUtils.isNetworkConnected(requireContext())) {
+                    action?.let {
+                        view?.findNavController()?.navigate(it)
+                    }
+                } else {
+                    DialogUtils.show(requireContext()) {
+                        ToastUtil.showToast(requireContext(), "krte h jugad")
 //                    TODO()
+                    }
                 }
             }
-        } else {
-            ActivityCompat.requestPermissions(
-                requireActivity(),
-                arrayOf(permission),
-                cameraPermissionRequestCode
-            )
+
+            shouldShowRequestPermissionRationale(permission) -> {
+                ToastUtil.showToast(requireContext(), "Feature requires permission")
+            }
+
+            else -> {
+                requestPermissionLauncher.launch(permission)
+            }
         }
     }
 
