@@ -4,7 +4,6 @@ import com.jcraft.jsch.ChannelExec
 import com.jcraft.jsch.ChannelSftp
 import com.jcraft.jsch.JSch
 import com.jcraft.jsch.Session
-import kotlinx.coroutines.GlobalScope
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.util.Properties
@@ -245,7 +244,7 @@ class LiquidGalaxyController(
         @Volatile
         private var INSTANCE: LiquidGalaxyController? = null
 
-        fun updateInstance(
+        fun newInstance(
             username: String,
             password: String,
             host: String,

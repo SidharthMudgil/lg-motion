@@ -240,7 +240,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 }
             }
 
-            LiquidGalaxyController.updateInstance(
+            LiquidGalaxyController.newInstance(
                 username = username,
                 password = password,
                 host = host,
