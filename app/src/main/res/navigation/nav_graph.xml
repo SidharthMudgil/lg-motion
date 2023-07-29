@@ -21,12 +21,7 @@
         android:id="@+id/mapsFragment"
         android:name="com.sidharth.lg_motion.ui.maps.fragment.MapsFragment"
         android:label="fragment_maps"
-        tools:layout="@layout/fragment_maps">
-        <argument
-            android:name="style"
-            android:defaultValue="Blue"
-            app:argType="string" />
-    </fragment>
+        tools:layout="@layout/fragment_maps" />
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.sidharth.lg_motion.ui.settings.fragment.SettingsFragment"

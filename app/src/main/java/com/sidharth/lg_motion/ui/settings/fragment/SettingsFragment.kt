@@ -6,7 +6,6 @@ import android.text.InputType
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.preference.EditTextPreference
-import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SeekBarPreference
@@ -17,8 +16,6 @@ import com.sidharth.lg_motion.util.NetworkUtils
 import com.sidharth.lg_motion.util.RangeInputFilter
 import com.sidharth.lg_motion.util.TextUtils
 import com.sidharth.lg_motion.util.ToastUtil
-import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class SettingsFragment : PreferenceFragmentCompat() {
@@ -34,7 +31,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
     private val relaunchPreference by lazy { findPreference<Preference>("relaunch")!! }
     private val restartPreference by lazy { findPreference<Preference>("restart")!! }
     private val shutdownPreference by lazy { findPreference<Preference>("shutdown")!! }
-    private val mapStylePreference by lazy { findPreference<ListPreference>("map_style")!! }
     private val aboutPreference by lazy { findPreference<Preference>("about")!! }
     private val openSourceLicensePreference by lazy { findPreference<Preference>("opensource_license")!! }
     private val privacyPolicyPreference by lazy { findPreference<Preference>("privacy_policy")!! }
@@ -123,7 +119,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
                     LiquidGalaxyController.getInstance()?.setRefresh()
                 }
             } else {
-                noNetwork()
+                showToast("No Internet Connection")
             }
             true
         }
@@ -134,7 +130,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
                     LiquidGalaxyController.getInstance()?.resetRefresh()
                 }
             } else {
-                noNetwork()
+                showToast("No Internet Connection")
             }
             true
         }
@@ -145,7 +141,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
                     LiquidGalaxyController.getInstance()?.clearKml()
                 }
             } else {
-                noNetwork()
+                showToast("No Internet Connection")
             }
             true
         }
@@ -156,7 +152,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
                     LiquidGalaxyController.getInstance()?.relaunch()
                 }
             } else {
-                noNetwork()
+                showToast("No Internet Connection")
             }
             true
         }
@@ -167,7 +163,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
                     LiquidGalaxyController.getInstance()?.restart()
                 }
             } else {
-                noNetwork()
+                showToast("No Internet Connection")
             }
             true
         }
@@ -178,12 +174,8 @@ class SettingsFragment : PreferenceFragmentCompat() {
                     LiquidGalaxyController.getInstance()?.shutdown()
                 }
             } else {
-                noNetwork()
+                showToast("No Internet Connection")
             }
-            true
-        }
-
-        mapStylePreference.setOnPreferenceChangeListener { _, newValue ->
             true
         }
 
@@ -220,7 +212,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
         }
     }
 
-    @OptIn(DelicateCoroutinesApi::class)
     private fun connect() {
         val username = usernamePreference.text?.trim().toString()
         val password = passwordPreference.text?.trim().toString()
@@ -244,17 +235,20 @@ class SettingsFragment : PreferenceFragmentCompat() {
             )
             if (autoConnectPreference.isChecked) {
                 if (networkConnected) {
-                    GlobalScope.launch {
-                        LiquidGalaxyController.getInstance()?.connect()
+                    lifecycleScope.launch {
+                        when (LiquidGalaxyController.getInstance()?.connect()) {
+                            true -> showToast("Connection Successful")
+                            else -> showToast("Connection Unsuccessful")
+                        }
                     }
                 } else {
-                    noNetwork()
+                    showToast("No Internet Connection")
                 }
             }
         }
     }
 
-    private fun noNetwork() {
-        ToastUtil.showToast(requireContext(), "No Network")
+    private fun showToast(message: String) {
+        ToastUtil.showToast(requireContext(), message)
     }
 }
