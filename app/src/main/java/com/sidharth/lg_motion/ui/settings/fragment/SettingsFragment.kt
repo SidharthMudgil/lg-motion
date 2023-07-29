@@ -15,6 +15,7 @@ import com.sidharth.lg_motion.R
 import com.sidharth.lg_motion.util.LiquidGalaxyController
 import com.sidharth.lg_motion.util.NetworkUtils
 import com.sidharth.lg_motion.util.RangeInputFilter
+import com.sidharth.lg_motion.util.TextUtils
 import com.sidharth.lg_motion.util.ToastUtil
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
@@ -102,7 +103,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         portPreference.onPreferenceChangeListener = preferenceChangeListener
 
         ipPreference.setOnPreferenceChangeListener { _, newValue ->
-            val isValidIp = (newValue as String).isValidIp()
+            val isValidIp = TextUtils.isValidIp(newValue as String)
             if (isValidIp && autoConnectPreference.isChecked) {
                 connect()
             }
@@ -219,12 +220,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
         }
     }
 
-    private fun String.isValidIp(): Boolean {
-        val ipPattern =
-            "^((25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)\\.){3}(25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)$".toRegex()
-        return isNotBlank() && matches(ipPattern)
-    }
-
     @OptIn(DelicateCoroutinesApi::class)
     private fun connect() {
         val username = usernamePreference.text?.trim().toString()
@@ -233,7 +228,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         val port = portPreference.text?.trim().toString()
         val screens = totalScreensPreference.value
 
-        if (username.isNotBlank() && password.isNotBlank() && host.isValidIp() && port.isNotBlank()) {
+        if (username.isNotBlank() && password.isNotBlank() && TextUtils.isValidIp(host) && port.isNotBlank()) {
             if (LiquidGalaxyController.getInstance() != null) {
                 lifecycleScope.launch {
                     LiquidGalaxyController.getInstance()?.disconnect()

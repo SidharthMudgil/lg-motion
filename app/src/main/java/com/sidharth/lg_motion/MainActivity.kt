@@ -1,7 +1,6 @@
 package com.sidharth.lg_motion
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
@@ -26,7 +25,7 @@ class MainActivity : AppCompatActivity() {
         navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment)
         setupBottomNavigation()
         setupRailViewNavigation()
-        connectToLG()
+        setupLiquidGalaxyConnection()
     }
 
     private fun setupBottomNavigation() {
@@ -65,7 +64,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun connectToLG() {
+    private fun setupLiquidGalaxyConnection() {
         val preferences = PreferenceManager.getDefaultSharedPreferences(this)
 
         val autoConnect = preferences.getBoolean("auto_connect", false)
