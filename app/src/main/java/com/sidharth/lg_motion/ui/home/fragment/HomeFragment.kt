@@ -82,22 +82,26 @@ class HomeFragment : Fragment(), OnFunActivityClickCallback, OnFeatureClickCallb
                 permission
             ) == PackageManager.PERMISSION_GRANTED -> {
                 if (NetworkUtils.isNetworkConnected(requireContext())) {
-                    action?.let {
-                        view?.findNavController()?.navigate(it)
-                    }
-                } else {
-                    DialogUtils.show(requireContext()) {
-                        if (NetworkUtils.isNetworkConnected(requireContext())) {
-                            lifecycleScope.launch {
-                                when (LiquidGalaxyController.getInstance()?.connect()) {
-                                    true -> showToast("Connection Successful")
-                                    else -> showToast("Connection Unsuccessful")
+                    if (LiquidGalaxyController.getInstance()?.connected == true) {
+                        action?.let {
+                            view?.findNavController()?.navigate(it)
+                        }
+                    } else {
+                        DialogUtils.show(requireContext()) {
+                            if (NetworkUtils.isNetworkConnected(requireContext())) {
+                                lifecycleScope.launch {
+                                    when (LiquidGalaxyController.getInstance()?.connect()) {
+                                        true -> showToast("Connection Successful")
+                                        else -> showToast("Connection Unsuccessful")
+                                    }
                                 }
+                            } else {
+                                showToast("No Internet Connection")
                             }
-                        } else {
-                            showToast("No Internet Connection")
                         }
                     }
+                } else {
+                    showToast("No Internet Connection")
                 }
             }
 

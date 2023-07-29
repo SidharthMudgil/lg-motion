@@ -39,7 +39,7 @@ class LiquidGalaxyController(
             return if (screens == 1) 1 else (screens / 2) + 1
         }
 
-    private val connected: Boolean
+    val connected: Boolean
         get() {
             return session?.isConnected ?: false
         }
