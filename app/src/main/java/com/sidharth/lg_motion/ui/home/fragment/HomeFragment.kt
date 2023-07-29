@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavDirections
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearSnapHelper
@@ -22,8 +23,10 @@ import com.sidharth.lg_motion.ui.home.adapter.FeaturesListAdapter
 import com.sidharth.lg_motion.ui.home.adapter.FunActivitiesAdapter
 import com.sidharth.lg_motion.util.Constants
 import com.sidharth.lg_motion.util.DialogUtils
+import com.sidharth.lg_motion.util.LiquidGalaxyController
 import com.sidharth.lg_motion.util.NetworkUtils
 import com.sidharth.lg_motion.util.ToastUtil
+import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment(), OnFunActivityClickCallback, OnFeatureClickCallback {
     private var action: NavDirections? = null
@@ -84,8 +87,16 @@ class HomeFragment : Fragment(), OnFunActivityClickCallback, OnFeatureClickCallb
                     }
                 } else {
                     DialogUtils.show(requireContext()) {
-                        ToastUtil.showToast(requireContext(), "krte h jugad")
-//                    TODO()
+                        if (NetworkUtils.isNetworkConnected(requireContext())) {
+                            lifecycleScope.launch {
+                                when (LiquidGalaxyController.getInstance()?.connect()) {
+                                    true -> showToast("Connection Successful")
+                                    else -> showToast("Connection Unsuccessful")
+                                }
+                            }
+                        } else {
+                            showToast("No Internet Connection")
+                        }
                     }
                 }
             }
@@ -97,6 +108,12 @@ class HomeFragment : Fragment(), OnFunActivityClickCallback, OnFeatureClickCallb
             else -> {
                 requestPermissionLauncher.launch(permission)
             }
+        }
+    }
+
+    private fun showToast(message: String) {
+        activity?.runOnUiThread {
+            ToastUtil.showToast(requireContext(), message)
         }
     }
 
