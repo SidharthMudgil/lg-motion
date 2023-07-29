@@ -87,7 +87,7 @@ class MainActivity : AppCompatActivity() {
                 lifecycleScope.launch {
                     when (LiquidGalaxyController.getInstance()?.connect()) {
                         true -> showToast("Connection Successful")
-                        else -> showToast("Connection Unsuccessful")
+                        else -> showToast("Connection Failed")
                     }
                 }
             } else {

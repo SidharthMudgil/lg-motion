@@ -3,6 +3,7 @@ package com.sidharth.lg_motion.ui.settings.fragment
 import android.os.Bundle
 import android.text.InputFilter
 import android.text.InputType
+import android.util.Log
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.preference.EditTextPreference
@@ -43,13 +44,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.root_preferences, rootKey)
 
-        val preferenceChangeListener = Preference.OnPreferenceChangeListener { _, newValue ->
-            val isValidInput = (newValue as String).isNotBlank()
-            if (isValidInput && autoConnectPreference.isChecked) {
-                connect()
-            }
-            isValidInput
-        }
         val inputFilter = InputFilter.LengthFilter(30)
 
         usernamePreference.apply {
@@ -92,15 +86,37 @@ class SettingsFragment : PreferenceFragmentCompat() {
             }
         }
 
-        usernamePreference.onPreferenceChangeListener = preferenceChangeListener
+        usernamePreference.setOnPreferenceChangeListener { _, newValue ->
+            val isValidInput = (newValue as String).isNotBlank()
+            if (isValidInput && autoConnectPreference.isChecked) {
+                usernamePreference.text = newValue
+                connect()
+            }
+            isValidInput
+        }
 
-        passwordPreference.onPreferenceChangeListener = preferenceChangeListener
+        passwordPreference.setOnPreferenceChangeListener { _, newValue ->
+            val isValidInput = (newValue as String).isNotBlank()
+            if (isValidInput && autoConnectPreference.isChecked) {
+                passwordPreference.text = newValue
+                connect()
+            }
+            isValidInput
+        }
 
-        portPreference.onPreferenceChangeListener = preferenceChangeListener
+        portPreference.setOnPreferenceChangeListener { _, newValue ->
+            val isValidInput = (newValue as String).isNotBlank()
+            if (isValidInput && autoConnectPreference.isChecked) {
+                portPreference.text = newValue
+                connect()
+            }
+            isValidInput
+        }
 
         ipPreference.setOnPreferenceChangeListener { _, newValue ->
             val isValidIp = TextUtils.isValidIp(newValue as String)
             if (isValidIp && autoConnectPreference.isChecked) {
+                ipPreference.text = newValue
                 connect()
             }
             isValidIp
@@ -213,11 +229,17 @@ class SettingsFragment : PreferenceFragmentCompat() {
     }
 
     private fun connect() {
-        val username = usernamePreference.text?.trim().toString()
-        val password = passwordPreference.text?.trim().toString()
-        val host = ipPreference.text?.trim().toString()
-        val port = portPreference.text?.trim().toString()
+        val username = usernamePreference.text ?: ""
+        val password = passwordPreference.text ?: ""
+        val host = ipPreference.text ?: ""
+        val port = portPreference.text ?: ""
         val screens = totalScreensPreference.value
+        
+        Log.d("info", username)
+        Log.d("info", password)
+        Log.d("info", host)
+        Log.d("info", port)
+        Log.d("info", screens.toString())
 
         if (username.isNotBlank() && password.isNotBlank() && TextUtils.isValidIp(host) && port.isNotBlank()) {
             if (LiquidGalaxyController.getInstance() != null) {
@@ -238,7 +260,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
                     lifecycleScope.launch {
                         when (LiquidGalaxyController.getInstance()?.connect()) {
                             true -> showToast("Connection Successful")
-                            else -> showToast("Connection Unsuccessful")
+                            else -> showToast("Connection Failed")
                         }
                     }
                 } else {

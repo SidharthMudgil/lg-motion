@@ -35,8 +35,16 @@ class HomeFragment : Fragment(), OnFunActivityClickCallback, OnFeatureClickCallb
         ActivityResultContracts.RequestPermission()
     ) { isGranted: Boolean ->
         if (isGranted) {
-            action?.let {
-                view?.findNavController()?.navigate(it)
+            if (NetworkUtils.isNetworkConnected(requireContext())){
+                if (LiquidGalaxyController.getInstance()?.connected == true) {
+                    action?.let {
+                        view?.findNavController()?.navigate(it)
+                    }
+                } else {
+                    showToast("No LG Connection")
+                }
+            }else {
+                showToast("No Internet Connection")
             }
         } else {
             ToastUtil.showToast(requireContext(), "Feature requires permission")
@@ -92,7 +100,7 @@ class HomeFragment : Fragment(), OnFunActivityClickCallback, OnFeatureClickCallb
                                 lifecycleScope.launch {
                                     when (LiquidGalaxyController.getInstance()?.connect()) {
                                         true -> showToast("Connection Successful")
-                                        else -> showToast("Connection Unsuccessful")
+                                        else -> showToast("Connection Failed")
                                     }
                                 }
                             } else {
