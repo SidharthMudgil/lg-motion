@@ -27,6 +27,9 @@
     <string name="connection_method_summary_on">Manually connect to the Liquid Galaxy</string>
 
     <string name="liquid_galaxy">Liquid Galaxy</string>
+    <string name="connect_summary">Connect to Liquid Galaxy</string>
+    <string name="disconnect">Disconnect</string>
+    <string name="disconnect_summary">Disconnect from Liquid Galaxy</string>
     <string name="clear_kml_title">Clear KML</string>
     <string name="clear_kml_summary">Remove KML data or overlays from display.</string>
     <string name="total_screens_title">Total Screens</string>
@@ -59,10 +62,8 @@
     <string name="connect">Connect</string>
     <string name="connection_dialog_title">Liquid Galaxy Connection</string>
     <string name="connection_dialog_message">This feature requires a connection to Liquid Galaxy to function properly</string>
-    <string name="disconnected">Disconnected</string>
-    <string name="connected">Connected</string>
-    <string name="connect_summary">Connect to Liquid Galaxy</string>
-    <string name="disconnect_summary">Disconnect from Liquid Galaxy</string>
-    <string name="disconnect">Disconnect</string>
 
+    <!-- Connection Status Card   -->
+    <string name="connected">Connected</string>
+    <string name="disconnected">Disconnected</string>
 </resources>

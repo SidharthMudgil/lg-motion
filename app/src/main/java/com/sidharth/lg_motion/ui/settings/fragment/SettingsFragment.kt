@@ -11,6 +11,7 @@ import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SeekBarPreference
 import androidx.preference.SwitchPreferenceCompat
 import com.sidharth.lg_motion.R
+import com.sidharth.lg_motion.ui.settings.preference.ConnectionStatusPreference
 import com.sidharth.lg_motion.util.LiquidGalaxyController
 import com.sidharth.lg_motion.util.NetworkUtils
 import com.sidharth.lg_motion.util.RangeInputFilter
@@ -20,6 +21,7 @@ import kotlinx.coroutines.launch
 
 
 class SettingsFragment : PreferenceFragmentCompat() {
+    private val connectionStatusPreference by lazy { findPreference<ConnectionStatusPreference>("connection_status")!! }
     private val usernamePreference by lazy { findPreference<EditTextPreference>("username")!! }
     private val passwordPreference by lazy { findPreference<EditTextPreference>("password")!! }
     private val ipPreference by lazy { findPreference<EditTextPreference>("ip")!! }
@@ -262,12 +264,14 @@ class SettingsFragment : PreferenceFragmentCompat() {
                             true -> {
                                 connectPreference.title = getString(R.string.disconnect)
                                 connectPreference.summary = getString(R.string.disconnect_summary)
+                                connectionStatusPreference.setConnectionStatus(true)
                                 showToast("Connection Successful")
                             }
 
                             else -> {
                                 connectPreference.title = getString(R.string.connect)
                                 connectPreference.summary = getString(R.string.connect_summary)
+                                connectionStatusPreference.setConnectionStatus(false)
                                 showToast("Connection Failed")
                             }
                         }
@@ -275,10 +279,12 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 } else {
                     connectPreference.title = getString(R.string.connect)
                     connectPreference.summary = getString(R.string.connect_summary)
+                    connectionStatusPreference.setConnectionStatus(false)
                     showToast("No Internet Connection")
                 }
             }
         } else if (forceConnect) {
+            connectionStatusPreference.setConnectionStatus(false)
             showToast("Invalid Connection Info")
         }
     }

@@ -1,5 +1,12 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.sidharth.lg_motion.ui.settings.preference.ConnectionStatusPreference
+        android:key="connection_status"
+        android:layout="@layout/card_connection_status"
+        app:allowDividerAbove="false"
+        app:allowDividerBelow="false" />
+
     <PreferenceCategory
         android:key="connection_category"
         android:title="@string/connection"
