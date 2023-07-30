@@ -50,4 +50,30 @@
         <item name="cornerSize">15dp</item>
     </style>
 
+    <style name="ConnectedStatusCardStyle">
+        <item name="cardCornerRadius">15dp</item>
+        <item name="cardBackgroundColor">@color/green_container</item>
+        <item name="cardElevation">0dp</item>
+        <item name="strokeWidth">0dp</item>
+    </style>
+
+    <style name="ConnectedTextStyle">
+        <item name="android:textSize">24sp</item>
+        <item name="android:textColor">@color/green_onContainer</item>
+        <item name="android:textFontWeight">600</item>
+    </style>
+
+    <style name="DisconnectedStatusCardStyle">
+        <item name="cardCornerRadius">15dp</item>
+        <item name="cardBackgroundColor">@color/base_theme_light_errorContainer</item>
+        <item name="cardElevation">0dp</item>
+        <item name="strokeWidth">0dp</item>
+    </style>
+
+    <style name="DisconnectedTextStyle">
+        <item name="android:textSize">24sp</item>
+        <item name="android:textColor">@color/base_theme_light_onErrorContainer</item>
+        <item name="android:textFontWeight">600</item>
+    </style>
+
 </resources>

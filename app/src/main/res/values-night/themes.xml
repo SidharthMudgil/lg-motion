@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
     <style name="Base.Theme.Lgmotion" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="colorPrimary">@color/base_theme_dark_primary</item>
@@ -29,5 +29,32 @@
         <item name="colorPrimaryInverse">@color/base_theme_dark_inversePrimary</item>
         <item name="android:statusBarColor">@color/base_theme_dark_background</item>
         <item name="android:windowLightStatusBar">false</item>
+    </style>
+
+
+    <style name="ConnectedStatusCardStyle">
+        <item name="cardCornerRadius">15dp</item>
+        <item name="cardBackgroundColor">@color/green_onContainer</item>
+        <item name="cardElevation">0dp</item>
+        <item name="strokeWidth">0dp</item>
+    </style>
+
+    <style name="ConnectedTextStyle">
+        <item name="android:textSize">24sp</item>
+        <item name="android:textColor">@color/green_container</item>
+        <item name="android:textFontWeight">700</item>
+    </style>
+
+    <style name="DisconnectedStatusCardStyle">
+        <item name="cardCornerRadius">15dp</item>
+        <item name="cardBackgroundColor">@color/base_theme_dark_errorContainer</item>
+        <item name="cardElevation">0dp</item>
+        <item name="strokeWidth">0dp</item>
+    </style>
+
+    <style name="DisconnectedTextStyle">
+        <item name="android:textSize">24sp</item>
+        <item name="android:textColor">@color/base_theme_dark_onErrorContainer</item>
+        <item name="android:textFontWeight">700</item>
     </style>
 </resources>

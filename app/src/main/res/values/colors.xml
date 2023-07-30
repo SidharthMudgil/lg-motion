@@ -61,4 +61,7 @@
     <color name="base_theme_dark_surfaceTint">#99CBFF</color>
     <color name="base_theme_dark_outlineVariant">#42474E</color>
     <color name="base_theme_dark_scrim">#000000</color>
+
+    <color name="green_container">#DAFFD6</color>
+    <color name="green_onContainer">#004102</color>
 </resources>

@@ -1,6 +1,5 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
     <PreferenceCategory
         android:key="connection_category"
         android:title="@string/connection"
@@ -42,9 +41,9 @@
         <SeekBarPreference
             android:key="screens"
             android:max="10"
-            app:defaultValue="3"
             android:summary="@string/total_screens_summary"
             android:title="@string/total_screens_title"
+            app:defaultValue="3"
             app:iconSpaceReserved="false"
             app:min="3"
             app:seekBarIncrement="1"
@@ -64,6 +63,12 @@
         android:key="liquid_galaxy_category"
         android:title="@string/liquid_galaxy"
         app:iconSpaceReserved="false">
+
+        <Preference
+            android:key="connect"
+            android:summary="@string/connect_summary"
+            android:title="@string/connect"
+            app:iconSpaceReserved="false" />
 
         <Preference
             android:key="clear_kml"
@@ -109,11 +114,11 @@
         app:iconSpaceReserved="false">
 
         <ListPreference
-            app:defaultValue="Blue"
             android:entries="@array/map_styles"
             android:entryValues="@array/map_styles"
             android:key="map_style"
             android:title="@string/map_style"
+            app:defaultValue="Blue"
             app:iconSpaceReserved="false"
             app:useSimpleSummaryProvider="true" />
 

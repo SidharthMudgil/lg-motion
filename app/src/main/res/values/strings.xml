@@ -59,5 +59,10 @@
     <string name="connect">Connect</string>
     <string name="connection_dialog_title">Liquid Galaxy Connection</string>
     <string name="connection_dialog_message">This feature requires a connection to Liquid Galaxy to function properly</string>
+    <string name="disconnected">Disconnected</string>
+    <string name="connected">Connected</string>
+    <string name="connect_summary">Connect to Liquid Galaxy</string>
+    <string name="disconnect_summary">Disconnect from Liquid Galaxy</string>
+    <string name="disconnect">Disconnect</string>
 
 </resources>

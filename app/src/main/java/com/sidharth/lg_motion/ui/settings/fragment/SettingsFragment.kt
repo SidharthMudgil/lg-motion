@@ -3,7 +3,6 @@ package com.sidharth.lg_motion.ui.settings.fragment
 import android.os.Bundle
 import android.text.InputFilter
 import android.text.InputType
-import android.util.Log
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.preference.EditTextPreference
@@ -19,6 +18,7 @@ import com.sidharth.lg_motion.util.TextUtils
 import com.sidharth.lg_motion.util.ToastUtil
 import kotlinx.coroutines.launch
 
+
 class SettingsFragment : PreferenceFragmentCompat() {
     private val usernamePreference by lazy { findPreference<EditTextPreference>("username")!! }
     private val passwordPreference by lazy { findPreference<EditTextPreference>("password")!! }
@@ -26,6 +26,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
     private val portPreference by lazy { findPreference<EditTextPreference>("port")!! }
     private val totalScreensPreference by lazy { findPreference<SeekBarPreference>("screens")!! }
     private val autoConnectPreference by lazy { findPreference<SwitchPreferenceCompat>("auto_connect")!! }
+    private val connectPreference by lazy { findPreference<Preference>("connect")!! }
     private val clearKmlPreference by lazy { findPreference<Preference>("clear_kml")!! }
     private val setRefreshPreference by lazy { findPreference<Preference>("set_refresh")!! }
     private val resetRefreshPreference by lazy { findPreference<Preference>("reset_refresh")!! }
@@ -129,6 +130,11 @@ class SettingsFragment : PreferenceFragmentCompat() {
             true
         }
 
+        connectPreference.setOnPreferenceClickListener {
+            connect(true)
+            true
+        }
+
         setRefreshPreference.setOnPreferenceClickListener {
             if (networkConnected) {
                 lifecycleScope.launch {
@@ -228,18 +234,12 @@ class SettingsFragment : PreferenceFragmentCompat() {
         }
     }
 
-    private fun connect() {
+    private fun connect(forceConnect: Boolean = false) {
         val username = usernamePreference.text ?: ""
         val password = passwordPreference.text ?: ""
         val host = ipPreference.text ?: ""
         val port = portPreference.text ?: ""
         val screens = totalScreensPreference.value
-        
-        Log.d("info", username)
-        Log.d("info", password)
-        Log.d("info", host)
-        Log.d("info", port)
-        Log.d("info", screens.toString())
 
         if (username.isNotBlank() && password.isNotBlank() && TextUtils.isValidIp(host) && port.isNotBlank()) {
             if (LiquidGalaxyController.getInstance() != null) {
@@ -255,18 +255,31 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 port = port.toInt(),
                 screens = screens,
             )
-            if (autoConnectPreference.isChecked) {
+            if (forceConnect || autoConnectPreference.isChecked) {
                 if (networkConnected) {
                     lifecycleScope.launch {
                         when (LiquidGalaxyController.getInstance()?.connect()) {
-                            true -> showToast("Connection Successful")
-                            else -> showToast("Connection Failed")
+                            true -> {
+                                connectPreference.title = getString(R.string.disconnect)
+                                connectPreference.summary = getString(R.string.disconnect_summary)
+                                showToast("Connection Successful")
+                            }
+
+                            else -> {
+                                connectPreference.title = getString(R.string.connect)
+                                connectPreference.summary = getString(R.string.connect_summary)
+                                showToast("Connection Failed")
+                            }
                         }
                     }
                 } else {
+                    connectPreference.title = getString(R.string.connect)
+                    connectPreference.summary = getString(R.string.connect_summary)
                     showToast("No Internet Connection")
                 }
             }
+        } else if (forceConnect) {
+            showToast("Invalid Connection Info")
         }
     }
 
