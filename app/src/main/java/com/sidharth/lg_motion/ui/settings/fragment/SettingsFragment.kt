@@ -49,6 +49,11 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
         val inputFilter = InputFilter.LengthFilter(30)
 
+        connectionStatusPreference.setOnPreferenceChangeListener { _, newValue ->
+            connectionStatusPreference.setConnectionStatus(newValue as Boolean)
+            true
+        }
+
         usernamePreference.apply {
             setOnBindEditTextListener { editText ->
                 editText.isSingleLine = true

@@ -1,5 +1,6 @@
 package com.sidharth.lg_motion
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -12,12 +13,25 @@ import com.sidharth.lg_motion.util.LiquidGalaxyController
 import com.sidharth.lg_motion.util.NetworkUtils
 import com.sidharth.lg_motion.util.ToastUtil
 import kotlinx.coroutines.launch
+import java.util.concurrent.Executors
+import java.util.concurrent.ScheduledExecutorService
+import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity() {
     private val activityMainBinding: ActivityMainBinding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
     }
     private var navHostFragment: Fragment? = null
+    private val preferences: SharedPreferences by lazy {
+        PreferenceManager.getDefaultSharedPreferences(this)
+    }
+    private var scheduledExecutorService: ScheduledExecutorService? = null
+    override fun onDestroy() {
+        super.onDestroy()
+        NetworkUtils.stopNetworkCallback(this)
+        scheduledExecutorService?.shutdown()
+        scheduledExecutorService = null
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,7 +39,27 @@ class MainActivity : AppCompatActivity() {
         navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment)
         setupBottomNavigation()
         setupRailViewNavigation()
-        setupLiquidGalaxyConnection()
+        setupLiquidGalaxyConnection().also {
+            addNetworkCallbackAndStartSchedule()
+        }
+    }
+
+    private fun addNetworkCallbackAndStartSchedule() {
+        NetworkUtils.startNetworkCallback(this, onConnectionAvailable = {
+            setupLiquidGalaxyConnection()
+        }, onConnectionLost = {
+            lifecycleScope.launch {
+                LiquidGalaxyController.getInstance()?.disconnect()
+                preferences.edit().putBoolean("connection_status", false).apply()
+            }
+        })
+
+        scheduledExecutorService = Executors.newSingleThreadScheduledExecutor()
+        scheduledExecutorService?.scheduleAtFixedRate({
+            preferences.edit().putBoolean(
+                "connection_status", LiquidGalaxyController.getInstance()?.connected == true
+            ).apply()
+        }, 0, 1, TimeUnit.SECONDS)
     }
 
     private fun setupBottomNavigation() {
@@ -65,7 +99,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupLiquidGalaxyConnection() {
-        val preferences = PreferenceManager.getDefaultSharedPreferences(this)
+        val editor = preferences.edit()
 
         val autoConnect = preferences.getBoolean("auto_connect", false)
         val username = preferences.getString("username", "") ?: ""
@@ -86,12 +120,20 @@ class MainActivity : AppCompatActivity() {
             if (NetworkUtils.isNetworkConnected(this)) {
                 lifecycleScope.launch {
                     when (LiquidGalaxyController.getInstance()?.connect()) {
-                        true -> showToast("Connection Successful")
-                        else -> showToast("Connection Failed")
+                        true -> {
+                            showToast("Connection Successful")
+                            editor.putBoolean("connection_status", true).apply()
+                        }
+
+                        else -> {
+                            showToast("Connection Failed")
+                            editor.putBoolean("connection_status", false).apply()
+                        }
                     }
                 }
             } else {
                 showToast("No Internet Connection")
+                editor.putBoolean("connection_status", false).apply()
             }
         }
     }
