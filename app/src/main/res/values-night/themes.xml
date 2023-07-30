@@ -31,6 +31,27 @@
         <item name="android:windowLightStatusBar">false</item>
     </style>
 
+    <style name="Theme.Lgmotion" parent="Base.Theme.Lgmotion">
+        <item name="materialAlertDialogTheme">@style/ThemeOverlay.App.MaterialAlertDialog</item>
+        <item name="alertDialogTheme">@style/ThemeOverlay.App.MaterialAlertDialog</item>
+        <item name="switchStyle">@style/Widget.Material3.CompoundButton.MaterialSwitch</item>
+    </style>
+
+    <style name="SplashTheme" parent="Theme.SplashScreen">
+        <item name="android:statusBarColor">@color/base_theme_dark_background</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/img_face</item>
+        <item name="windowSplashScreenIconBackgroundColor">@color/base_theme_dark_background</item>
+        <item name="windowSplashScreenBackground">@color/base_theme_dark_background</item>
+        <item name="postSplashScreenTheme">@style/Theme.Lgmotion</item>
+    </style>
+
+    <style name="ThemeOverlay.App.MaterialAlertDialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">
+        <item name="colorOnSurface">@color/base_theme_dark_primary</item>
+        <item name="dialogCornerRadius">15dp</item>
+        <item name="backgroundTint">@color/base_theme_dark_surface</item>
+        <item name="android:background">@color/base_theme_dark_surface</item>
+    </style>
 
     <style name="ConnectedStatusCardStyle">
         <item name="cardCornerRadius">15dp</item>

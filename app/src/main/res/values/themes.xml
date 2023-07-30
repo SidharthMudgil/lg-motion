@@ -38,6 +38,15 @@
         <item name="switchStyle">@style/Widget.Material3.CompoundButton.MaterialSwitch</item>
     </style>
 
+    <style name="SplashTheme" parent="Theme.SplashScreen">
+        <item name="android:statusBarColor">@color/base_theme_light_background</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/img_face</item>
+        <item name="windowSplashScreenIconBackgroundColor">@color/base_theme_light_background</item>
+        <item name="windowSplashScreenBackground">@color/base_theme_light_background</item>
+        <item name="postSplashScreenTheme">@style/Theme.Lgmotion</item>
+    </style>
+
     <style name="ThemeOverlay.App.MaterialAlertDialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">
         <item name="colorOnSurface">@color/base_theme_light_primary</item>
         <item name="dialogCornerRadius">15dp</item>

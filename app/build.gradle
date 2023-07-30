@@ -25,6 +25,7 @@ android {
     buildTypes {
         release {
             minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -47,6 +48,9 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+
+    // SplashScreen
+    implementation 'androidx.core:core-splashscreen:1.0.1'
 
     // Camera
     implementation "androidx.camera:camera-core:1.2.3"
@@ -71,12 +75,6 @@ dependencies {
 
     // SSH Connection
     implementation 'com.github.mwiede:jsch:0.2.9'
-//    implementation 'com.hierynomus:sshj:0.35.0'  <-- second most popular light weight
-//    implementation 'com.jcraft:jsch:0.1.55'   <-- most popular and oldest
-
-    // Dagger
-    implementation 'com.google.dagger:dagger:2.47'
-    kapt 'com.google.dagger:dagger-compiler:2.47'
 
     // Palette
     implementation 'androidx.palette:palette-ktx:1.0.0'
