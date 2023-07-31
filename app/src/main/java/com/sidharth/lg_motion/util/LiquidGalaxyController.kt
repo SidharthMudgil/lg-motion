@@ -1,5 +1,6 @@
 package com.sidharth.lg_motion.util
 
+import android.util.Log
 import com.jcraft.jsch.ChannelExec
 import com.jcraft.jsch.ChannelSftp
 import com.jcraft.jsch.JSch
@@ -104,6 +105,11 @@ class LiquidGalaxyController(
                     channel.outputStream = ByteArrayOutputStream()
                     channel.setCommand(command)
                     channel.connect()
+
+                    while (!channel.isConnected) {
+                        Log.d("execute", "channel opening")
+                    }
+
                     channel.disconnect()
                 }
             } catch (e: Exception) {
@@ -233,7 +239,7 @@ class LiquidGalaxyController(
                 else
                 exit 1
                 fi
-                if  [[ $(service ${'$'}SERVICE status) =~ 'stop' ]]; then
+                if  [[ ${'$'}(service ${'$'}SERVICE status) =~ 'stop' ]]; then
                 echo $password | sudo -S service ${'$'}{SERVICE} start
                 else
                 echo $password | sudo -S service ${'$'}{SERVICE} restart
@@ -258,8 +264,8 @@ class LiquidGalaxyController(
     }
 
     suspend fun performAction(state: State, direction: String?) {
-        val focusWindow = """xdotool windowfocus $(xdotool search --name "Google Earth Pro")"""
-        if (lastState != State.IDLE) {
+        val focusWindow = """xdotool windowfocus ${'$'}(xdotool search --name "Google Earth Pro")"""
+        if (state == State.IDLE || (lastState != State.IDLE && lastState != state)) {
             execute("""$focusWindow keyup ${lastState.key}""")
         }
         val command = when (state) {

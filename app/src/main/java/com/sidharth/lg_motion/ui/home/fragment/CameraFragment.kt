@@ -38,6 +38,8 @@ class CameraFragment : Fragment() {
         private const val TAG = "Landmarker & Detection"
     }
 
+    private var lastState: LiquidGalaxyController.State = LiquidGalaxyController.State.IDLE
+
     private val args: CameraFragmentArgs by navArgs()
 
     private lateinit var faceLandmarkerHelper: FaceLandmarkerHelper
@@ -305,9 +307,11 @@ class CameraFragment : Fragment() {
 
     private val faceLandMarkerListener = object : FaceLandmarkerHelper.LandmarkerListener {
         override fun onResults(resultBundle: FaceLandmarkerHelper.ResultBundle) {
-            execute(
-                LiquidGalaxyStateUtil.getStateFromFaceLandmarkerResult(resultBundle), null
-            )
+            val newState = LiquidGalaxyStateUtil.getStateFromFaceLandmarkerResult(resultBundle)
+            if ((lastState == newState).not()) {
+                lastState = newState
+                execute(newState, null)
+            }
         }
 
         override fun onError(error: String, errorCode: Int) {
@@ -321,9 +325,11 @@ class CameraFragment : Fragment() {
 
     private val handLandmarkerListener = object : HandLandmarkerHelper.LandmarkerListener {
         override fun onResults(resultBundle: HandLandmarkerHelper.ResultBundle) {
-            execute(
-                LiquidGalaxyStateUtil.getStateFromHandLandmarkerResult(resultBundle), null
-            )
+            val newState = LiquidGalaxyStateUtil.getStateFromHandLandmarkerResult(resultBundle)
+            if ((lastState == newState).not()) {
+                lastState = newState
+                execute(newState, null)
+            }
         }
 
         override fun onError(error: String, errorCode: Int) {
@@ -338,9 +344,11 @@ class CameraFragment : Fragment() {
 
     private val poseLandMarkerListener = object : PoseLandmarkerHelper.LandmarkerListener {
         override fun onResults(resultBundle: PoseLandmarkerHelper.ResultBundle) {
-            execute(
-                LiquidGalaxyStateUtil.getStateFromPoseLandmarkerResult(resultBundle), null
-            )
+            val newState = LiquidGalaxyStateUtil.getStateFromPoseLandmarkerResult(resultBundle)
+            if ((lastState == newState).not()) {
+                lastState = newState
+                execute(newState, null)
+            }
         }
 
         override fun onError(error: String, errorCode: Int) {
@@ -354,9 +362,11 @@ class CameraFragment : Fragment() {
 
     private val objectDetectorListener = object : ObjectDetectorHelper.DetectorListener {
         override fun onResults(resultBundle: ObjectDetectorHelper.ResultBundle) {
-            execute(
-                LiquidGalaxyStateUtil.getStateFromObjectDetectorResult(resultBundle), null
-            )
+            val newState = LiquidGalaxyStateUtil.getStateFromObjectDetectorResult(resultBundle)
+            if ((lastState == newState).not()) {
+                lastState = newState
+                execute(newState, null)
+            }
         }
 
         override fun onError(error: String, errorCode: Int) {
@@ -376,9 +386,12 @@ class CameraFragment : Fragment() {
 
     private fun idleState() {
         lifecycleScope.launch {
-            LiquidGalaxyController.getInstance()?.performAction(
-                LiquidGalaxyController.State.IDLE, null
-            )
+            if (lastState != LiquidGalaxyController.State.IDLE) {
+                lastState = LiquidGalaxyController.State.IDLE
+                LiquidGalaxyController.getInstance()?.performAction(
+                    LiquidGalaxyController.State.IDLE, null
+                )
+            }
         }
     }
 
