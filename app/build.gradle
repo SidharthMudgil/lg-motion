@@ -35,7 +35,6 @@ android {
     kotlinOptions {
         jvmTarget = '17'
     }
-    buildToolsVersion '34.0.0'
 }
 
 dependencies {
@@ -72,7 +71,7 @@ dependencies {
     implementation 'com.google.mediapipe:tasks-vision:0.10.2'
 
     // SSH Connection
-    implementation 'com.github.mwiede:jsch:0.2.9'
+    implementation 'com.github.mwiede:jsch:0.2.10'
 
     // Palette
     implementation 'androidx.palette:palette-ktx:1.0.0'
