@@ -35,7 +35,11 @@ class ConnectionStatusPreference @JvmOverloads constructor(
             disconnectedCard.visibility = View.VISIBLE
         }
     }
-    
+
+    fun getConnectionStatus(): Boolean {
+        return this.isConnected
+    }
+
     fun setConnectionStatus(isConnected: Boolean) {
         this.isConnected = isConnected
         persistBoolean(isConnected)

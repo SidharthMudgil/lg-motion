@@ -138,7 +138,11 @@ class SettingsFragment : PreferenceFragmentCompat() {
         }
 
         connectPreference.setOnPreferenceClickListener {
-            connect(true)
+            if (connectionStatusPreference.getConnectionStatus()) {
+                disconnect()
+            } else {
+                connect(true)
+            }
             true
         }
 
@@ -241,6 +245,18 @@ class SettingsFragment : PreferenceFragmentCompat() {
         }
     }
 
+    private fun disconnect(showToast: Boolean = true) {
+        if (LiquidGalaxyController.getInstance() != null) {
+            lifecycleScope.launch {
+                LiquidGalaxyController.getInstance()?.disconnect()
+                connectionStatusPreference.setConnectionStatus(false)
+                if (showToast) {
+                    showToast("Disconnected")
+                }
+            }
+        }
+    }
+
     private fun connect(forceConnect: Boolean = false) {
         val username = usernamePreference.text ?: ""
         val password = passwordPreference.text ?: ""
@@ -249,11 +265,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         val screens = totalScreensPreference.value
 
         if (username.isNotBlank() && password.isNotBlank() && TextUtils.isValidIp(host) && port.isNotBlank()) {
-            if (LiquidGalaxyController.getInstance() != null) {
-                lifecycleScope.launch {
-                    LiquidGalaxyController.getInstance()?.disconnect()
-                }
-            }
+            disconnect(showToast = false)
 
             LiquidGalaxyController.newInstance(
                 username = username,
