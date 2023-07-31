@@ -384,15 +384,17 @@ class CameraFragment : Fragment() {
 
     @Suppress("SameParameterValue")
     private fun execute(state: LiquidGalaxyController.State, direction: String?) {
-        activity?.runOnUiThread {
-            ToastUtil.showToast(requireContext(), state.name)
-        }
-        if (NetworkUtils.isNetworkConnected(requireContext())) {
-            lifecycleScope.launch {
-                LiquidGalaxyController.getInstance()?.performAction(
-                    state = state,
-                    direction = direction
-                )
+        if (isAdded) {
+            activity?.runOnUiThread {
+                ToastUtil.showToast(requireContext(), state.name)
+            }
+            if (NetworkUtils.isNetworkConnected(requireContext())) {
+                lifecycleScope.launch {
+                    LiquidGalaxyController.getInstance()?.performAction(
+                        state = state,
+                        direction = direction
+                    )
+                }
             }
         }
     }
