@@ -4,6 +4,8 @@ import com.jcraft.jsch.ChannelExec
 import com.jcraft.jsch.ChannelSftp
 import com.jcraft.jsch.JSch
 import com.jcraft.jsch.Session
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.util.Properties
@@ -44,45 +46,70 @@ class LiquidGalaxyController(
             return session?.isConnected ?: false
         }
 
-    private suspend fun setupNewSession() {
-        val jSch = JSch()
-        session = jSch.getSession(username, host, port)
-        session?.setPassword(password)
-        val config = Properties()
-        config["StrictHostKeyChecking"] = "no"
-        session?.setConfig(config)
-        session?.connect()
-    }
-
-    private suspend fun execute(command: String) {
-        if (session != null && connected) {
-            val channel = session?.openChannel("exec") as ChannelExec
-            channel.outputStream = ByteArrayOutputStream()
-            channel.setCommand(command)
-            channel.connect()
-            channel.disconnect()
+    private suspend fun setupNewSession(): Boolean {
+        return withContext(Dispatchers.IO) {
+            try {
+                val jSch = JSch()
+                session = jSch.getSession(username, host, port)
+                session?.setPassword(password)
+                val config = Properties()
+                config["StrictHostKeyChecking"] = "no"
+                session?.setConfig(config)
+                session?.connect()
+                true
+            } catch (e: Exception) {
+                e.printStackTrace()
+                false
+            }
         }
     }
 
     suspend fun connect(): Boolean {
         return try {
             if (session == null || connected.not()) {
-                setupNewSession()
-                displayLogos()
+                if (setupNewSession()) {
+                    displayLogos()
+                } else {
+                    return false
+                }
             } else {
                 session?.sendKeepAliveMsg()
             }
             true
         } catch (e: Exception) {
+            e.printStackTrace()
             false
         }
     }
 
     suspend fun disconnect() {
-        if (session != null) {
-            session?.disconnect()
+        withContext(Dispatchers.IO) {
+            try {
+                if (session != null) {
+                    session?.disconnect()
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            } finally {
+                session = null
+            }
         }
-        session = null
+    }
+
+    private suspend fun execute(command: String) {
+        withContext(Dispatchers.IO) {
+            try {
+                if (session != null && connected) {
+                    val channel = session?.openChannel("exec") as ChannelExec
+                    channel.outputStream = ByteArrayOutputStream()
+                    channel.setCommand(command)
+                    channel.connect()
+                    channel.disconnect()
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
     }
 
     private suspend fun displayLogos() {
@@ -129,32 +156,36 @@ class LiquidGalaxyController(
     }
 
     suspend fun uploadFile(name: String, file: File) {
-        if (session != null && connected) {
-            val channel = session?.openChannel("sftp") as ChannelSftp
-            channel.connect()
-            try {
-                val remotePath = "/var/www/html/$name.kml"
-                channel.put(file.absolutePath, remotePath)
-                channel.chmod(644, remotePath)
-            } catch (e: Exception) {
-                e.printStackTrace()
-                channel.disconnect()
-            } finally {
-                channel.disconnect()
+        withContext(Dispatchers.IO) {
+            if (session != null && connected) {
+                val channel = session?.openChannel("sftp") as ChannelSftp
+                channel.connect()
+                try {
+                    val remotePath = "/var/www/html/$name.kml"
+                    channel.put(file.absolutePath, remotePath)
+                    channel.chmod(644, remotePath)
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    channel.disconnect()
+                } finally {
+                    channel.disconnect()
+                }
             }
         }
     }
 
     suspend fun deleteFile(name: String) {
-        if (session != null && connected) {
-            val channel = session?.openChannel("sftp") as ChannelSftp
-            channel.connect()
-            try {
-                channel.rm("/var/www/html/$name")
-            } catch (e: Exception) {
-                e.printStackTrace()
-            } finally {
-                channel.disconnect()
+        withContext(Dispatchers.IO) {
+            if (session != null && connected) {
+                val channel = session?.openChannel("sftp") as ChannelSftp
+                channel.connect()
+                try {
+                    channel.rm("/var/www/html/$name")
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                } finally {
+                    channel.disconnect()
+                }
             }
         }
     }
