@@ -49,9 +49,10 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
         val inputFilter = InputFilter.LengthFilter(30)
 
-        connectionStatusPreference.setOnPreferenceChangeListener { _, newValue ->
-            connectionStatusPreference.setConnectionStatus(newValue as Boolean)
-            true
+        if (connectionStatusPreference.isConnected()) {
+            onConnection(showToast = false)
+        } else {
+            onDisconnection(showToast = false)
         }
 
         usernamePreference.apply {
@@ -138,7 +139,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         }
 
         connectPreference.setOnPreferenceClickListener {
-            if (connectionStatusPreference.getConnectionStatus()) {
+            if (connectionStatusPreference.isConnected()) {
                 disconnect()
             } else {
                 connect(true)
@@ -249,10 +250,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         if (LiquidGalaxyController.getInstance() != null) {
             lifecycleScope.launch {
                 LiquidGalaxyController.getInstance()?.disconnect()
-                connectionStatusPreference.setConnectionStatus(false)
-                if (showToast) {
-                    showToast("Disconnected")
-                }
+                onDisconnection("Disconnected", showToast)
             }
         }
     }
@@ -278,31 +276,35 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 if (networkConnected) {
                     lifecycleScope.launch {
                         when (LiquidGalaxyController.getInstance()?.connect()) {
-                            true -> {
-                                connectPreference.title = getString(R.string.disconnect)
-                                connectPreference.summary = getString(R.string.disconnect_summary)
-                                connectionStatusPreference.setConnectionStatus(true)
-                                showToast("Connection Successful")
-                            }
-
-                            else -> {
-                                connectPreference.title = getString(R.string.connect)
-                                connectPreference.summary = getString(R.string.connect_summary)
-                                connectionStatusPreference.setConnectionStatus(false)
-                                showToast("Connection Failed")
-                            }
+                            true -> onConnection()
+                            else -> onDisconnection()
                         }
                     }
                 } else {
-                    connectPreference.title = getString(R.string.connect)
-                    connectPreference.summary = getString(R.string.connect_summary)
-                    connectionStatusPreference.setConnectionStatus(false)
-                    showToast("No Internet Connection")
+                    onDisconnection("No Internet Connection")
                 }
             }
         } else if (forceConnect) {
             connectionStatusPreference.setConnectionStatus(false)
             showToast("Invalid Connection Info")
+        }
+    }
+
+    private fun onConnection(showToast: Boolean = true) {
+        connectPreference.title = getString(R.string.disconnect)
+        connectPreference.summary = getString(R.string.disconnect_summary)
+        connectionStatusPreference.setConnectionStatus(true)
+        if (showToast) {
+            showToast("Connection Successful")
+        }
+    }
+
+    private fun onDisconnection(message: String = "Connection Failed", showToast: Boolean = true) {
+        connectPreference.title = getString(R.string.connect)
+        connectPreference.summary = getString(R.string.connect_summary)
+        connectionStatusPreference.setConnectionStatus(false)
+        if (showToast) {
+            showToast(message)
         }
     }
 

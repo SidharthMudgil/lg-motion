@@ -36,7 +36,7 @@ class ConnectionStatusPreference @JvmOverloads constructor(
         }
     }
 
-    fun getConnectionStatus(): Boolean {
+    fun isConnected(): Boolean {
         return this.isConnected
     }
 
