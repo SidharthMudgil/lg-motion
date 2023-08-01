@@ -1,13 +1,11 @@
 package com.sidharth.lg_motion.util
 
-import android.animation.ValueAnimator
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.speech.RecognitionListener
 import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
-import android.view.animation.AccelerateInterpolator
 import com.airbnb.lottie.LottieAnimationView
 
 class LottieSpeechAnimator(
@@ -22,15 +20,6 @@ class LottieSpeechAnimator(
 
     private var speechRecognizer: SpeechRecognizer? = null
     private var listener: OnSpeechRecognitionListener? = null
-
-    private val animator = with(ValueAnimator.ofFloat(0.0f)) {
-        interpolator = AccelerateInterpolator()
-        duration = sampling
-        addUpdateListener {
-            animationView.progress = it.animatedValue as Float
-        }
-        this
-    }
 
     fun setOnSpeechRecognitionListener(listener: OnSpeechRecognitionListener) {
         this.listener = listener
@@ -60,28 +49,10 @@ class LottieSpeechAnimator(
     }
 
     private inner class SpeechRecognitionListener : RecognitionListener {
-
         override fun onReadyForSpeech(params: Bundle?) {
-            // Optional: You can perform any setup tasks when the recognizer is ready.
-        }
-
-        override fun onBeginningOfSpeech() {
-            // Optional: You can perform any tasks when the user starts speaking.
-        }
-
-        override fun onRmsChanged(rmsdB: Float) {
-            val rms = cleanUpSignal(rmsdB)
-            val progress = getProgress(rms)
-            with(animator) {
-                cancel()
-                val currentStop = animatedValue as Float
-                val maxStop = progress.coerceAtMost(1.0).toFloat()
-                setFloatValues(currentStop, maxStop)
-                start()
+            if (!animationView.isAnimating) {
+                animationView.resumeAnimation()
             }
-        }
-
-        override fun onBufferReceived(p0: ByteArray?) {
         }
 
         override fun onPartialResults(partialResults: Bundle?) {
@@ -107,10 +78,17 @@ class LottieSpeechAnimator(
         }
 
         override fun onEndOfSpeech() {
+            animationView.pauseAnimation()
         }
 
-        override fun onEvent(eventType: Int, params: Bundle?) {
+        override fun onBeginningOfSpeech() {
         }
+
+        override fun onRmsChanged(rmsdB: Float) {}
+
+        override fun onBufferReceived(p0: ByteArray?) {}
+
+        override fun onEvent(eventType: Int, params: Bundle?) {}
     }
 
     companion object {
@@ -119,7 +97,6 @@ class LottieSpeechAnimator(
         private const val preGain = 0.3
         private const val minDb = 0.0
         private const val maxDb = 80.0
-        private const val sampling = 100L
 
         private fun cleanUpSignal(rms: Float): Double {
             ema = ema * alpha + (1 - alpha) * rms

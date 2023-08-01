@@ -40,6 +40,7 @@ class AudioFragment : Fragment(), LottieSpeechAnimator.OnSpeechRecognitionListen
         savedInstanceState: Bundle?
     ): View {
         lottieSpeechAnimator.start()
+        binding.animationView.playAnimation()
         return binding.root
     }
 
@@ -54,6 +55,11 @@ class AudioFragment : Fragment(), LottieSpeechAnimator.OnSpeechRecognitionListen
     }
 
     override fun onSpeechRecognitionResult(result: String) {
+        if (isAdded) {
+            activity?.runOnUiThread {
+                binding.result.text = result
+            }
+        }
         val res = LiquidGalaxyStateUtil.getStateFromSpeechResult(result)
         lifecycleScope.launch {
             res?.let {
