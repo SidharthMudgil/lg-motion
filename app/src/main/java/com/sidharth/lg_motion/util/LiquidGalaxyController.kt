@@ -26,7 +26,7 @@ class LiquidGalaxyController(
     }
 
     private var lastState = State.IDLE
-    private val logoSlaves = "slave_${leftScreen}"
+    private val logoSlave = "slave_${leftScreen}"
     private var session: Session? = null
 
     private val leftScreen: Int
@@ -110,22 +110,12 @@ class LiquidGalaxyController(
     }
 
     private suspend fun displayLogos() {
-        val command = ""
-        execute(command)
-    }
-
-    suspend fun hideLogos() {
-        val command = """
-            chmod 777 /var/www/html/kml/$logoSlaves.kml; echo '
-            <kml xmlns="http://www.opengis.net/kml/2.2"
-            xmlns:atom="http://www.w3.org/2005/Atom"
-            xmlns:gx="http://www.google.com/kml/ext/2.2">
-            <Document id="$logoSlaves">
-            </Document>
-            </kml>
-            ' > /var/www/html/kml/$logoSlaves.kml
-            """.trimMargin()
-
+        val command = "chmod 777 /var/www/html/kml/$logoSlave.kml; echo '${
+            KMLUtils.screenOverlayImage(
+                "https://avatars.githubusercontent.com/u/68889544?v=4",
+                Pair(0.6, 0.8)
+            )
+        }' > /var/www/html/kml/$logoSlave.kml"
         execute(command)
     }
 
@@ -133,7 +123,7 @@ class LiquidGalaxyController(
         for (i in 2..screens) {
             execute("echo '' > /var/www/html/kml/slave_$i.kml")
         }
-        execute("""echo "" > /tmp/query.txt""")
+        execute("echo '' > /tmp/query.txt")
         execute("echo '' > /var/www/html/kmls.txt")
     }
 
