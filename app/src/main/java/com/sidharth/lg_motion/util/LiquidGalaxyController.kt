@@ -1,6 +1,6 @@
 package com.sidharth.lg_motion.util
 
-import android.util.Log
+import com.google.android.gms.maps.model.CameraPosition
 import com.jcraft.jsch.ChannelExec
 import com.jcraft.jsch.ChannelSftp
 import com.jcraft.jsch.JSch
@@ -133,7 +133,6 @@ class LiquidGalaxyController(
         for (i in 2..screens) {
             execute("echo '' > /var/www/html/kml/slave_$i.kml")
         }
-        stopOrbit()
         execute("""echo "" > /tmp/query.txt""")
         execute("echo '' > /var/www/html/kmls.txt")
     }
@@ -173,12 +172,8 @@ class LiquidGalaxyController(
         }
     }
 
-    suspend fun startOrbit() {
-        execute("""echo "playtour=Orbit" > /tmp/query.txt""")
-    }
-
-    private suspend fun stopOrbit() {
-        execute("""echo "exittour=true" > /tmp/query.txt""")
+    suspend fun flyTo(cameraPosition: CameraPosition) {
+        execute("echo 'flytoview=${KMLUtils.lookAt(cameraPosition)}' > /tmp/query.txt")
     }
 
     suspend fun setRefresh() {
@@ -243,7 +238,6 @@ class LiquidGalaxyController(
 
     suspend fun performAction(state: State, direction: String?) {
         if ((state == State.IDLE) || (lastState != State.IDLE && lastState != state)) {
-            Log.d("execute", "keyup: \"export DISPLAY=:0; xdotool keyup ${lastState.key}\"")
             execute("export DISPLAY=:0; xdotool keyup ${lastState.key}")
             lastState = State.IDLE
         }
@@ -253,7 +247,6 @@ class LiquidGalaxyController(
                 State.FLY_TO -> "echo 'search=$direction' > /tmp/query.txt"
                 else -> "export DISPLAY=:0; xdotool keydown ${state.key}"
             }
-            Log.d("execute", "keydown: '$command'")
             execute(command)
             lastState = when (state) {
                 State.PLANET, State.FLY_TO -> State.IDLE

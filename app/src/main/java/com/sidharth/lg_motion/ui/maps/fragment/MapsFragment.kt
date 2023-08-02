@@ -7,12 +7,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.preference.PreferenceManager
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.sidharth.lg_motion.R
+import com.sidharth.lg_motion.util.LiquidGalaxyController
+import com.sidharth.lg_motion.util.NetworkUtils
+import kotlinx.coroutines.launch
 
 class MapsFragment : Fragment(), OnSharedPreferenceChangeListener {
     private var mapStyle: Int = R.raw.map_style_blue
@@ -21,6 +26,10 @@ class MapsFragment : Fragment(), OnSharedPreferenceChangeListener {
     private val callback = OnMapReadyCallback { googleMap ->
         googleMap.mapType = mapType
         updateMapStyle(googleMap)
+
+        googleMap.setOnCameraIdleListener {
+            updateMap(googleMap.cameraPosition)
+        }
     }
 
     override fun onCreateView(
@@ -85,6 +94,16 @@ class MapsFragment : Fragment(), OnSharedPreferenceChangeListener {
 
             val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
             mapFragment?.getMapAsync(callback)
+        }
+    }
+
+    private fun updateMap(cameraPosition: CameraPosition) {
+        if (NetworkUtils.isNetworkConnected(requireContext())) {
+            if (LiquidGalaxyController.getInstance()?.connected == true) {
+                lifecycleScope.launch {
+                    LiquidGalaxyController.getInstance()?.flyTo(cameraPosition)
+                }
+            }
         }
     }
 

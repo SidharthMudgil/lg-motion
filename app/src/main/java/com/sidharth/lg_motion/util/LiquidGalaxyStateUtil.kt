@@ -1,9 +1,11 @@
 package com.sidharth.lg_motion.util
 
-object LiquidGalaxyStateUtil {
-    private const val confidence = 0.5
+import android.util.Log
 
-    private enum class Command(
+object LiquidGalaxyStateUtil {
+    private const val faceConfidence = 0.5
+
+    private enum class AudioCommand(
         val keys: List<String>
     ) {
         IDLE(listOf("stop", "stop moving", "idle")),
@@ -26,32 +28,32 @@ object LiquidGalaxyStateUtil {
             "neutral", "jawOpen", "jawLeft", "jawRight", "mouthRollUpper", "mouthRollLower",
             "eyeBlinkRight", "eyeBlinkLeft", "eyeSquintLeft", "eyeSquintRight"
         )
-        val blendshapeMap = resultBundle.result.faceBlendshapes().get()[0]
+        val blendshapes = resultBundle.result.faceBlendshapes().get()[0]
             .associateBy { it.categoryName().trim('_') }
             .filterKeys { it in categoryNames }
             .mapValues { it.value.score() }
 
-        val neutral = blendshapeMap.getValue("neutral")
-        val eyeBlinkLeft = blendshapeMap.getValue("eyeBlinkLeft")
-        val eyeBlinkRight = blendshapeMap.getValue("eyeBlinkRight")
-        val eyeSquintLeft = blendshapeMap.getValue("eyeSquintLeft")
-        val eyeSquintRight = blendshapeMap.getValue("eyeSquintRight")
-        val jawLeft = blendshapeMap.getValue("jawLeft")
-        val jawOpen = blendshapeMap.getValue("jawOpen")
-        val jawRight = blendshapeMap.getValue("jawRight")
-        val mouthRollLower = blendshapeMap.getValue("mouthRollLower")
-        val mouthRollUpper = blendshapeMap.getValue("mouthRollUpper")
+        val neutral = blendshapes.getValue("neutral")
+        val eyeBlinkLeft = blendshapes.getValue("eyeBlinkLeft")
+        val eyeBlinkRight = blendshapes.getValue("eyeBlinkRight")
+        val eyeSquintLeft = blendshapes.getValue("eyeSquintLeft")
+        val eyeSquintRight = blendshapes.getValue("eyeSquintRight")
+        val jawLeft = blendshapes.getValue("jawLeft")
+        val jawOpen = blendshapes.getValue("jawOpen")
+        val jawRight = blendshapes.getValue("jawRight")
+        val mouthRollLower = blendshapes.getValue("mouthRollLower")
+        val mouthRollUpper = blendshapes.getValue("mouthRollUpper")
 
         return when {
-            jawRight > confidence -> LiquidGalaxyController.State.MOVE_EAST
-            jawLeft > confidence -> LiquidGalaxyController.State.MOVE_WEST
-            mouthRollUpper > confidence -> LiquidGalaxyController.State.MOVE_NORTH
-            mouthRollLower > confidence -> LiquidGalaxyController.State.MOVE_SOUTH
-            eyeBlinkRight > confidence && eyeBlinkLeft > confidence || eyeSquintRight > confidence && eyeSquintLeft > confidence -> LiquidGalaxyController.State.ZOOM_OUT
-            eyeBlinkLeft > confidence || eyeSquintLeft > confidence -> LiquidGalaxyController.State.ROTATE_LEFT
-            eyeBlinkRight > confidence || eyeSquintRight > confidence -> LiquidGalaxyController.State.ROTATE_RIGHT
-            jawOpen > confidence -> LiquidGalaxyController.State.ZOOM_IN
-            neutral > confidence -> LiquidGalaxyController.State.IDLE
+            jawRight > faceConfidence -> LiquidGalaxyController.State.MOVE_EAST
+            jawLeft > faceConfidence -> LiquidGalaxyController.State.MOVE_WEST
+            mouthRollUpper > faceConfidence -> LiquidGalaxyController.State.MOVE_NORTH
+            mouthRollLower > faceConfidence -> LiquidGalaxyController.State.MOVE_SOUTH
+            eyeBlinkRight > faceConfidence && eyeBlinkLeft > faceConfidence || eyeSquintRight > faceConfidence && eyeSquintLeft > faceConfidence -> LiquidGalaxyController.State.ZOOM_OUT
+            eyeBlinkLeft > faceConfidence || eyeSquintLeft > faceConfidence -> LiquidGalaxyController.State.ROTATE_LEFT
+            eyeBlinkRight > faceConfidence || eyeSquintRight > faceConfidence -> LiquidGalaxyController.State.ROTATE_RIGHT
+            jawOpen > faceConfidence -> LiquidGalaxyController.State.ZOOM_IN
+            neutral > faceConfidence -> LiquidGalaxyController.State.IDLE
             else -> LiquidGalaxyController.State.IDLE
         }
     }
@@ -59,44 +61,64 @@ object LiquidGalaxyStateUtil {
     fun getStateFromHandLandmarkerResult(
         resultBundle: HandLandmarkerHelper.ResultBundle
     ): LiquidGalaxyController.State {
-//        TODO("")
+        Log.d("resultLandmarksHand", resultBundle.results.toString())
         return LiquidGalaxyController.State.IDLE
     }
 
     fun getStateFromPoseLandmarkerResult(
         resultBundle: PoseLandmarkerHelper.ResultBundle
     ): LiquidGalaxyController.State {
-//        TODO("")
+        Log.d("resultLandmarksPose", resultBundle.results.toString())
         return LiquidGalaxyController.State.IDLE
     }
 
     fun getStateFromObjectDetectorResult(
         resultBundle: ObjectDetectorHelper.ResultBundle
     ): LiquidGalaxyController.State {
-//        TODO("")
+        Log.d("resultObject", resultBundle.results.toString())
         return LiquidGalaxyController.State.IDLE
     }
 
     fun getStateFromSpeechResult(
         result: String
     ): Pair<LiquidGalaxyController.State, String?>? {
-        val flyToPattern = Regex("\\b(${Command.FLY_TO.keys.joinToString("|")})\\s+(\\w+)")
+        val flyToPattern = Regex("\\b(${AudioCommand.FLY_TO.keys.joinToString("|")})\\s+(\\w+)")
         val planetPattern =
-            Regex("\\b(${Command.CHANGE_PLANET.keys.joinToString("|")})\\s+(earth|mars|moon)")
+            Regex("\\b(${AudioCommand.CHANGE_PLANET.keys.joinToString("|")})\\s+(earth|mars|moon)")
 
         return when {
-            result in Command.IDLE.keys -> Pair(LiquidGalaxyController.State.IDLE, null)
-            result in Command.MOVE_NORTH.keys -> Pair(LiquidGalaxyController.State.MOVE_NORTH, null)
-            result in Command.MOVE_SOUTH.keys -> Pair(LiquidGalaxyController.State.MOVE_SOUTH, null)
-            result in Command.MOVE_EAST.keys -> Pair(LiquidGalaxyController.State.MOVE_EAST, null)
-            result in Command.MOVE_WEST.keys -> Pair(LiquidGalaxyController.State.MOVE_WEST, null)
-            result in Command.ZOOM_IN.keys -> Pair(LiquidGalaxyController.State.ZOOM_IN, null)
-            result in Command.ZOOM_OUT.keys -> Pair(LiquidGalaxyController.State.ZOOM_OUT, null)
-            result in Command.ROTATE_LEFT.keys -> Pair(
+            result in AudioCommand.IDLE.keys -> Pair(LiquidGalaxyController.State.IDLE, null)
+            result in AudioCommand.MOVE_NORTH.keys -> Pair(
+                LiquidGalaxyController.State.MOVE_NORTH,
+                null
+            )
+
+            result in AudioCommand.MOVE_SOUTH.keys -> Pair(
+                LiquidGalaxyController.State.MOVE_SOUTH,
+                null
+            )
+
+            result in AudioCommand.MOVE_EAST.keys -> Pair(
+                LiquidGalaxyController.State.MOVE_EAST,
+                null
+            )
+
+            result in AudioCommand.MOVE_WEST.keys -> Pair(
+                LiquidGalaxyController.State.MOVE_WEST,
+                null
+            )
+
+            result in AudioCommand.ZOOM_IN.keys -> Pair(LiquidGalaxyController.State.ZOOM_IN, null)
+            result in AudioCommand.ZOOM_OUT.keys -> Pair(
+                LiquidGalaxyController.State.ZOOM_OUT,
+                null
+            )
+
+            result in AudioCommand.ROTATE_LEFT.keys -> Pair(
                 LiquidGalaxyController.State.ROTATE_LEFT, null
             )
 
-            result in Command.ROTATE_RIGHT.keys -> Pair(
+            result in AudioCommand.ROTATE_RIGHT.keys -> Pair(
                 LiquidGalaxyController.State.ROTATE_RIGHT, null
             )
 
