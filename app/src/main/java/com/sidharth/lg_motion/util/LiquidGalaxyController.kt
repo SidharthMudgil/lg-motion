@@ -121,10 +121,8 @@ class LiquidGalaxyController(
 
     suspend fun clearKml() {
         for (i in 2..screens) {
-            execute("echo '' > /var/www/html/kml/slave_$i.kml")
+            execute("chmod 777 /var/www/html/kml/slave_$i.kml; echo '' > /var/www/html/kml/slave_$i.kml")
         }
-        execute("echo '' > /tmp/query.txt")
-        execute("echo '' > /var/www/html/kmls.txt")
     }
 
     suspend fun uploadFile(name: String, file: File) {
@@ -193,23 +191,21 @@ class LiquidGalaxyController(
 
     suspend fun relaunch() {
         for (i in screens downTo 1) {
-            val command = """
-                RELAUNCH_CMD="\
-                if [ -f /etc/init/lxdm.conf ]; then
-                export SERVICE=lxdm
+            val command = """/home/$username/bin/lg-relaunch > /home/$username/log.txt;
+                RELAUNCH_CMD="if [ -f /etc/init/lxdm.conf ]; then
+                    export SERVICE=lxdm
                 elif [ -f /etc/init/lightdm.conf ]; then
-                export SERVICE=lightdm
+                    export SERVICE=lightdm
                 else
-                exit 1
+                    exit 1
                 fi
                 if  [[ \${'$'}(service \${'$'}SERVICE status) =~ 'stop' ]]; then
-                echo $password | sudo -S service \${'$'}{SERVICE} start
+                    echo $password | sudo -S service \${'$'}SERVICE start
                 else
-                echo $password | sudo -S service \${'$'}{SERVICE} restart
+                    echo $password | sudo -S service \${'$'}SERVICE restart
                 fi
-                " && sshpass -p $password ssh -x -t lg@lg$i "${'$'}RELAUNCH_CMD\"""".trimMargin()
+                " && sshpass -p $password ssh -x -t lg@lg$i "${'$'}RELAUNCH_CMD"""".trimMargin()
 
-            execute(""""/home/$username/bin/lg-relaunch" > /home/$username/log.txt""")
             execute(command)
         }
     }
