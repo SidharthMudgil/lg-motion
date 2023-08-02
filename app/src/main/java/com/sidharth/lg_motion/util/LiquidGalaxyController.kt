@@ -112,7 +112,7 @@ class LiquidGalaxyController(
     private suspend fun displayLogos() {
         val command = "chmod 777 /var/www/html/kml/$logoSlave.kml; echo '${
             KMLUtils.screenOverlayImage(
-                "https://avatars.githubusercontent.com/u/68889544?v=4",
+                "https://github.com/SidharthMudgil/lg-motion/blob/main/logo.png",
                 Pair(0.6, 0.8)
             )
         }' > /var/www/html/kml/$logoSlave.kml"
