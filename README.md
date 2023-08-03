@@ -45,8 +45,8 @@ git clone https://github.com/SidharthMudgil/lg-motion.git
 
 ### APK Installation
 1. Download the latest APK file from the "Releases" section of this GitHub repository.
-   - [lgmotion.apk](https://github.com/SidharthMudgil/lg-motion/releases/latest/lgmotion.apk)
-   - [lgmotion.aab](https://github.com/SidharthMudgil/lg-motion/releases/latest/lgmotion.aab)
+   - [lgmotion.apk](https://github.com/SidharthMudgil/lg-motion/releases/latest/download/lg-motion.apk)
+   - [lgmotion.aab](https://github.com/SidharthMudgil/lg-motion/releases/latest/download/lg-motion.aab)
 
 2. Enable "Unknown Sources" in your Android device settings to allow the installation of apps from external sources.
 
