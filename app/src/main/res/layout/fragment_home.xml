@@ -18,6 +18,7 @@
             android:layout_marginTop="10dp"
             app:layout_constraintHeight_percent=".2"
             android:clipChildren="false"
+            android:visibility="gone"
             android:clipToPadding="false"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

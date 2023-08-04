@@ -4,11 +4,14 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Surface
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavDirections
 import androidx.navigation.findNavController
@@ -17,38 +20,48 @@ import com.google.android.material.carousel.CarouselLayoutManager
 import com.sidharth.lg_motion.databinding.FragmentHomeBinding
 import com.sidharth.lg_motion.domain.callback.OnFeatureClickCallback
 import com.sidharth.lg_motion.domain.callback.OnFunActivityClickCallback
+import com.sidharth.lg_motion.domain.callback.ProgressIndicatorCallback
 import com.sidharth.lg_motion.domain.model.Feature
 import com.sidharth.lg_motion.domain.model.FunActivity
 import com.sidharth.lg_motion.ui.home.adapter.FeaturesListAdapter
 import com.sidharth.lg_motion.ui.home.adapter.FunActivitiesAdapter
+import com.sidharth.lg_motion.ui.home.viewmodel.ProgressViewModel
+import com.sidharth.lg_motion.ui.home.viewmodel.ProgressViewModelFactory
 import com.sidharth.lg_motion.util.Constants
 import com.sidharth.lg_motion.util.DialogUtils
-import com.sidharth.lg_motion.util.LiquidGalaxyController
+import com.sidharth.lg_motion.util.LiquidGalaxyManager
 import com.sidharth.lg_motion.util.NetworkUtils
-import com.sidharth.lg_motion.util.ToastUtil
 import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment(), OnFunActivityClickCallback, OnFeatureClickCallback {
     private var action: NavDirections? = null
+    private val viewModel: ProgressViewModel by activityViewModels {
+        ProgressViewModelFactory()
+    }
 
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { isGranted: Boolean ->
         if (isGranted) {
-            if (NetworkUtils.isNetworkConnected(requireContext())){
-                if (LiquidGalaxyController.getInstance()?.connected == true) {
+            if (NetworkUtils.isNetworkConnected(requireContext())) {
+                if (LiquidGalaxyManager.getInstance()?.connected == true) {
                     action?.let {
                         view?.findNavController()?.navigate(it)
                     }
                 } else {
                     showToast("No LG Connection")
                 }
-            }else {
+            } else {
                 showToast("No Internet Connection")
             }
         } else {
-            ToastUtil.showToast(requireContext(), "Feature requires permission")
+            showToast("Feature requires permission")
         }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        DialogUtils.dismiss()
     }
 
     override fun onCreateView(
@@ -90,23 +103,21 @@ class HomeFragment : Fragment(), OnFunActivityClickCallback, OnFeatureClickCallb
                 permission
             ) == PackageManager.PERMISSION_GRANTED -> {
                 if (NetworkUtils.isNetworkConnected(requireContext())) {
-                    if (LiquidGalaxyController.getInstance()?.connected == true) {
+                    if (LiquidGalaxyManager.getInstance()?.connected == true) {
                         action?.let {
                             view?.findNavController()?.navigate(it)
                         }
                     } else {
-                        DialogUtils.show(requireContext()) {
-                            if (NetworkUtils.isNetworkConnected(requireContext())) {
-                                lifecycleScope.launch {
-                                    when (LiquidGalaxyController.getInstance()?.connect()) {
-                                        true -> showToast("Connection Successful")
-                                        else -> showToast("Connection Failed")
-                                    }
-                                }
-                            } else {
-                                showToast("No Internet Connection")
-                            }
-                        }
+                        context?.getSystemService(WindowManager::class.java)?.currentWindowMetrics?.bounds?.height()
+                            ?.let { height ->
+                                activity?.display?.rotation?.let {
+                                    if (height >= 600 && it == Surface.ROTATION_0) {
+                                        DialogUtils.show(requireContext()) {
+                                            connect()
+                                        }
+                                    } else showToast("No LG Connection")
+                                } ?: showToast("No LG Connection")
+                            } ?: showToast("No LG Connection")
                     }
                 } else {
                     showToast("No Internet Connection")
@@ -114,7 +125,7 @@ class HomeFragment : Fragment(), OnFunActivityClickCallback, OnFeatureClickCallb
             }
 
             shouldShowRequestPermissionRationale(permission) -> {
-                ToastUtil.showToast(requireContext(), "Feature requires permission")
+                showToast("Feature requires permission")
             }
 
             else -> {
@@ -123,18 +134,24 @@ class HomeFragment : Fragment(), OnFunActivityClickCallback, OnFeatureClickCallb
         }
     }
 
-    private fun showToast(message: String) {
-        activity?.runOnUiThread {
-            ToastUtil.showToast(requireContext(), message)
+    private fun connect() {
+        lifecycleScope.launch {
+            viewModel.setConnecting(true)
+            when (LiquidGalaxyManager.getInstance()?.connect()) {
+                true -> showToast("Connection Successful")
+                else -> showToast("Connection Failed")
+            }
+            viewModel.setConnecting(false)
         }
     }
 
     override fun onFunActivityClick(name: FunActivity.Activity) {
-        ToastUtil.showToast(requireContext(), "Coming Soon")
+        showToast("Coming Soon")
     }
 
-    override fun onPause() {
-        super.onPause()
-        DialogUtils.dismiss()
+    private fun showToast(message: String) {
+        if (activity is ProgressIndicatorCallback) {
+            (activity as ProgressIndicatorCallback?)?.showToast(message)
+        }
     }
 }

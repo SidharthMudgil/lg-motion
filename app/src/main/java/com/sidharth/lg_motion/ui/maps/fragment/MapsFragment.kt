@@ -15,7 +15,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.sidharth.lg_motion.R
-import com.sidharth.lg_motion.util.LiquidGalaxyController
+import com.sidharth.lg_motion.util.LiquidGalaxyManager
 import com.sidharth.lg_motion.util.NetworkUtils
 import kotlinx.coroutines.launch
 
@@ -99,9 +99,9 @@ class MapsFragment : Fragment(), OnSharedPreferenceChangeListener {
 
     private fun updateMap(cameraPosition: CameraPosition) {
         if (NetworkUtils.isNetworkConnected(requireContext())) {
-            if (LiquidGalaxyController.getInstance()?.connected == true) {
+            if (LiquidGalaxyManager.getInstance()?.connected == true) {
                 lifecycleScope.launch {
-                    LiquidGalaxyController.getInstance()?.flyTo(cameraPosition)
+                    LiquidGalaxyManager.getInstance()?.flyTo(cameraPosition)
                 }
             }
         }

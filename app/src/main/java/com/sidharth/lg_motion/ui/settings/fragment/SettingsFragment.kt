@@ -3,6 +3,7 @@ package com.sidharth.lg_motion.ui.settings.fragment
 import android.os.Bundle
 import android.text.InputFilter
 import android.text.InputType
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.preference.EditTextPreference
@@ -11,8 +12,11 @@ import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SeekBarPreference
 import androidx.preference.SwitchPreferenceCompat
 import com.sidharth.lg_motion.R
+import com.sidharth.lg_motion.domain.callback.ProgressIndicatorCallback
+import com.sidharth.lg_motion.ui.home.viewmodel.ProgressViewModel
+import com.sidharth.lg_motion.ui.home.viewmodel.ProgressViewModelFactory
 import com.sidharth.lg_motion.ui.settings.preference.ConnectionStatusPreference
-import com.sidharth.lg_motion.util.LiquidGalaxyController
+import com.sidharth.lg_motion.util.LiquidGalaxyManager
 import com.sidharth.lg_motion.util.NetworkUtils
 import com.sidharth.lg_motion.util.RangeInputFilter
 import com.sidharth.lg_motion.util.TextUtils
@@ -39,6 +43,10 @@ class SettingsFragment : PreferenceFragmentCompat() {
     private val openSourceLicensePreference by lazy { findPreference<Preference>("opensource_license")!! }
     private val privacyPolicyPreference by lazy { findPreference<Preference>("privacy_policy")!! }
     private val appVersionPreference by lazy { findPreference<Preference>("app_version")!! }
+
+    private val viewModel: ProgressViewModel by activityViewModels {
+        ProgressViewModelFactory()
+    }
     private val networkConnected: Boolean
         get() {
             return NetworkUtils.isNetworkConnected(requireContext())
@@ -47,13 +55,18 @@ class SettingsFragment : PreferenceFragmentCompat() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.root_preferences, rootKey)
 
-        val inputFilter = InputFilter.LengthFilter(30)
-
         if (connectionStatusPreference.isConnected()) {
             onConnection(showToast = false)
         } else {
             onDisconnection(showToast = false)
         }
+
+        setupChangeListeners()
+        setupClickListeners()
+    }
+
+    private fun setupChangeListeners() {
+        val inputFilter = InputFilter.LengthFilter(30)
 
         usernamePreference.apply {
             setOnBindEditTextListener { editText ->
@@ -137,7 +150,9 @@ class SettingsFragment : PreferenceFragmentCompat() {
             }
             true
         }
+    }
 
+    private fun setupClickListeners() {
         connectPreference.setOnPreferenceClickListener {
             if (connectionStatusPreference.isConnected()) {
                 disconnect()
@@ -148,68 +163,32 @@ class SettingsFragment : PreferenceFragmentCompat() {
         }
 
         setRefreshPreference.setOnPreferenceClickListener {
-            if (networkConnected) {
-                lifecycleScope.launch {
-                    LiquidGalaxyController.getInstance()?.setRefresh()
-                }
-            } else {
-                showToast("No Internet Connection")
-            }
+            execute(Action.SET_REFRESH)
             true
         }
 
         resetRefreshPreference.setOnPreferenceClickListener {
-            if (networkConnected) {
-                lifecycleScope.launch {
-                    LiquidGalaxyController.getInstance()?.resetRefresh()
-                }
-            } else {
-                showToast("No Internet Connection")
-            }
+            execute(Action.RESET_REFRESH)
             true
         }
 
         clearKmlPreference.setOnPreferenceClickListener {
-            if (networkConnected) {
-                lifecycleScope.launch {
-                    LiquidGalaxyController.getInstance()?.clearKml()
-                }
-            } else {
-                showToast("No Internet Connection")
-            }
+            execute(Action.CLEAR_KML)
             true
         }
 
         relaunchPreference.setOnPreferenceClickListener {
-            if (networkConnected) {
-                lifecycleScope.launch {
-                    LiquidGalaxyController.getInstance()?.relaunch()
-                }
-            } else {
-                showToast("No Internet Connection")
-            }
+            execute(Action.RELAUNCH)
             true
         }
 
         restartPreference.setOnPreferenceClickListener {
-            if (networkConnected) {
-                lifecycleScope.launch {
-                    LiquidGalaxyController.getInstance()?.restart()
-                }
-            } else {
-                showToast("No Internet Connection")
-            }
+            execute(Action.RESTART)
             true
         }
 
         shutdownPreference.setOnPreferenceClickListener {
-            if (networkConnected) {
-                lifecycleScope.launch {
-                    LiquidGalaxyController.getInstance()?.shutdown()
-                }
-            } else {
-                showToast("No Internet Connection")
-            }
+            execute(Action.SHUTDOWN)
             true
         }
 
@@ -246,12 +225,28 @@ class SettingsFragment : PreferenceFragmentCompat() {
         }
     }
 
-    private fun disconnect(showToast: Boolean = true) {
-        if (LiquidGalaxyController.getInstance() != null) {
-            lifecycleScope.launch {
-                LiquidGalaxyController.getInstance()?.disconnect()
-                onDisconnection("Disconnected", showToast)
+    private fun execute(action: Action) {
+        if (networkConnected) {
+            if (LiquidGalaxyManager.getInstance()?.connected == true) {
+                lifecycleScope.launch {
+                    viewModel.setConnecting(true)
+                    LiquidGalaxyManager.getInstance()?.apply {
+                        when (action) {
+                            Action.CLEAR_KML -> clearKml()
+                            Action.SET_REFRESH -> setRefresh()
+                            Action.RESET_REFRESH -> resetRefresh()
+                            Action.RELAUNCH -> relaunch()
+                            Action.RESTART -> restart()
+                            Action.SHUTDOWN -> shutdown()
+                        }
+                        viewModel.setConnecting(false)
+                    }
+                }
+            } else {
+                showToast("No LG Connection")
             }
+        } else {
+            showToast("No Internet Connection")
         }
     }
 
@@ -264,8 +259,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
         if (username.isNotBlank() && password.isNotBlank() && TextUtils.isValidIp(host) && port.isNotBlank()) {
             disconnect(showToast = false)
-
-            LiquidGalaxyController.newInstance(
+            LiquidGalaxyManager.newInstance(
                 username = username,
                 password = password,
                 host = host,
@@ -275,40 +269,64 @@ class SettingsFragment : PreferenceFragmentCompat() {
             if (forceConnect || autoConnectPreference.isChecked) {
                 if (networkConnected) {
                     lifecycleScope.launch {
-                        when (LiquidGalaxyController.getInstance()?.connect()) {
+                        viewModel.setConnecting(true)
+                        when (LiquidGalaxyManager.getInstance()?.connect()) {
                             true -> onConnection()
-                            else -> onDisconnection()
+                            else -> onDisconnection(updatePreference = false)
                         }
+                        viewModel.setConnecting(false)
                     }
                 } else {
-                    onDisconnection("No Internet Connection")
+                    onDisconnection("No Internet Connection", updatePreference = false)
                 }
             }
         } else if (forceConnect) {
-            connectionStatusPreference.setConnectionStatus(false)
-            showToast("Invalid Connection Info")
+            onDisconnection(message = "Invalid Connection Info", updatePreference = false)
+        }
+    }
+
+    private fun disconnect(showToast: Boolean = true) {
+        if (LiquidGalaxyManager.getInstance() != null) {
+            lifecycleScope.launch {
+                LiquidGalaxyManager.getInstance()?.disconnect()
+                onDisconnection("Disconnected", showToast)
+            }
         }
     }
 
     private fun onConnection(showToast: Boolean = true) {
-        connectPreference.title = getString(R.string.disconnect)
-        connectPreference.summary = getString(R.string.disconnect_summary)
-        connectionStatusPreference.setConnectionStatus(true)
+        if (isAdded) {
+            connectPreference.title = requireContext().getString(R.string.disconnect)
+            connectPreference.summary = requireContext().getString(R.string.disconnect_summary)
+            connectionStatusPreference.setConnectionStatus(true)
+        }
+
         if (showToast) {
             showToast("Connection Successful")
         }
     }
 
-    private fun onDisconnection(message: String = "Connection Failed", showToast: Boolean = true) {
-        connectPreference.title = getString(R.string.connect)
-        connectPreference.summary = getString(R.string.connect_summary)
-        connectionStatusPreference.setConnectionStatus(false)
+    private fun onDisconnection(message: String = "Connection Failed", showToast: Boolean = true, updatePreference: Boolean = true) {
+        if (isAdded && updatePreference) {
+            connectPreference.title = requireContext().getString(R.string.connect)
+            connectPreference.summary = requireContext().getString(R.string.connect_summary)
+            connectionStatusPreference.setConnectionStatus(false)
+        }
+
         if (showToast) {
             showToast(message)
         }
     }
 
     private fun showToast(message: String) {
-        ToastUtil.showToast(requireContext(), message)
+        if (activity is ProgressIndicatorCallback) {
+            (activity as ProgressIndicatorCallback?)?.showToast(message)
+        }
+    }
+
+    companion object {
+        private enum class Action {
+            CLEAR_KML, SET_REFRESH, RESET_REFRESH, RELAUNCH, RESTART, SHUTDOWN
+        }
     }
 }

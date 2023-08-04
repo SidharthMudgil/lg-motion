@@ -11,7 +11,7 @@ import java.io.File
 import java.util.Properties
 
 
-class LiquidGalaxyController(
+class LiquidGalaxyManager(
     private val username: String,
     private val password: String,
     private val host: String,
@@ -53,7 +53,7 @@ class LiquidGalaxyController(
                 val config = Properties()
                 config["StrictHostKeyChecking"] = "no"
                 session?.setConfig(config)
-                session?.connect()
+                session?.connect(7000)
                 true
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -243,7 +243,7 @@ class LiquidGalaxyController(
 
     companion object {
         @Volatile
-        private var INSTANCE: LiquidGalaxyController? = null
+        private var INSTANCE: LiquidGalaxyManager? = null
 
         fun newInstance(
             username: String,
@@ -253,7 +253,7 @@ class LiquidGalaxyController(
             screens: Int,
         ) {
             synchronized(this) {
-                INSTANCE = LiquidGalaxyController(
+                INSTANCE = LiquidGalaxyManager(
                     username = username,
                     password = password,
                     host = host,
@@ -265,7 +265,7 @@ class LiquidGalaxyController(
             }
         }
 
-        fun getInstance(): LiquidGalaxyController? {
+        fun getInstance(): LiquidGalaxyManager? {
             return INSTANCE
         }
     }

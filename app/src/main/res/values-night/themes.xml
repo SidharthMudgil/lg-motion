@@ -32,6 +32,8 @@
     </style>
 
     <style name="Theme.Lgmotion" parent="Base.Theme.Lgmotion">
+        <item name="circularProgressIndicatorStyle">@style/Widget.App.CircularProgressIndicator
+        </item>
         <item name="materialAlertDialogTheme">@style/ThemeOverlay.App.MaterialAlertDialog</item>
         <item name="alertDialogTheme">@style/ThemeOverlay.App.MaterialAlertDialog</item>
         <item name="switchStyle">@style/Widget.Material3.CompoundButton.MaterialSwitch</item>
@@ -44,6 +46,10 @@
         <item name="windowSplashScreenIconBackgroundColor">@color/base_theme_dark_background</item>
         <item name="windowSplashScreenBackground">@color/base_theme_dark_background</item>
         <item name="postSplashScreenTheme">@style/Theme.Lgmotion</item>
+    </style>
+
+    <style name="Widget.App.CircularProgressIndicator" parent="Widget.Material3.CircularProgressIndicator">
+        <item name="trackThickness">20dp</item>
     </style>
 
     <style name="ThemeOverlay.App.MaterialAlertDialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">

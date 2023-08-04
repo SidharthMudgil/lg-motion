@@ -22,7 +22,7 @@ import com.sidharth.lg_motion.databinding.FragmentCameraBinding
 import com.sidharth.lg_motion.domain.model.Feature
 import com.sidharth.lg_motion.util.FaceLandmarkerHelper
 import com.sidharth.lg_motion.util.HandLandmarkerHelper
-import com.sidharth.lg_motion.util.LiquidGalaxyController
+import com.sidharth.lg_motion.util.LiquidGalaxyManager
 import com.sidharth.lg_motion.util.LiquidGalaxyStateUtil
 import com.sidharth.lg_motion.util.NetworkUtils
 import com.sidharth.lg_motion.util.ObjectDetectorHelper
@@ -38,7 +38,7 @@ class CameraFragment : Fragment() {
         private const val TAG = "Landmarker & Detection"
     }
 
-    private var lastState: LiquidGalaxyController.State = LiquidGalaxyController.State.IDLE
+    private var lastState: LiquidGalaxyManager.State = LiquidGalaxyManager.State.IDLE
 
     private val args: CameraFragmentArgs by navArgs()
 
@@ -386,24 +386,24 @@ class CameraFragment : Fragment() {
 
     private fun idleState() {
         lifecycleScope.launch {
-            if (lastState != LiquidGalaxyController.State.IDLE) {
-                lastState = LiquidGalaxyController.State.IDLE
-                LiquidGalaxyController.getInstance()?.performAction(
-                    LiquidGalaxyController.State.IDLE, null
+            if (lastState != LiquidGalaxyManager.State.IDLE) {
+                lastState = LiquidGalaxyManager.State.IDLE
+                LiquidGalaxyManager.getInstance()?.performAction(
+                    LiquidGalaxyManager.State.IDLE, null
                 )
             }
         }
     }
 
     @Suppress("SameParameterValue")
-    private fun execute(state: LiquidGalaxyController.State, direction: String?) {
+    private fun execute(state: LiquidGalaxyManager.State, direction: String?) {
         if (isAdded) {
             activity?.runOnUiThread {
                 ToastUtil.showToast(requireContext(), state.name)
             }
             if (NetworkUtils.isNetworkConnected(requireContext())) {
                 lifecycleScope.launch {
-                    LiquidGalaxyController.getInstance()?.performAction(
+                    LiquidGalaxyManager.getInstance()?.performAction(
                         state = state,
                         direction = direction
                     )
