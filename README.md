@@ -11,7 +11,7 @@ The app utilizes the power of the Mediapipe API for recognizing and processing f
   - [Dark Theme](#dark-theme)
   - [Map Styles](#map-styles)
 - [Installation](#installation)
-- [How To Contribute](#how-to-contribute)
+- [Contribution](#contribution)
 
 
 ## Screenshots
@@ -45,8 +45,9 @@ git clone https://github.com/SidharthMudgil/lg-motion.git
 
 ### APK Installation
 1. Download the latest APK file from the "Releases" section of this GitHub repository.
-   - [lgmotion.apk](https://github.com/SidharthMudgil/lg-motion/releases/latest/download/lg-motion.apk)
-   - [lgmotion.aab](https://github.com/SidharthMudgil/lg-motion/releases/latest/download/lg-motion.aab)
+
+      | [Download APK](https://github.com/SidharthMudgil/lg-motion/releases/latest/download/lg-motion.apk) | [Download AAB](https://github.com/SidharthMudgil/lg-motion/releases/latest/download/lg-motion.aab) |
+      | -------------------------- | -------------------------- |
 
 2. Enable "Unknown Sources" in your Android device settings to allow the installation of apps from external sources.
 
