@@ -23,7 +23,7 @@ object LiquidGalaxyStateUtil {
 
     fun getStateFromFaceLandmarkerResult(
         resultBundle: FaceLandmarkerHelper.ResultBundle
-    ): LiquidGalaxyController.State {
+    ): LiquidGalaxyManager.State {
         val categoryNames = listOf(
             "neutral", "jawOpen", "jawLeft", "jawRight", "mouthRollUpper", "mouthRollLower",
             "eyeBlinkRight", "eyeBlinkLeft", "eyeSquintLeft", "eyeSquintRight"
@@ -45,87 +45,87 @@ object LiquidGalaxyStateUtil {
         val mouthRollUpper = blendshapes.getValue("mouthRollUpper")
 
         return when {
-            jawRight > faceConfidence -> LiquidGalaxyController.State.MOVE_EAST
-            jawLeft > faceConfidence -> LiquidGalaxyController.State.MOVE_WEST
-            mouthRollUpper > faceConfidence -> LiquidGalaxyController.State.MOVE_NORTH
-            mouthRollLower > faceConfidence -> LiquidGalaxyController.State.MOVE_SOUTH
-            eyeBlinkRight > faceConfidence && eyeBlinkLeft > faceConfidence || eyeSquintRight > faceConfidence && eyeSquintLeft > faceConfidence -> LiquidGalaxyController.State.ZOOM_OUT
-            eyeBlinkLeft > faceConfidence || eyeSquintLeft > faceConfidence -> LiquidGalaxyController.State.ROTATE_LEFT
-            eyeBlinkRight > faceConfidence || eyeSquintRight > faceConfidence -> LiquidGalaxyController.State.ROTATE_RIGHT
-            jawOpen > faceConfidence -> LiquidGalaxyController.State.ZOOM_IN
-            neutral > faceConfidence -> LiquidGalaxyController.State.IDLE
-            else -> LiquidGalaxyController.State.IDLE
+            jawRight > faceConfidence -> LiquidGalaxyManager.State.MOVE_EAST
+            jawLeft > faceConfidence -> LiquidGalaxyManager.State.MOVE_WEST
+            mouthRollUpper > faceConfidence -> LiquidGalaxyManager.State.MOVE_NORTH
+            mouthRollLower > faceConfidence -> LiquidGalaxyManager.State.MOVE_SOUTH
+            eyeBlinkRight > faceConfidence && eyeBlinkLeft > faceConfidence || eyeSquintRight > faceConfidence && eyeSquintLeft > faceConfidence -> LiquidGalaxyManager.State.ZOOM_OUT
+            eyeBlinkLeft > faceConfidence || eyeSquintLeft > faceConfidence -> LiquidGalaxyManager.State.ROTATE_LEFT
+            eyeBlinkRight > faceConfidence || eyeSquintRight > faceConfidence -> LiquidGalaxyManager.State.ROTATE_RIGHT
+            jawOpen > faceConfidence -> LiquidGalaxyManager.State.ZOOM_IN
+            neutral > faceConfidence -> LiquidGalaxyManager.State.IDLE
+            else -> LiquidGalaxyManager.State.IDLE
         }
     }
 
     fun getStateFromHandLandmarkerResult(
         resultBundle: HandLandmarkerHelper.ResultBundle
-    ): LiquidGalaxyController.State {
+    ): LiquidGalaxyManager.State {
         Log.d("resultLandmarksHand", resultBundle.results.toString())
-        return LiquidGalaxyController.State.IDLE
+        return LiquidGalaxyManager.State.IDLE
     }
 
     fun getStateFromPoseLandmarkerResult(
         resultBundle: PoseLandmarkerHelper.ResultBundle
-    ): LiquidGalaxyController.State {
+    ): LiquidGalaxyManager.State {
         Log.d("resultLandmarksPose", resultBundle.results.toString())
-        return LiquidGalaxyController.State.IDLE
+        return LiquidGalaxyManager.State.IDLE
     }
 
     fun getStateFromObjectDetectorResult(
         resultBundle: ObjectDetectorHelper.ResultBundle
-    ): LiquidGalaxyController.State {
+    ): LiquidGalaxyManager.State {
         Log.d("resultObject", resultBundle.results.toString())
-        return LiquidGalaxyController.State.IDLE
+        return LiquidGalaxyManager.State.IDLE
     }
 
     fun getStateFromSpeechResult(
         result: String
-    ): Pair<LiquidGalaxyController.State, String?>? {
+    ): Pair<LiquidGalaxyManager.State, String?>? {
         val flyToPattern = Regex("\\b(${AudioCommand.FLY_TO.keys.joinToString("|")})\\s+(\\w+)")
         val planetPattern =
             Regex("\\b(${AudioCommand.CHANGE_PLANET.keys.joinToString("|")})\\s+(earth|mars|moon)")
 
         return when {
-            result in AudioCommand.IDLE.keys -> Pair(LiquidGalaxyController.State.IDLE, null)
+            result in AudioCommand.IDLE.keys -> Pair(LiquidGalaxyManager.State.IDLE, null)
             result in AudioCommand.MOVE_NORTH.keys -> Pair(
-                LiquidGalaxyController.State.MOVE_NORTH,
+                LiquidGalaxyManager.State.MOVE_NORTH,
                 null
             )
 
             result in AudioCommand.MOVE_SOUTH.keys -> Pair(
-                LiquidGalaxyController.State.MOVE_SOUTH,
+                LiquidGalaxyManager.State.MOVE_SOUTH,
                 null
             )
 
             result in AudioCommand.MOVE_EAST.keys -> Pair(
-                LiquidGalaxyController.State.MOVE_EAST,
+                LiquidGalaxyManager.State.MOVE_EAST,
                 null
             )
 
             result in AudioCommand.MOVE_WEST.keys -> Pair(
-                LiquidGalaxyController.State.MOVE_WEST,
+                LiquidGalaxyManager.State.MOVE_WEST,
                 null
             )
 
-            result in AudioCommand.ZOOM_IN.keys -> Pair(LiquidGalaxyController.State.ZOOM_IN, null)
+            result in AudioCommand.ZOOM_IN.keys -> Pair(LiquidGalaxyManager.State.ZOOM_IN, null)
             result in AudioCommand.ZOOM_OUT.keys -> Pair(
-                LiquidGalaxyController.State.ZOOM_OUT,
+                LiquidGalaxyManager.State.ZOOM_OUT,
                 null
             )
 
             result in AudioCommand.ROTATE_LEFT.keys -> Pair(
-                LiquidGalaxyController.State.ROTATE_LEFT, null
+                LiquidGalaxyManager.State.ROTATE_LEFT, null
             )
 
             result in AudioCommand.ROTATE_RIGHT.keys -> Pair(
-                LiquidGalaxyController.State.ROTATE_RIGHT, null
+                LiquidGalaxyManager.State.ROTATE_RIGHT, null
             )
 
             flyToPattern.matches(result) -> {
                 val destination = flyToPattern.find(result)?.groupValues?.get(2)
                 if (!destination.isNullOrBlank()) Pair(
-                    LiquidGalaxyController.State.FLY_TO,
+                    LiquidGalaxyManager.State.FLY_TO,
                     destination
                 )
                 else null
@@ -133,7 +133,7 @@ object LiquidGalaxyStateUtil {
 
             planetPattern.matches(result) -> {
                 val planet = planetPattern.find(result)?.groupValues?.get(2)
-                if (!planet.isNullOrBlank()) Pair(LiquidGalaxyController.State.PLANET, planet)
+                if (!planet.isNullOrBlank()) Pair(LiquidGalaxyManager.State.PLANET, planet)
                 else null
             }
 

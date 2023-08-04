@@ -10,7 +10,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.sidharth.lg_motion.databinding.FragmentAudioBinding
-import com.sidharth.lg_motion.util.LiquidGalaxyController
+import com.sidharth.lg_motion.util.LiquidGalaxyManager
 import com.sidharth.lg_motion.util.LiquidGalaxyStateUtil
 import com.sidharth.lg_motion.util.LottieSpeechAnimator
 import com.sidharth.lg_motion.util.NetworkUtils
@@ -72,10 +72,10 @@ class AudioFragment : Fragment(), LottieSpeechAnimator.OnSpeechRecognitionListen
         Log.e("LottieSpeechAnimator", errorMessage)
     }
 
-    private fun execute(state: LiquidGalaxyController.State, direction: String?) {
+    private fun execute(state: LiquidGalaxyManager.State, direction: String?) {
         if (NetworkUtils.isNetworkConnected(requireContext())) {
             lifecycleScope.launch {
-                LiquidGalaxyController.getInstance()?.performAction(
+                LiquidGalaxyManager.getInstance()?.performAction(
                     state = state,
                     direction = direction
                 )

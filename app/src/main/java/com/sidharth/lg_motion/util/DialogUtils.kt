@@ -53,7 +53,7 @@ object DialogUtils {
                     editor.putString("port", port).apply()
                     editor.putInt("screens", screens).apply()
 
-                    LiquidGalaxyController.newInstance(
+                    LiquidGalaxyManager.newInstance(
                         username = username,
                         password = password,
                         host = ip,

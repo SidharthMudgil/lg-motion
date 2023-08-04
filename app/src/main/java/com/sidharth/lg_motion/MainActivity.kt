@@ -2,6 +2,8 @@ package com.sidharth.lg_motion
 
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.view.View
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.fragment.app.Fragment
@@ -10,7 +12,10 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.preference.PreferenceManager
 import com.sidharth.lg_motion.databinding.ActivityMainBinding
-import com.sidharth.lg_motion.util.LiquidGalaxyController
+import com.sidharth.lg_motion.domain.callback.ProgressIndicatorCallback
+import com.sidharth.lg_motion.ui.home.viewmodel.ProgressViewModel
+import com.sidharth.lg_motion.ui.home.viewmodel.ProgressViewModelFactory
+import com.sidharth.lg_motion.util.LiquidGalaxyManager
 import com.sidharth.lg_motion.util.NetworkUtils
 import com.sidharth.lg_motion.util.ToastUtil
 import kotlinx.coroutines.launch
@@ -18,14 +23,18 @@ import java.util.concurrent.Executors
 import java.util.concurrent.ScheduledExecutorService
 import java.util.concurrent.TimeUnit
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), ProgressIndicatorCallback {
     private val activityMainBinding: ActivityMainBinding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
     }
-    private var navHostFragment: Fragment? = null
     private val preferences: SharedPreferences by lazy {
         PreferenceManager.getDefaultSharedPreferences(this)
     }
+    private val viewModel: ProgressViewModel by viewModels {
+        ProgressViewModelFactory()
+    }
+    private val networkConnected: Boolean get() = NetworkUtils.isNetworkConnected(this)
+    private var navHostFragment: Fragment? = null
     private var scheduledExecutorService: ScheduledExecutorService? = null
     override fun onDestroy() {
         super.onDestroy()
@@ -41,8 +50,20 @@ class MainActivity : AppCompatActivity() {
         navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment)
         setupBottomNavigation()
         setupRailViewNavigation()
-        setupLiquidGalaxyConnection().also {
-            addNetworkCallbackAndStartSchedule()
+        viewModel.connecting.observe(this) { connecting ->
+            if (connecting) {
+                showProgressIndicator()
+            } else {
+                hideProgressIndicator()
+            }
+        }
+        viewModel.first.observe(this) { first ->
+            if (first.not()) {
+                setupLiquidGalaxyConnection().also {
+                    viewModel.setFirstValue(true)
+                    addNetworkCallbackAndStartSchedule()
+                }
+            }
         }
     }
 
@@ -51,7 +72,7 @@ class MainActivity : AppCompatActivity() {
             setupLiquidGalaxyConnection()
         }, onConnectionLost = {
             lifecycleScope.launch {
-                LiquidGalaxyController.getInstance()?.disconnect()
+                LiquidGalaxyManager.getInstance()?.disconnect()
                 preferences.edit().putBoolean("connection_status", false).apply()
             }
         })
@@ -59,7 +80,7 @@ class MainActivity : AppCompatActivity() {
         scheduledExecutorService = Executors.newSingleThreadScheduledExecutor()
         scheduledExecutorService?.scheduleAtFixedRate({
             preferences.edit().putBoolean(
-                "connection_status", LiquidGalaxyController.getInstance()?.connected == true
+                "connection_status", LiquidGalaxyManager.getInstance()?.connected == true
             ).apply()
         }, 0, 1, TimeUnit.SECONDS)
     }
@@ -111,7 +132,7 @@ class MainActivity : AppCompatActivity() {
         val screens = preferences.getInt("screens", 3)
 
         if (autoConnect && username.isNotBlank() && password.isNotBlank() && ip.isNotBlank() && port >= 0) {
-            LiquidGalaxyController.newInstance(
+            LiquidGalaxyManager.newInstance(
                 username = username,
                 password = password,
                 host = ip,
@@ -119,9 +140,11 @@ class MainActivity : AppCompatActivity() {
                 screens = screens,
             )
 
-            if (NetworkUtils.isNetworkConnected(this)) {
+            if (networkConnected) {
                 lifecycleScope.launch {
-                    when (LiquidGalaxyController.getInstance()?.connect()) {
+                    showProgressIndicator()
+                    viewModel.setConnecting(true)
+                    when (LiquidGalaxyManager.getInstance()?.connect()) {
                         true -> {
                             showToast("Connection Successful")
                             editor.putBoolean("connection_status", true).apply()
@@ -132,6 +155,8 @@ class MainActivity : AppCompatActivity() {
                             editor.putBoolean("connection_status", false).apply()
                         }
                     }
+                    viewModel.setConnecting(false)
+                    hideProgressIndicator()
                 }
             } else {
                 showToast("No Internet Connection")
@@ -140,7 +165,19 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun showToast(message: String) {
+    override fun showProgressIndicator() {
+        runOnUiThread {
+            activityMainBinding.progressIndicator.visibility = View.VISIBLE
+        }
+    }
+
+    override fun hideProgressIndicator() {
+        runOnUiThread {
+            activityMainBinding.progressIndicator.visibility = View.GONE
+        }
+    }
+
+    override fun showToast(message: String) {
         runOnUiThread {
             ToastUtil.showToast(this, message)
         }
