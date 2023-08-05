@@ -9,11 +9,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.findNavController
 import com.sidharth.lg_motion.databinding.FragmentAudioBinding
+import com.sidharth.lg_motion.util.Info
 import com.sidharth.lg_motion.util.LiquidGalaxyManager
-import com.sidharth.lg_motion.util.LiquidGalaxyStateUtil
 import com.sidharth.lg_motion.util.LottieSpeechAnimator
 import com.sidharth.lg_motion.util.NetworkUtils
+import com.sidharth.lg_motion.util.SpeechLandmarkerResultParser
 import kotlinx.coroutines.launch
 
 
@@ -41,6 +43,11 @@ class AudioFragment : Fragment(), LottieSpeechAnimator.OnSpeechRecognitionListen
     ): View {
         lottieSpeechAnimator.start()
         binding.animationView.playAnimation()
+        binding.info.setOnClickListener {
+            view?.findNavController()?.navigate(
+                AudioFragmentDirections.actionAudioFragmentToInfoFragment(Info.VOICE_COMMANDS)
+            )
+        }
         return binding.root
     }
 
@@ -60,7 +67,7 @@ class AudioFragment : Fragment(), LottieSpeechAnimator.OnSpeechRecognitionListen
                 binding.result.text = result
             }
         }
-        val res = LiquidGalaxyStateUtil.getStateFromSpeechResult(result)
+        val res = SpeechLandmarkerResultParser.getStateFromSpeechResult(result)
         lifecycleScope.launch {
             res?.let {
                 execute(res.first, res.second)

@@ -4,10 +4,8 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.Surface
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -17,6 +15,7 @@ import androidx.navigation.NavDirections
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearSnapHelper
 import com.google.android.material.carousel.CarouselLayoutManager
+import com.sidharth.lg_motion.R
 import com.sidharth.lg_motion.databinding.FragmentHomeBinding
 import com.sidharth.lg_motion.domain.callback.OnFeatureClickCallback
 import com.sidharth.lg_motion.domain.callback.OnFunActivityClickCallback
@@ -43,20 +42,15 @@ class HomeFragment : Fragment(), OnFunActivityClickCallback, OnFeatureClickCallb
         ActivityResultContracts.RequestPermission()
     ) { isGranted: Boolean ->
         if (isGranted) {
-            if (NetworkUtils.isNetworkConnected(requireContext())) {
-                if (LiquidGalaxyManager.getInstance()?.connected == true) {
-                    action?.let {
-                        view?.findNavController()?.navigate(it)
-                    }
-                } else {
-                    showToast("No LG Connection")
-                }
-            } else {
-                showToast("No Internet Connection")
-            }
+            onPermissionGranted()
         } else {
-            showToast("Feature requires permission")
+            showSnackbar("Feature requires permission")
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        DialogUtils.dismiss()
     }
 
     override fun onPause() {
@@ -98,34 +92,13 @@ class HomeFragment : Fragment(), OnFunActivityClickCallback, OnFeatureClickCallb
         }
 
         when {
-            ContextCompat.checkSelfPermission(
-                requireContext(),
-                permission
-            ) == PackageManager.PERMISSION_GRANTED -> {
-                if (NetworkUtils.isNetworkConnected(requireContext())) {
-                    if (LiquidGalaxyManager.getInstance()?.connected == true) {
-                        action?.let {
-                            view?.findNavController()?.navigate(it)
-                        }
-                    } else {
-                        context?.getSystemService(WindowManager::class.java)?.currentWindowMetrics?.bounds?.height()
-                            ?.let { height ->
-                                activity?.display?.rotation?.let {
-                                    if (height >= 600 && it == Surface.ROTATION_0) {
-                                        DialogUtils.show(requireContext()) {
-                                            connect()
-                                        }
-                                    } else showToast("No LG Connection")
-                                } ?: showToast("No LG Connection")
-                            } ?: showToast("No LG Connection")
-                    }
-                } else {
-                    showToast("No Internet Connection")
-                }
+            ContextCompat.checkSelfPermission(requireContext(), permission)
+                    == PackageManager.PERMISSION_GRANTED -> {
+                onPermissionGranted()
             }
 
             shouldShowRequestPermissionRationale(permission) -> {
-                showToast("Feature requires permission")
+                showSnackbar("Feature requires permission")
             }
 
             else -> {
@@ -134,24 +107,47 @@ class HomeFragment : Fragment(), OnFunActivityClickCallback, OnFeatureClickCallb
         }
     }
 
+    private fun onPermissionGranted() {
+        if (NetworkUtils.isNetworkConnected(requireContext())) {
+            if (LiquidGalaxyManager.getInstance()?.connected == true) {
+                action?.let {
+                    view?.findNavController()?.navigate(it)
+                }
+            } else {
+                val isPortrait = resources.getBoolean(R.bool.portrait)
+                val isTablet = resources.getBoolean(R.bool.tablet)
+
+                if (isTablet || isPortrait) {
+                    DialogUtils.show(requireContext()) {
+                        connect()
+                    }
+                } else {
+                    showSnackbar("No LG Connection")
+                }
+            }
+        } else {
+            showSnackbar("No Internet Connection")
+        }
+    }
+
     private fun connect() {
         lifecycleScope.launch {
             viewModel.setConnecting(true)
             when (LiquidGalaxyManager.getInstance()?.connect()) {
-                true -> showToast("Connection Successful")
-                else -> showToast("Connection Failed")
+                true -> showSnackbar("Connection Successful")
+                else -> showSnackbar("Connection Failed")
             }
             viewModel.setConnecting(false)
         }
     }
 
     override fun onFunActivityClick(name: FunActivity.Activity) {
-        showToast("Coming Soon")
+        showSnackbar("Coming Soon")
     }
 
-    private fun showToast(message: String) {
+    private fun showSnackbar(message: String) {
         if (activity is ProgressIndicatorCallback) {
-            (activity as ProgressIndicatorCallback?)?.showToast(message)
+            (activity as ProgressIndicatorCallback?)?.showSnackbar(message)
         }
     }
 }

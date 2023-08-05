@@ -66,4 +66,17 @@
     <!-- Connection Status Card   -->
     <string name="connected">Connected</string>
     <string name="disconnected">Disconnected</string>
+
+    <!-- Voice Commands   -->
+    <string name="stop">Stop</string>
+    <string name="fly_to">Fly to</string>
+    <string name="planet">Planet</string>
+    <string name="zoom_out">Zoom Out</string>
+    <string name="zoom_in">Zoom In</string>
+    <string name="rotate_right">Rotate Right</string>
+    <string name="rotate_left">Rotate Left</string>
+    <string name="move_west">Move West</string>
+    <string name="move_east">Move East</string>
+    <string name="move_south">Move South</string>
+    <string name="move_north">Move North</string>
 </resources>

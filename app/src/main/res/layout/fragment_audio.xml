@@ -38,4 +38,22 @@
         app:lottie_loop="true"
         app:lottie_rawRes="@raw/audio_visual" />
 
+    <ImageButton
+        android:id="@+id/info"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_margin="15dp"
+        android:background="@null"
+        android:clickable="true"
+        android:contentDescription="@null"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_info"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0"
+        app:tint="@color/base_theme_light_primary" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

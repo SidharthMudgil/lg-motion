@@ -20,7 +20,6 @@ import com.sidharth.lg_motion.util.LiquidGalaxyManager
 import com.sidharth.lg_motion.util.NetworkUtils
 import com.sidharth.lg_motion.util.RangeInputFilter
 import com.sidharth.lg_motion.util.TextUtils
-import com.sidharth.lg_motion.util.ToastUtil
 import kotlinx.coroutines.launch
 
 
@@ -56,9 +55,9 @@ class SettingsFragment : PreferenceFragmentCompat() {
         setPreferencesFromResource(R.xml.root_preferences, rootKey)
 
         if (connectionStatusPreference.isConnected()) {
-            onConnection(showToast = false)
+            onConnection(showSnackbar = false)
         } else {
-            onDisconnection(showToast = false)
+            onDisconnection(showSnackbar = false)
         }
 
         setupChangeListeners()
@@ -212,8 +211,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         }
 
         appVersionPreference.setOnPreferenceClickListener {
-            ToastUtil.showToast(
-                requireContext(),
+            showSnackbar(
                 "version ${
                     requireContext().packageManager.getPackageInfo(
                         requireContext().packageName,
@@ -243,10 +241,10 @@ class SettingsFragment : PreferenceFragmentCompat() {
                     }
                 }
             } else {
-                showToast("No LG Connection")
+                showSnackbar("No LG Connection")
             }
         } else {
-            showToast("No Internet Connection")
+            showSnackbar("No Internet Connection")
         }
     }
 
@@ -258,7 +256,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         val screens = totalScreensPreference.value
 
         if (username.isNotBlank() && password.isNotBlank() && TextUtils.isValidIp(host) && port.isNotBlank()) {
-            disconnect(showToast = false)
+            disconnect(showSnackbar = false)
             LiquidGalaxyManager.newInstance(
                 username = username,
                 password = password,
@@ -285,42 +283,42 @@ class SettingsFragment : PreferenceFragmentCompat() {
         }
     }
 
-    private fun disconnect(showToast: Boolean = true) {
+    private fun disconnect(showSnackbar: Boolean = true) {
         if (LiquidGalaxyManager.getInstance() != null) {
             lifecycleScope.launch {
                 LiquidGalaxyManager.getInstance()?.disconnect()
-                onDisconnection("Disconnected", showToast)
+                onDisconnection("Disconnected", showSnackbar)
             }
         }
     }
 
-    private fun onConnection(showToast: Boolean = true) {
+    private fun onConnection(showSnackbar: Boolean = true) {
         if (isAdded) {
             connectPreference.title = requireContext().getString(R.string.disconnect)
             connectPreference.summary = requireContext().getString(R.string.disconnect_summary)
             connectionStatusPreference.setConnectionStatus(true)
         }
 
-        if (showToast) {
-            showToast("Connection Successful")
+        if (showSnackbar) {
+            showSnackbar("Connection Successful")
         }
     }
 
-    private fun onDisconnection(message: String = "Connection Failed", showToast: Boolean = true, updatePreference: Boolean = true) {
+    private fun onDisconnection(message: String = "Connection Failed", showSnackbar: Boolean = true, updatePreference: Boolean = true) {
         if (isAdded && updatePreference) {
             connectPreference.title = requireContext().getString(R.string.connect)
             connectPreference.summary = requireContext().getString(R.string.connect_summary)
             connectionStatusPreference.setConnectionStatus(false)
         }
 
-        if (showToast) {
-            showToast(message)
+        if (showSnackbar) {
+            showSnackbar(message)
         }
     }
 
-    private fun showToast(message: String) {
+    private fun showSnackbar(message: String) {
         if (activity is ProgressIndicatorCallback) {
-            (activity as ProgressIndicatorCallback?)?.showToast(message)
+            (activity as ProgressIndicatorCallback?)?.showSnackbar(message)
         }
     }
 
