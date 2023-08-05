@@ -17,14 +17,16 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import com.sidharth.lg_motion.databinding.FragmentCameraBinding
 import com.sidharth.lg_motion.domain.callback.ProgressIndicatorCallback
 import com.sidharth.lg_motion.domain.model.Feature
 import com.sidharth.lg_motion.util.FaceLandmarkerHelper
 import com.sidharth.lg_motion.util.HandLandmarkerHelper
+import com.sidharth.lg_motion.util.Info
 import com.sidharth.lg_motion.util.LiquidGalaxyManager
-import com.sidharth.lg_motion.util.LiquidGalaxyStateUtil
+import com.sidharth.lg_motion.util.SpeechLandmarkerResultParser
 import com.sidharth.lg_motion.util.NetworkUtils
 import com.sidharth.lg_motion.util.ObjectDetectorHelper
 import com.sidharth.lg_motion.util.PoseLandmarkerHelper
@@ -150,6 +152,11 @@ class CameraFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _fragmentCameraBinding = FragmentCameraBinding.inflate(inflater)
+        fragmentCameraBinding.info.setOnClickListener {
+            view?.findNavController()?.navigate(
+                CameraFragmentDirections.actionCameraFragmentToInfoFragment(Info.FACE_GESTURES)
+            )
+        }
         return fragmentCameraBinding.root
     }
 
@@ -307,7 +314,7 @@ class CameraFragment : Fragment() {
 
     private val faceLandMarkerListener = object : FaceLandmarkerHelper.LandmarkerListener {
         override fun onResults(resultBundle: FaceLandmarkerHelper.ResultBundle) {
-            val newState = LiquidGalaxyStateUtil.getStateFromFaceLandmarkerResult(resultBundle)
+            val newState = SpeechLandmarkerResultParser.getStateFromFaceLandmarkerResult(resultBundle)
             if ((lastState == newState).not()) {
                 lastState = newState
                 execute(newState, null)
@@ -325,7 +332,7 @@ class CameraFragment : Fragment() {
 
     private val handLandmarkerListener = object : HandLandmarkerHelper.LandmarkerListener {
         override fun onResults(resultBundle: HandLandmarkerHelper.ResultBundle) {
-            val newState = LiquidGalaxyStateUtil.getStateFromHandLandmarkerResult(resultBundle)
+            val newState = SpeechLandmarkerResultParser.getStateFromHandLandmarkerResult(resultBundle)
             if ((lastState == newState).not()) {
                 lastState = newState
                 execute(newState, null)
@@ -344,7 +351,7 @@ class CameraFragment : Fragment() {
 
     private val poseLandMarkerListener = object : PoseLandmarkerHelper.LandmarkerListener {
         override fun onResults(resultBundle: PoseLandmarkerHelper.ResultBundle) {
-            val newState = LiquidGalaxyStateUtil.getStateFromPoseLandmarkerResult(resultBundle)
+            val newState = SpeechLandmarkerResultParser.getStateFromPoseLandmarkerResult(resultBundle)
             if ((lastState == newState).not()) {
                 lastState = newState
                 execute(newState, null)
@@ -362,7 +369,7 @@ class CameraFragment : Fragment() {
 
     private val objectDetectorListener = object : ObjectDetectorHelper.DetectorListener {
         override fun onResults(resultBundle: ObjectDetectorHelper.ResultBundle) {
-            val newState = LiquidGalaxyStateUtil.getStateFromObjectDetectorResult(resultBundle)
+            val newState = SpeechLandmarkerResultParser.getStateFromObjectDetectorResult(resultBundle)
             if ((lastState == newState).not()) {
                 lastState = newState
                 execute(newState, null)

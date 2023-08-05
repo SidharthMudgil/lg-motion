@@ -48,6 +48,11 @@ class HomeFragment : Fragment(), OnFunActivityClickCallback, OnFeatureClickCallb
         }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        DialogUtils.dismiss()
+    }
+
     override fun onPause() {
         super.onPause()
         DialogUtils.dismiss()

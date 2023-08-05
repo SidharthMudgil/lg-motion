@@ -79,5 +79,6 @@ object DialogUtils {
         if (dialog != null && dialog?.isShowing == true) {
             dialog?.dismiss()
         }
+        dialog = null
     }
 }

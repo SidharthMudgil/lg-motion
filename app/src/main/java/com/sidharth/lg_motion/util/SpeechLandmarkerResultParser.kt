@@ -2,7 +2,7 @@ package com.sidharth.lg_motion.util
 
 import android.util.Log
 
-object LiquidGalaxyStateUtil {
+object SpeechLandmarkerResultParser {
     private const val faceConfidence = 0.5
 
     private enum class AudioCommand(
