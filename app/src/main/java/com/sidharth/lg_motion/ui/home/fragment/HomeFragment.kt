@@ -49,13 +49,13 @@ class HomeFragment : Fragment(), OnFunActivityClickCallback, OnFeatureClickCallb
                         view?.findNavController()?.navigate(it)
                     }
                 } else {
-                    showToast("No LG Connection")
+                    showSnackbar("No LG Connection")
                 }
             } else {
-                showToast("No Internet Connection")
+                showSnackbar("No Internet Connection")
             }
         } else {
-            showToast("Feature requires permission")
+            showSnackbar("Feature requires permission")
         }
     }
 
@@ -115,17 +115,17 @@ class HomeFragment : Fragment(), OnFunActivityClickCallback, OnFeatureClickCallb
                                         DialogUtils.show(requireContext()) {
                                             connect()
                                         }
-                                    } else showToast("No LG Connection")
-                                } ?: showToast("No LG Connection")
-                            } ?: showToast("No LG Connection")
+                                    } else showSnackbar("No LG Connection")
+                                } ?: showSnackbar("No LG Connection")
+                            } ?: showSnackbar("No LG Connection")
                     }
                 } else {
-                    showToast("No Internet Connection")
+                    showSnackbar("No Internet Connection")
                 }
             }
 
             shouldShowRequestPermissionRationale(permission) -> {
-                showToast("Feature requires permission")
+                showSnackbar("Feature requires permission")
             }
 
             else -> {
@@ -138,20 +138,20 @@ class HomeFragment : Fragment(), OnFunActivityClickCallback, OnFeatureClickCallb
         lifecycleScope.launch {
             viewModel.setConnecting(true)
             when (LiquidGalaxyManager.getInstance()?.connect()) {
-                true -> showToast("Connection Successful")
-                else -> showToast("Connection Failed")
+                true -> showSnackbar("Connection Successful")
+                else -> showSnackbar("Connection Failed")
             }
             viewModel.setConnecting(false)
         }
     }
 
     override fun onFunActivityClick(name: FunActivity.Activity) {
-        showToast("Coming Soon")
+        showSnackbar("Coming Soon")
     }
 
-    private fun showToast(message: String) {
+    private fun showSnackbar(message: String) {
         if (activity is ProgressIndicatorCallback) {
-            (activity as ProgressIndicatorCallback?)?.showToast(message)
+            (activity as ProgressIndicatorCallback?)?.showSnackbar(message)
         }
     }
 }

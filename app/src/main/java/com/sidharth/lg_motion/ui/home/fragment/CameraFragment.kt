@@ -19,6 +19,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import com.sidharth.lg_motion.databinding.FragmentCameraBinding
+import com.sidharth.lg_motion.domain.callback.ProgressIndicatorCallback
 import com.sidharth.lg_motion.domain.model.Feature
 import com.sidharth.lg_motion.util.FaceLandmarkerHelper
 import com.sidharth.lg_motion.util.HandLandmarkerHelper
@@ -27,7 +28,6 @@ import com.sidharth.lg_motion.util.LiquidGalaxyStateUtil
 import com.sidharth.lg_motion.util.NetworkUtils
 import com.sidharth.lg_motion.util.ObjectDetectorHelper
 import com.sidharth.lg_motion.util.PoseLandmarkerHelper
-import com.sidharth.lg_motion.util.ToastUtil
 import kotlinx.coroutines.launch
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
@@ -380,7 +380,7 @@ class CameraFragment : Fragment() {
 
     private fun showError(error: String) {
         activity?.runOnUiThread {
-            ToastUtil.showToast(requireContext(), error)
+            showSnackbar(error)
         }
     }
 
@@ -399,7 +399,7 @@ class CameraFragment : Fragment() {
     private fun execute(state: LiquidGalaxyManager.State, direction: String?) {
         if (isAdded) {
             activity?.runOnUiThread {
-                ToastUtil.showToast(requireContext(), state.name)
+                showSnackbar(state.name)
             }
             if (NetworkUtils.isNetworkConnected(requireContext())) {
                 lifecycleScope.launch {
@@ -409,6 +409,12 @@ class CameraFragment : Fragment() {
                     )
                 }
             }
+        }
+    }
+
+    private fun showSnackbar(message: String) {
+        if (activity is ProgressIndicatorCallback) {
+            (activity as ProgressIndicatorCallback?)?.showSnackbar(message)
         }
     }
 }

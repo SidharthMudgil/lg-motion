@@ -3,5 +3,5 @@ interface ProgressIndicatorCallback {
     fun showProgressIndicator()
     fun hideProgressIndicator()
 
-    fun showToast(message: String)
+    fun showSnackbar(message: String)
 }

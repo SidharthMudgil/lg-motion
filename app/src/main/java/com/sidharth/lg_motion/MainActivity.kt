@@ -17,7 +17,7 @@ import com.sidharth.lg_motion.ui.home.viewmodel.ProgressViewModel
 import com.sidharth.lg_motion.ui.home.viewmodel.ProgressViewModelFactory
 import com.sidharth.lg_motion.util.LiquidGalaxyManager
 import com.sidharth.lg_motion.util.NetworkUtils
-import com.sidharth.lg_motion.util.ToastUtil
+import com.sidharth.lg_motion.util.NotificationUtils
 import kotlinx.coroutines.launch
 import java.util.concurrent.Executors
 import java.util.concurrent.ScheduledExecutorService
@@ -146,12 +146,12 @@ class MainActivity : AppCompatActivity(), ProgressIndicatorCallback {
                     viewModel.setConnecting(true)
                     when (LiquidGalaxyManager.getInstance()?.connect()) {
                         true -> {
-                            showToast("Connection Successful")
+                            showSnackbar("Connection Successful")
                             editor.putBoolean("connection_status", true).apply()
                         }
 
                         else -> {
-                            showToast("Connection Failed")
+                            showSnackbar("Connection Failed")
                             editor.putBoolean("connection_status", false).apply()
                         }
                     }
@@ -159,7 +159,7 @@ class MainActivity : AppCompatActivity(), ProgressIndicatorCallback {
                     hideProgressIndicator()
                 }
             } else {
-                showToast("No Internet Connection")
+                showSnackbar("No Internet Connection")
                 editor.putBoolean("connection_status", false).apply()
             }
         }
@@ -177,9 +177,9 @@ class MainActivity : AppCompatActivity(), ProgressIndicatorCallback {
         }
     }
 
-    override fun showToast(message: String) {
+    override fun showSnackbar(message: String) {
         runOnUiThread {
-            ToastUtil.showToast(this, message)
+            NotificationUtils.showSnackbar(activityMainBinding.mainLayout, message, activityMainBinding.bottomNavigationView)
         }
     }
 }
