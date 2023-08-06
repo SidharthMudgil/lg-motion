@@ -369,11 +369,12 @@ class CameraFragment : Fragment() {
 
     private val objectDetectorListener = object : ObjectDetectorHelper.DetectorListener {
         override fun onResults(resultBundle: ObjectDetectorHelper.ResultBundle) {
-            val newState = SpeechLandmarkerResultParser.getStateFromObjectDetectorResult(resultBundle)
-            if ((lastState == newState).not()) {
-                lastState = newState
-                execute(newState, null)
-            }
+            showSnackbar(SpeechLandmarkerResultParser.getStateFromObjectDetectorResult(resultBundle))
+//            val newState = SpeechLandmarkerResultParser.getStateFromObjectDetectorResult(resultBundle)
+//            if ((lastState == newState).not()) {
+//                lastState = newState
+//                execute(newState, null)
+//            }
         }
 
         override fun onError(error: String, errorCode: Int) {

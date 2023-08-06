@@ -74,9 +74,9 @@ object SpeechLandmarkerResultParser {
 
     fun getStateFromObjectDetectorResult(
         resultBundle: ObjectDetectorHelper.ResultBundle
-    ): LiquidGalaxyManager.State {
-        Log.d("resultObject", resultBundle.results.toString())
-        return LiquidGalaxyManager.State.IDLE
+    ): String {
+//        unfinished, should return State for object manipulation
+        return resultBundle.results[0].detections()[0].categories()[0].categoryName()
     }
 
     fun getStateFromSpeechResult(
