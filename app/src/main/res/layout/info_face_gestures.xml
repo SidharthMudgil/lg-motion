@@ -417,7 +417,7 @@
             android:layout_height="0dp"
             android:layout_margin="10dp"
             android:orientation="vertical"
-            app:constraint_referenced_ids="flow3, flow4,flow10,flow11, cv_command9"
+            app:constraint_referenced_ids="flow3,flow4,flow10,flow11,cv_command9"
             app:flow_verticalGap="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

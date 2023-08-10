@@ -17,14 +17,12 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import com.sidharth.lg_motion.databinding.FragmentCameraBinding
 import com.sidharth.lg_motion.domain.callback.ProgressIndicatorCallback
 import com.sidharth.lg_motion.domain.model.Feature
 import com.sidharth.lg_motion.util.FaceLandmarkerHelper
 import com.sidharth.lg_motion.util.HandLandmarkerHelper
-import com.sidharth.lg_motion.util.Info
 import com.sidharth.lg_motion.util.LiquidGalaxyManager
 import com.sidharth.lg_motion.util.SpeechLandmarkerResultParser
 import com.sidharth.lg_motion.util.NetworkUtils
@@ -152,11 +150,11 @@ class CameraFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _fragmentCameraBinding = FragmentCameraBinding.inflate(inflater)
-        fragmentCameraBinding.info.setOnClickListener {
-            view?.findNavController()?.navigate(
-                CameraFragmentDirections.actionCameraFragmentToInfoFragment(Info.FACE_GESTURES)
-            )
-        }
+//        fragmentCameraBinding.info.setOnClickListener {
+//            view?.findNavController()?.navigate(
+//                CameraFragmentDirections.actionCameraFragmentToInfoFragment(Info.FACE_GESTURES)
+//            )
+//        }
         return fragmentCameraBinding.root
     }
 
