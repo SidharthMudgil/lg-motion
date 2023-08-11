@@ -18,7 +18,7 @@ object KMLUtils {
             <ScreenOverlay>
             <name>Logo</name>
             <Icon>
-            <href>https://raw.githubusercontent.com/SidharthMudgil/lg-motion/85ddb452e2037772a40884ff3254d48d6ecc51de/logo.png</href>
+            <href>https://raw.githubusercontent.com/SidharthMudgil/lg-motion/5635d30c536b04004ce131c2c940bd3b0883a305/logo.png</href>
             </Icon>
             <overlayXY x="0" y="1" xunits="fraction" yunits="fraction"/>
             <screenXY x="0.02" y="0.95" xunits="fraction" yunits="fraction"/>
