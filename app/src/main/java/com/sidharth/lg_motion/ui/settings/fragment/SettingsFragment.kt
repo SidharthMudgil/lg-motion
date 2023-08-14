@@ -11,6 +11,7 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SeekBarPreference
 import androidx.preference.SwitchPreferenceCompat
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.sidharth.lg_motion.R
 import com.sidharth.lg_motion.domain.callback.ProgressIndicatorCallback
 import com.sidharth.lg_motion.ui.home.viewmodel.ProgressViewModel
@@ -162,32 +163,32 @@ class SettingsFragment : PreferenceFragmentCompat() {
         }
 
         setRefreshPreference.setOnPreferenceClickListener {
-            execute(Action.SET_REFRESH)
+            createShowConfirmationDialog { execute(Action.SET_REFRESH) }
             true
         }
 
         resetRefreshPreference.setOnPreferenceClickListener {
-            execute(Action.RESET_REFRESH)
+            createShowConfirmationDialog { execute(Action.RESET_REFRESH) }
             true
         }
 
         clearKmlPreference.setOnPreferenceClickListener {
-            execute(Action.CLEAR_KML)
+            createShowConfirmationDialog { execute(Action.CLEAR_KML) }
             true
         }
 
         relaunchPreference.setOnPreferenceClickListener {
-            execute(Action.RELAUNCH)
+            createShowConfirmationDialog { execute(Action.RELAUNCH) }
             true
         }
 
         restartPreference.setOnPreferenceClickListener {
-            execute(Action.RESTART)
+            createShowConfirmationDialog { execute(Action.RESTART) }
             true
         }
 
         shutdownPreference.setOnPreferenceClickListener {
-            execute(Action.SHUTDOWN)
+            createShowConfirmationDialog { execute(Action.SHUTDOWN) }
             true
         }
 
@@ -221,6 +222,20 @@ class SettingsFragment : PreferenceFragmentCompat() {
             )
             true
         }
+    }
+
+    private fun createShowConfirmationDialog(action: () -> Unit) {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle("Confirmation")
+            .setMessage("Are you sure you want to perform this action?")
+            .setPositiveButton("Confirm") { dialog, _ ->
+                dialog.dismiss()
+                action()
+            }
+            .setNegativeButton("Cancel") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
     }
 
     private fun execute(action: Action) {
@@ -304,7 +319,11 @@ class SettingsFragment : PreferenceFragmentCompat() {
         }
     }
 
-    private fun onDisconnection(message: String = "Connection Failed", showSnackbar: Boolean = true, updatePreference: Boolean = true) {
+    private fun onDisconnection(
+        message: String = "Connection Failed",
+        showSnackbar: Boolean = true,
+        updatePreference: Boolean = true
+    ) {
         if (isAdded && updatePreference) {
             connectPreference.title = requireContext().getString(R.string.connect)
             connectPreference.summary = requireContext().getString(R.string.connect_summary)
