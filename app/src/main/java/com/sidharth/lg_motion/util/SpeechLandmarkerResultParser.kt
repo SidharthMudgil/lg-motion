@@ -1,7 +1,5 @@
 package com.sidharth.lg_motion.util
 
-import android.util.Log
-
 object SpeechLandmarkerResultParser {
     private const val faceConfidence = 0.5
 
@@ -56,27 +54,6 @@ object SpeechLandmarkerResultParser {
             neutral > faceConfidence -> LiquidGalaxyManager.State.IDLE
             else -> LiquidGalaxyManager.State.IDLE
         }
-    }
-
-    fun getStateFromHandLandmarkerResult(
-        resultBundle: HandLandmarkerHelper.ResultBundle
-    ): LiquidGalaxyManager.State {
-        Log.d("resultLandmarksHand", resultBundle.results.toString())
-        return LiquidGalaxyManager.State.IDLE
-    }
-
-    fun getStateFromPoseLandmarkerResult(
-        resultBundle: PoseLandmarkerHelper.ResultBundle
-    ): LiquidGalaxyManager.State {
-        Log.d("resultLandmarksPose", resultBundle.results.toString())
-        return LiquidGalaxyManager.State.IDLE
-    }
-
-    fun getStateFromObjectDetectorResult(
-        resultBundle: ObjectDetectorHelper.ResultBundle
-    ): String {
-//        unfinished, should return State for object manipulation
-        return resultBundle.results[0].detections()[0].categories()[0].categoryName()
     }
 
     fun getStateFromSpeechResult(
@@ -140,4 +117,25 @@ object SpeechLandmarkerResultParser {
             else -> null
         }
     }
+
+//    fun getStateFromHandLandmarkerResult(
+//        resultBundle: HandLandmarkerHelper.ResultBundle
+//    ): LiquidGalaxyManager.State {
+//        Log.d("resultLandmarksHand", resultBundle.results.toString())
+//        return LiquidGalaxyManager.State.IDLE
+//    }
+//
+//    fun getStateFromPoseLandmarkerResult(
+//        resultBundle: PoseLandmarkerHelper.ResultBundle
+//    ): LiquidGalaxyManager.State {
+//        Log.d("resultLandmarksPose", resultBundle.results.toString())
+//        return LiquidGalaxyManager.State.IDLE
+//    }
+//
+//    fun getStateFromObjectDetectorResult(
+//        resultBundle: ObjectDetectorHelper.ResultBundle
+//    ): String {
+//        Log.d("resultDetectedObject", resultBundle.results[0].detections()[0].categories()[0].categoryName())
+//        return LiquidGalaxyManager.State.IDLE
+//    }
 }

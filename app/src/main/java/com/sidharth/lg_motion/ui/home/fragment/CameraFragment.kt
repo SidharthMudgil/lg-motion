@@ -22,12 +22,12 @@ import com.sidharth.lg_motion.databinding.FragmentCameraBinding
 import com.sidharth.lg_motion.domain.callback.ProgressIndicatorCallback
 import com.sidharth.lg_motion.domain.model.Feature
 import com.sidharth.lg_motion.util.FaceLandmarkerHelper
-import com.sidharth.lg_motion.util.HandLandmarkerHelper
+//import com.sidharth.lg_motion.util.HandLandmarkerHelper
 import com.sidharth.lg_motion.util.LiquidGalaxyManager
 import com.sidharth.lg_motion.util.SpeechLandmarkerResultParser
 import com.sidharth.lg_motion.util.NetworkUtils
-import com.sidharth.lg_motion.util.ObjectDetectorHelper
-import com.sidharth.lg_motion.util.PoseLandmarkerHelper
+//import com.sidharth.lg_motion.util.ObjectDetectorHelper
+//import com.sidharth.lg_motion.util.PoseLandmarkerHelper
 import kotlinx.coroutines.launch
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
@@ -43,9 +43,9 @@ class CameraFragment : Fragment() {
     private val args: CameraFragmentArgs by navArgs()
 
     private lateinit var faceLandmarkerHelper: FaceLandmarkerHelper
-    private lateinit var handLandmarkerHelper: HandLandmarkerHelper
-    private lateinit var poseLandmarkerHelper: PoseLandmarkerHelper
-    private lateinit var objectDetectorHelper: ObjectDetectorHelper
+//    private lateinit var handLandmarkerHelper: HandLandmarkerHelper
+//    private lateinit var poseLandmarkerHelper: PoseLandmarkerHelper
+//    private lateinit var objectDetectorHelper: ObjectDetectorHelper
 
     private var _fragmentCameraBinding: FragmentCameraBinding? = null
 
@@ -71,23 +71,23 @@ class CameraFragment : Fragment() {
                     }
                 }
 
-                Feature.Type.HAND.name -> {
-                    if (handLandmarkerHelper.isClose()) {
-                        handLandmarkerHelper.setupHandLandmarker()
-                    }
-                }
-
-                Feature.Type.POSE.name -> {
-                    if (poseLandmarkerHelper.isClose()) {
-                        poseLandmarkerHelper.setupPoseLandmarker()
-                    }
-                }
-
-                Feature.Type.OBJECT.name -> {
-                    if (objectDetectorHelper.isClose()) {
-                        objectDetectorHelper.setupObjectDetector()
-                    }
-                }
+//                Feature.Type.HAND.name -> {
+//                    if (handLandmarkerHelper.isClose()) {
+//                        handLandmarkerHelper.setupHandLandmarker()
+//                    }
+//                }
+//
+//                Feature.Type.POSE.name -> {
+//                    if (poseLandmarkerHelper.isClose()) {
+//                        poseLandmarkerHelper.setupPoseLandmarker()
+//                    }
+//                }
+//
+//                Feature.Type.OBJECT.name -> {
+//                    if (objectDetectorHelper.isClose()) {
+//                        objectDetectorHelper.setupObjectDetector()
+//                    }
+//                }
 
                 else -> {
                     if (faceLandmarkerHelper.isClose()) {
@@ -109,29 +109,29 @@ class CameraFragment : Fragment() {
                 }
             }
 
-            Feature.Type.HAND.name -> {
-                if (this::handLandmarkerHelper.isInitialized) {
-                    backgroundExecutor.execute {
-                        handLandmarkerHelper.clearHandLandmarker()
-                    }
-                }
-            }
-
-            Feature.Type.POSE.name -> {
-                if (this::poseLandmarkerHelper.isInitialized) {
-                    backgroundExecutor.execute {
-                        poseLandmarkerHelper.clearPoseLandmarker()
-                    }
-                }
-            }
-
-            Feature.Type.OBJECT.name -> {
-                if (this::objectDetectorHelper.isInitialized) {
-                    backgroundExecutor.execute {
-                        objectDetectorHelper.clearObjectDetector()
-                    }
-                }
-            }
+//            Feature.Type.HAND.name -> {
+//                if (this::handLandmarkerHelper.isInitialized) {
+//                    backgroundExecutor.execute {
+//                        handLandmarkerHelper.clearHandLandmarker()
+//                    }
+//                }
+//            }
+//
+//            Feature.Type.POSE.name -> {
+//                if (this::poseLandmarkerHelper.isInitialized) {
+//                    backgroundExecutor.execute {
+//                        poseLandmarkerHelper.clearPoseLandmarker()
+//                    }
+//                }
+//            }
+//
+//            Feature.Type.OBJECT.name -> {
+//                if (this::objectDetectorHelper.isInitialized) {
+//                    backgroundExecutor.execute {
+//                        objectDetectorHelper.clearObjectDetector()
+//                    }
+//                }
+//            }
         }
     }
 
@@ -176,30 +176,30 @@ class CameraFragment : Fragment() {
                     )
                 }
 
-                Feature.Type.HAND.name -> {
-                    handLandmarkerHelper = HandLandmarkerHelper(
-                        context = requireContext(),
-                        handLandmarkerHelperListener = handLandmarkerListener,
-                    )
-                }
-
-                Feature.Type.POSE.name -> {
-                    poseLandmarkerHelper = PoseLandmarkerHelper(
-                        context = requireContext(),
-                        poseLandmarkerHelperListener = poseLandMarkerListener,
-                    )
-                }
-
-                Feature.Type.OBJECT.name -> {
-                    objectDetectorHelper = ObjectDetectorHelper(
-                        context = requireContext(),
-                        objectDetectorListener = objectDetectorListener,
-                    )
-
-                    fragmentCameraBinding.viewFinder.post {
-                        setUpCamera()
-                    }
-                }
+//                Feature.Type.HAND.name -> {
+//                    handLandmarkerHelper = HandLandmarkerHelper(
+//                        context = requireContext(),
+//                        handLandmarkerHelperListener = handLandmarkerListener,
+//                    )
+//                }
+//
+//                Feature.Type.POSE.name -> {
+//                    poseLandmarkerHelper = PoseLandmarkerHelper(
+//                        context = requireContext(),
+//                        poseLandmarkerHelperListener = poseLandMarkerListener,
+//                    )
+//                }
+//
+//                Feature.Type.OBJECT.name -> {
+//                    objectDetectorHelper = ObjectDetectorHelper(
+//                        context = requireContext(),
+//                        objectDetectorListener = objectDetectorListener,
+//                    )
+//
+//                    fragmentCameraBinding.viewFinder.post {
+//                        setUpCamera()
+//                    }
+//                }
             }
         }
     }
@@ -240,23 +240,23 @@ class CameraFragment : Fragment() {
                         }
                     }
 
-                    Feature.Type.HAND.name -> {
-                        it.setAnalyzer(backgroundExecutor) { image ->
-                            detectHand(image)
-                        }
-                    }
-
-                    Feature.Type.POSE.name -> {
-                        it.setAnalyzer(backgroundExecutor) { image ->
-                            detectPose(image)
-                        }
-                    }
-
-                    Feature.Type.OBJECT.name -> {
-                        it.setAnalyzer(backgroundExecutor) { image ->
-                            detectObject(image)
-                        }
-                    }
+//                    Feature.Type.HAND.name -> {
+//                        it.setAnalyzer(backgroundExecutor) { image ->
+//                            detectHand(image)
+//                        }
+//                    }
+//
+//                    Feature.Type.POSE.name -> {
+//                        it.setAnalyzer(backgroundExecutor) { image ->
+//                            detectPose(image)
+//                        }
+//                    }
+//
+//                    Feature.Type.OBJECT.name -> {
+//                        it.setAnalyzer(backgroundExecutor) { image ->
+//                            detectObject(image)
+//                        }
+//                    }
                 }
             }
 
@@ -289,26 +289,26 @@ class CameraFragment : Fragment() {
         )
     }
 
-    private fun detectHand(imageProxy: ImageProxy) {
-        handLandmarkerHelper.detectLiveStream(
-            imageProxy = imageProxy,
-            isFrontCamera = cameraFacing == CameraSelector.LENS_FACING_FRONT
-        )
-    }
-
-    private fun detectPose(imageProxy: ImageProxy) {
-        poseLandmarkerHelper.detectLiveStream(
-            imageProxy = imageProxy,
-            isFrontCamera = cameraFacing == CameraSelector.LENS_FACING_FRONT
-        )
-    }
-
-    private fun detectObject(imageProxy: ImageProxy) {
-        objectDetectorHelper.detectLivestream(
-            imageProxy = imageProxy,
-            isFrontCamera = cameraFacing == CameraSelector.LENS_FACING_FRONT
-        )
-    }
+//    private fun detectHand(imageProxy: ImageProxy) {
+//        handLandmarkerHelper.detectLiveStream(
+//            imageProxy = imageProxy,
+//            isFrontCamera = cameraFacing == CameraSelector.LENS_FACING_FRONT
+//        )
+//    }
+//
+//    private fun detectPose(imageProxy: ImageProxy) {
+//        poseLandmarkerHelper.detectLiveStream(
+//            imageProxy = imageProxy,
+//            isFrontCamera = cameraFacing == CameraSelector.LENS_FACING_FRONT
+//        )
+//    }
+//
+//    private fun detectObject(imageProxy: ImageProxy) {
+//        objectDetectorHelper.detectLivestream(
+//            imageProxy = imageProxy,
+//            isFrontCamera = cameraFacing == CameraSelector.LENS_FACING_FRONT
+//        )
+//    }
 
     private val faceLandMarkerListener = object : FaceLandmarkerHelper.LandmarkerListener {
         override fun onResults(resultBundle: FaceLandmarkerHelper.ResultBundle) {
@@ -328,61 +328,61 @@ class CameraFragment : Fragment() {
         }
     }
 
-    private val handLandmarkerListener = object : HandLandmarkerHelper.LandmarkerListener {
-        override fun onResults(resultBundle: HandLandmarkerHelper.ResultBundle) {
-            val newState = SpeechLandmarkerResultParser.getStateFromHandLandmarkerResult(resultBundle)
-            if ((lastState == newState).not()) {
-                lastState = newState
-                execute(newState, null)
-            }
-        }
-
-        override fun onError(error: String, errorCode: Int) {
-            showError(error)
-        }
-
-
-        override fun onNoResults() {
-            idleState()
-        }
-    }
-
-    private val poseLandMarkerListener = object : PoseLandmarkerHelper.LandmarkerListener {
-        override fun onResults(resultBundle: PoseLandmarkerHelper.ResultBundle) {
-            val newState = SpeechLandmarkerResultParser.getStateFromPoseLandmarkerResult(resultBundle)
-            if ((lastState == newState).not()) {
-                lastState = newState
-                execute(newState, null)
-            }
-        }
-
-        override fun onError(error: String, errorCode: Int) {
-            showError(error)
-        }
-
-        override fun onNoResults() {
-            idleState()
-        }
-    }
-
-    private val objectDetectorListener = object : ObjectDetectorHelper.DetectorListener {
-        override fun onResults(resultBundle: ObjectDetectorHelper.ResultBundle) {
-            showSnackbar(SpeechLandmarkerResultParser.getStateFromObjectDetectorResult(resultBundle))
+//    private val handLandmarkerListener = object : HandLandmarkerHelper.LandmarkerListener {
+//        override fun onResults(resultBundle: HandLandmarkerHelper.ResultBundle) {
+//            val newState = SpeechLandmarkerResultParser.getStateFromHandLandmarkerResult(resultBundle)
+//            if ((lastState == newState).not()) {
+//                lastState = newState
+//                execute(newState, null)
+//            }
+//        }
+//
+//        override fun onError(error: String, errorCode: Int) {
+//            showError(error)
+//        }
+//
+//
+//        override fun onNoResults() {
+//            idleState()
+//        }
+//    }
+//
+//    private val poseLandMarkerListener = object : PoseLandmarkerHelper.LandmarkerListener {
+//        override fun onResults(resultBundle: PoseLandmarkerHelper.ResultBundle) {
+//            val newState = SpeechLandmarkerResultParser.getStateFromPoseLandmarkerResult(resultBundle)
+//            if ((lastState == newState).not()) {
+//                lastState = newState
+//                execute(newState, null)
+//            }
+//        }
+//
+//        override fun onError(error: String, errorCode: Int) {
+//            showError(error)
+//        }
+//
+//        override fun onNoResults() {
+//            idleState()
+//        }
+//    }
+//
+//    private val objectDetectorListener = object : ObjectDetectorHelper.DetectorListener {
+//        override fun onResults(resultBundle: ObjectDetectorHelper.ResultBundle) {
+//            showSnackbar(SpeechLandmarkerResultParser.getStateFromObjectDetectorResult(resultBundle))
 //            val newState = SpeechLandmarkerResultParser.getStateFromObjectDetectorResult(resultBundle)
 //            if ((lastState == newState).not()) {
 //                lastState = newState
 //                execute(newState, null)
 //            }
-        }
-
-        override fun onError(error: String, errorCode: Int) {
-            showError(error)
-        }
-
-        override fun onNoResults() {
-            idleState()
-        }
-    }
+//        }
+//
+//        override fun onError(error: String, errorCode: Int) {
+//            showError(error)
+//        }
+//
+//        override fun onNoResults() {
+//            idleState()
+//        }
+//    }
 
     private fun showError(error: String) {
         activity?.runOnUiThread {
