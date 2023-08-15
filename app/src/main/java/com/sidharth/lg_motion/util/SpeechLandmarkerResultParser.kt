@@ -43,14 +43,14 @@ object SpeechLandmarkerResultParser {
         val mouthRollUpper = blendshapes.getValue("mouthRollUpper")
 
         return when {
+            jawOpen > faceConfidence -> LiquidGalaxyManager.State.ZOOM_IN
             jawRight > faceConfidence -> LiquidGalaxyManager.State.MOVE_EAST
             jawLeft > faceConfidence -> LiquidGalaxyManager.State.MOVE_WEST
             mouthRollUpper > faceConfidence -> LiquidGalaxyManager.State.MOVE_NORTH
             mouthRollLower > faceConfidence -> LiquidGalaxyManager.State.MOVE_SOUTH
             eyeBlinkRight > faceConfidence && eyeBlinkLeft > faceConfidence || eyeSquintRight > faceConfidence && eyeSquintLeft > faceConfidence -> LiquidGalaxyManager.State.ZOOM_OUT
-            eyeBlinkLeft > faceConfidence || eyeSquintLeft > faceConfidence -> LiquidGalaxyManager.State.ROTATE_LEFT
-            eyeBlinkRight > faceConfidence || eyeSquintRight > faceConfidence -> LiquidGalaxyManager.State.ROTATE_RIGHT
-            jawOpen > faceConfidence -> LiquidGalaxyManager.State.ZOOM_IN
+            eyeBlinkLeft > faceConfidence -> LiquidGalaxyManager.State.ROTATE_LEFT
+            eyeBlinkRight > faceConfidence -> LiquidGalaxyManager.State.ROTATE_RIGHT
             neutral > faceConfidence -> LiquidGalaxyManager.State.IDLE
             else -> LiquidGalaxyManager.State.IDLE
         }

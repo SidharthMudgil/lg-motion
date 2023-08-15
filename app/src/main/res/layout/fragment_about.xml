@@ -262,7 +262,7 @@
             android:background="@null"
             android:contentDescription="@null"
             android:src="@drawable/ic_github"
-            app:tint="@color/base_theme_light_onSecondaryContainer" />
+            app:tint="@color/base_theme_light_onPrimaryContainer" />
 
         <ImageButton
             android:id="@+id/org_discord"
@@ -325,6 +325,40 @@
             app:layout_constraintVertical_bias="0" />
 
         <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/label_credits"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:includeFontPadding="false"
+            android:text="@string/label_credits"
+            android:textAlignment="center"
+            android:textColor="@color/base_theme_light_onPrimaryContainer"
+            android:textFontWeight="800"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/flow2"
+            app:layout_constraintVertical_bias="0" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/credits"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:includeFontPadding="false"
+            android:lineSpacingExtra="3dp"
+            android:textAlignment="center"
+            android:textColor="@color/base_theme_light_onPrimaryContainer"
+            android:textFontWeight="500"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/label_credits"
+            app:layout_constraintVertical_bias="0" />
+
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/app_version"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -337,7 +371,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/org_instagram"
+            app:layout_constraintTop_toBottomOf="@+id/credits"
             app:layout_constraintVertical_bias="0"
             tools:text="version 1.0" />
 

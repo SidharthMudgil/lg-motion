@@ -79,4 +79,5 @@
     <string name="move_east">Move East</string>
     <string name="move_south">Move South</string>
     <string name="move_north">Move North</string>
+    <string name="label_credits">Credits</string>
 </resources>

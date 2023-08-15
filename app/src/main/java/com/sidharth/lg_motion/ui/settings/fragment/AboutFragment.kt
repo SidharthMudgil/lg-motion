@@ -47,6 +47,15 @@ class AboutFragment : Fragment() {
         The Liquid Galaxy Project, while making use of Google Earth software, does not develop the Google Earth code-base itself. Google Earth is not open source software, although it is free (as in beer). Instead, the Liquid Galaxy Project works on extending the Liquid Galaxy system with open source software both improving its administration and enabling open source applications, so that content of various types can be displayed in the immersive panoramic environment.
     """.trimIndent().trimMargin()
 
+    private val credits = """
+        Navdeep(aka: Lord of the IA)
+        Mohamed(the relentless APK tester)
+        Imad Laichi(the careful document crafter)
+        Rafel Salguerio(the Rocky Linux server handler)
+        Mario Ezquerro(Google Developer Expert Cloud, the real SUDO master)
+        Andreu Ibanez(Liquid Galaxy administrator)
+    """.trimIndent().trimMargin()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -110,6 +119,7 @@ class AboutFragment : Fragment() {
 
         binding.appDescription.text = appDescription
         binding.orgDescription.text = orgDescription
+        binding.credits.text = credits
         binding.appVersion.text = version
 
         return binding.root
