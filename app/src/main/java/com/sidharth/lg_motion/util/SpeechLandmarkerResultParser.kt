@@ -23,8 +23,8 @@ object SpeechLandmarkerResultParser {
         resultBundle: FaceLandmarkerHelper.ResultBundle
     ): LiquidGalaxyManager.State {
         val categoryNames = listOf(
-            "neutral", "jawOpen", "jawLeft", "jawRight", "mouthRollUpper", "mouthRollLower",
-            "eyeBlinkRight", "eyeBlinkLeft", "eyeSquintLeft", "eyeSquintRight"
+            "neutral", "jawOpen", "jawLeft", "jawRight", "mouthLeft", "mouthRight",
+            "mouthRollUpper", "mouthRollLower", "eyeBlinkRight", "eyeBlinkLeft",
         )
         val blendshapes = resultBundle.result.faceBlendshapes().get()[0]
             .associateBy { it.categoryName().trim('_') }
