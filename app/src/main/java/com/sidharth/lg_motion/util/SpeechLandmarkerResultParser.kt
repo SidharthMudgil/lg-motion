@@ -34,21 +34,22 @@ object SpeechLandmarkerResultParser {
         val neutral = blendshapes.getValue("neutral")
         val eyeBlinkLeft = blendshapes.getValue("eyeBlinkLeft")
         val eyeBlinkRight = blendshapes.getValue("eyeBlinkRight")
-        val eyeSquintLeft = blendshapes.getValue("eyeSquintLeft")
-        val eyeSquintRight = blendshapes.getValue("eyeSquintRight")
         val jawLeft = blendshapes.getValue("jawLeft")
         val jawOpen = blendshapes.getValue("jawOpen")
         val jawRight = blendshapes.getValue("jawRight")
         val mouthRollLower = blendshapes.getValue("mouthRollLower")
         val mouthRollUpper = blendshapes.getValue("mouthRollUpper")
+        val mouthLeft = blendshapes.getValue("mouthLeft")
+        val mouthRight = blendshapes.getValue("mouthRight")
 
         return when {
             jawOpen > faceConfidence -> LiquidGalaxyManager.State.ZOOM_IN
+            mouthLeft > faceConfidence -> LiquidGalaxyManager.State.ZOOM_IN
             jawRight > faceConfidence -> LiquidGalaxyManager.State.MOVE_EAST
             jawLeft > faceConfidence -> LiquidGalaxyManager.State.MOVE_WEST
             mouthRollUpper > faceConfidence -> LiquidGalaxyManager.State.MOVE_NORTH
             mouthRollLower > faceConfidence -> LiquidGalaxyManager.State.MOVE_SOUTH
-            eyeBlinkRight > faceConfidence && eyeBlinkLeft > faceConfidence || eyeSquintRight > faceConfidence && eyeSquintLeft > faceConfidence -> LiquidGalaxyManager.State.ZOOM_OUT
+            mouthRight > faceConfidence -> LiquidGalaxyManager.State.ZOOM_OUT
             eyeBlinkLeft > faceConfidence -> LiquidGalaxyManager.State.ROTATE_LEFT
             eyeBlinkRight > faceConfidence -> LiquidGalaxyManager.State.ROTATE_RIGHT
             neutral > faceConfidence -> LiquidGalaxyManager.State.IDLE
