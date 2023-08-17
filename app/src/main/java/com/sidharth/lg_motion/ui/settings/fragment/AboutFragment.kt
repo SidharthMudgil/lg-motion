@@ -48,12 +48,12 @@ class AboutFragment : Fragment() {
     """.trimIndent().trimMargin()
 
     private val credits = """
-        Navdeep(aka: Lord of the IA)
-        Mohamed(the relentless APK tester)
-        Imad Laichi(the careful document crafter)
-        Rafel Salguerio(the Rocky Linux server handler)
-        Mario Ezquerro(Google Developer Expert Cloud, the real SUDO master)
-        Andreu Ibanez(Liquid Galaxy administrator)
+        Navdeep (aka: Lord of the IA)
+        Mohamed (the relentless APK tester)
+        Imad Laichi (the careful document crafter)
+        Rafel Salguerio (the Rocky Linux server handler)
+        Mario Ezquerro (Google Developer Expert Cloud, the real SUDO master)
+        Andreu Ibanez (Liquid Galaxy administrator)
     """.trimIndent().trimMargin()
 
     override fun onCreateView(
