@@ -13,12 +13,11 @@
         android:textAllCaps="true"
         android:textColor="@color/base_theme_light_primary"
         android:textFontWeight="600"
-        android:textSize="28sp"
+        android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@id/guideline"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1" />
+        app:layout_constraintTop_toBottomOf="@id/layout"/>
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
@@ -42,8 +41,8 @@
 
     <ImageButton
         android:id="@+id/listen"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:layout_margin="15dp"
         android:background="@null"
         android:clickable="true"

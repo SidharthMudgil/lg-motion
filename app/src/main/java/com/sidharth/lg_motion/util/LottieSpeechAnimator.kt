@@ -43,6 +43,9 @@ class LottieSpeechAnimator(
     }
 
     fun stop() {
+        if (animationView.isAnimating) {
+            animationView.cancelAnimation()
+        }
         speechRecognizer?.stopListening()
         speechRecognizer?.destroy()
         speechRecognizer = null
@@ -51,7 +54,7 @@ class LottieSpeechAnimator(
     private inner class SpeechRecognitionListener : RecognitionListener {
         override fun onReadyForSpeech(params: Bundle?) {
             if (!animationView.isAnimating) {
-                animationView.resumeAnimation()
+                animationView.playAnimation()
             }
         }
 
@@ -76,7 +79,7 @@ class LottieSpeechAnimator(
         }
 
         override fun onEndOfSpeech() {
-            animationView.pauseAnimation()
+            animationView.cancelAnimation()
         }
 
         override fun onBeginningOfSpeech() {
@@ -87,25 +90,5 @@ class LottieSpeechAnimator(
         override fun onBufferReceived(p0: ByteArray?) {}
 
         override fun onEvent(eventType: Int, params: Bundle?) {}
-    }
-
-    companion object {
-        private var ema = 0.0
-        private const val alpha = 0.8
-        private const val preGain = 0.3
-        private const val minDb = 0.0
-        private const val maxDb = 80.0
-
-        private fun cleanUpSignal(rms: Float): Double {
-            ema = ema * alpha + (1 - alpha) * rms
-            val preGained = preGain * ema
-            return 20.0 * kotlin.math.log10(preGained)
-        }
-
-        private fun getProgress(db: Double): Double {
-            var perc = db.coerceAtLeast(minDb) - minDb
-            perc /= (maxDb - minDb)
-            return perc
-        }
     }
 }

@@ -39,7 +39,6 @@ class AudioFragment : Fragment(), LottieSpeechAnimator.OnSpeechRecognitionListen
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding.animationView.playAnimation()
         binding.listen.setOnClickListener {
             lottieSpeechAnimator.stop()
             lottieSpeechAnimator.start()
