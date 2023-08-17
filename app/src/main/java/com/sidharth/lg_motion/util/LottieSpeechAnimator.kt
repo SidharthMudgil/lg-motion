@@ -67,14 +67,12 @@ class LottieSpeechAnimator(
             matches?.get(0)?.let { result ->
                 listener?.onSpeechRecognitionResult(result.lowercase())
                 stop()
-                start()
             }
         }
 
         override fun onError(error: Int) {
             listener?.onSpeechRecognitionError("Speech recognition error occurred.")
             stop()
-            start()
         }
 
         override fun onEndOfSpeech() {

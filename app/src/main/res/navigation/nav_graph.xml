@@ -76,11 +76,7 @@
         android:id="@+id/audioFragment"
         android:name="com.sidharth.lg_motion.ui.home.fragment.AudioFragment"
         android:label="fragment_audio"
-        tools:layout="@layout/fragment_audio" >
-        <action
-            android:id="@+id/action_audioFragment_to_infoFragment"
-            app:destination="@id/infoFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_audio" />
     <fragment
         android:id="@+id/infoFragment"
         android:name="com.sidharth.lg_motion.ui.home.fragment.InfoFragment"

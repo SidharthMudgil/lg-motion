@@ -9,9 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.findNavController
 import com.sidharth.lg_motion.databinding.FragmentAudioBinding
-import com.sidharth.lg_motion.util.Info
 import com.sidharth.lg_motion.util.LiquidGalaxyManager
 import com.sidharth.lg_motion.util.LottieSpeechAnimator
 import com.sidharth.lg_motion.util.NetworkUtils
@@ -41,12 +39,10 @@ class AudioFragment : Fragment(), LottieSpeechAnimator.OnSpeechRecognitionListen
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        lottieSpeechAnimator.start()
         binding.animationView.playAnimation()
-        binding.info.setOnClickListener {
-            view?.findNavController()?.navigate(
-                AudioFragmentDirections.actionAudioFragmentToInfoFragment(Info.VOICE_COMMANDS)
-            )
+        binding.listen.setOnClickListener {
+            lottieSpeechAnimator.stop()
+            lottieSpeechAnimator.start()
         }
         return binding.root
     }
