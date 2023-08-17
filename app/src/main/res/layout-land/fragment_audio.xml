@@ -8,7 +8,7 @@
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/result"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textAllCaps="true"
         android:textColor="@color/base_theme_light_primary"
@@ -16,16 +16,18 @@
         android:textSize="28sp"
         app:layout_constraintBottom_toTopOf="@id/guideline"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1" />
+        app:layout_constraintVertical_bias="1"
+        app:layout_constraintWidth_percent=".5" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent=".7" />
+        app:layout_constraintGuide_percent=".4" />
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/animationView"
@@ -33,17 +35,17 @@
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent=".5"
+        app:layout_constraintHorizontal_bias="0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1"
+        app:layout_constraintWidth_percent=".5"
         app:lottie_loop="true"
         app:lottie_rawRes="@raw/audio_visual" />
 
     <ImageButton
         android:id="@+id/listen"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_margin="15dp"
         android:background="@null"
         android:clickable="true"
@@ -51,22 +53,21 @@
         android:scaleType="centerCrop"
         android:src="@drawable/ic_mic"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/layout"
-        app:layout_constraintVertical_bias="0.9"
+        app:layout_constraintEnd_toEndOf="@id/animationView"
+        app:layout_constraintStart_toStartOf="@id/animationView"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias=".9"
         app:tint="@color/base_theme_light_primary" />
 
     <include
-        android:id="@+id/layout"
         layout="@layout/info_voice_commands"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent=".5"
+        app:layout_constraintHorizontal_bias="1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0" />
+        app:layout_constraintWidth_percent=".5" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.helper.widget.Flow
+        android:id="@+id/flow5"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_rounded"
+        android:orientation="vertical"
+        android:padding="15dp"
+        app:constraint_referenced_ids="command2,command3,command4,command5"
+        app:flow_horizontalAlign="center"
+        app:flow_verticalAlign="center"
+        app:flow_verticalGap="15dp"
+        app:flow_verticalStyle="spread" />
+
+    <androidx.constraintlayout.helper.widget.Flow
+        android:id="@+id/flow6"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_rounded"
+        android:orientation="vertical"
+        android:padding="15dp"
+        app:constraint_referenced_ids="command6,command7"
+        app:flow_horizontalAlign="center"
+        app:flow_verticalAlign="center"
+        app:flow_verticalGap="15dp"
+        app:flow_verticalStyle="spread" />
+
+    <androidx.constraintlayout.helper.widget.Flow
+        android:id="@+id/flow7"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_rounded"
+        android:orientation="vertical"
+        android:padding="15dp"
+        app:constraint_referenced_ids="command8,command9"
+        app:flow_horizontalAlign="center"
+        app:flow_verticalAlign="center"
+        app:flow_verticalGap="15dp"
+        app:flow_verticalStyle="spread" />
+
+    <androidx.constraintlayout.helper.widget.Flow
+        android:id="@+id/flow8"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_rounded"
+        android:orientation="vertical"
+        android:padding="15dp"
+        app:constraint_referenced_ids="command1,command10,command11"
+        app:flow_horizontalAlign="center"
+        app:flow_verticalAlign="center"
+        app:flow_verticalGap="15dp"
+        app:flow_verticalStyle="spread" />
+
+    <androidx.constraintlayout.helper.widget.Flow
+        android:id="@+id/flow9"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="10dp"
+        android:orientation="vertical"
+        app:constraint_referenced_ids="flow5,flow6,flow7,flow8"
+        app:flow_horizontalAlign="center"
+        app:flow_verticalAlign="center"
+        app:flow_verticalGap="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/command1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_rounded_outlined"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:padding="10dp"
+        android:text="@string/stop"
+        android:textAlignment="center"
+        android:textColor="@color/base_theme_light_primary"
+        android:textFontWeight="700"
+        android:textSize="18sp" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/command2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_rounded_outlined"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:padding="10dp"
+        android:text="@string/move_north"
+        android:textAlignment="center"
+        android:textColor="@color/base_theme_light_primary"
+        android:textFontWeight="700"
+        android:textSize="18sp" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/command3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_rounded_outlined"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:padding="10dp"
+        android:text="@string/move_south"
+        android:textAlignment="center"
+        android:textColor="@color/base_theme_light_primary"
+        android:textFontWeight="700"
+        android:textSize="18sp" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/command4"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_rounded_outlined"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:padding="10dp"
+        android:text="@string/move_east"
+        android:textAlignment="center"
+        android:textColor="@color/base_theme_light_primary"
+        android:textFontWeight="700"
+        android:textSize="18sp" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/command5"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_rounded_outlined"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:padding="10dp"
+        android:text="@string/move_west"
+        android:textAlignment="center"
+        android:textColor="@color/base_theme_light_primary"
+        android:textFontWeight="700"
+        android:textSize="18sp" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/command6"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_rounded_outlined"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:padding="10dp"
+        android:text="@string/rotate_left"
+        android:textAlignment="center"
+        android:textColor="@color/base_theme_light_primary"
+        android:textFontWeight="700"
+        android:textSize="18sp" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/command7"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_rounded_outlined"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:padding="10dp"
+        android:text="@string/rotate_right"
+        android:textAlignment="center"
+        android:textColor="@color/base_theme_light_primary"
+        android:textFontWeight="700"
+        android:textSize="18sp" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/command8"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_rounded_outlined"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:padding="10dp"
+        android:text="@string/zoom_in"
+        android:textAlignment="center"
+        android:textColor="@color/base_theme_light_primary"
+        android:textFontWeight="700"
+        android:textSize="18sp" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/command9"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_rounded_outlined"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:padding="10dp"
+        android:text="@string/zoom_out"
+        android:textAlignment="center"
+        android:textColor="@color/base_theme_light_primary"
+        android:textFontWeight="700"
+        android:textSize="18sp" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/command10"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_rounded_outlined"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:padding="10dp"
+        android:text="@string/planet"
+        android:textAlignment="center"
+        android:textColor="@color/base_theme_light_primary"
+        android:textFontWeight="700"
+        android:textSize="18sp" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/command11"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_rounded_outlined"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:padding="10dp"
+        android:text="@string/fly_to"
+        android:textAlignment="center"
+        android:textColor="@color/base_theme_light_primary"
+        android:textFontWeight="700"
+        android:textSize="18sp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
