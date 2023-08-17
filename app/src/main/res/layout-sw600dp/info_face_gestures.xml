@@ -10,7 +10,7 @@
         android:layout_height="0dp"
         android:layout_margin="10dp"
         android:orientation="vertical"
-        app:constraint_referenced_ids="flow3,flow4"
+        app:constraint_referenced_ids="flow1,flow2,flow3"
         app:flow_verticalGap="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -18,34 +18,33 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.helper.widget.Flow
-        android:id="@+id/flow3"
+        android:id="@+id/flow1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:constraint_referenced_ids="cv_command1,cv_command2,cv_command3,cv_command4,cv_command5"
+        app:constraint_referenced_ids="cv_command1,cv_command2,cv_command3"
         app:flow_horizontalGap="20dp"
         app:flow_horizontalStyle="spread_inside" />
 
     <androidx.constraintlayout.helper.widget.Flow
-        android:id="@+id/flow4"
+        android:id="@+id/flow2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:constraint_referenced_ids="cv_command6,cv_command7,cv_camera,cv_command8,cv_command9"
+        app:constraint_referenced_ids="cv_command4,cv_command5,cv_command6"
+        app:flow_horizontalGap="20dp"
+        app:flow_horizontalStyle="spread_inside" />
+
+    <androidx.constraintlayout.helper.widget.Flow
+        android:id="@+id/flow3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="cv_command7,cv_command8,cv_command9"
         app:flow_horizontalGap="20dp"
         app:flow_horizontalStyle="spread_inside" />
 
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/cv_camera"
-        android:layout_width="0dp"
-        android:layout_height="350dp"
-        app:cardBackgroundColor="@color/base_theme_light_secondaryContainer"
-        app:cardCornerRadius="15dp"
-        app:cardElevation="0dp"
-        app:strokeWidth="0dp" />
-
-    <com.google.android.material.card.MaterialCardView
         android:id="@+id/cv_command1"
         android:layout_width="0dp"
-        android:layout_height="350dp"
+        android:layout_height="200dp"
         app:cardBackgroundColor="@color/base_theme_light_secondaryContainer"
         app:cardCornerRadius="15dp"
         app:cardElevation="0dp"
@@ -86,7 +85,7 @@
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cv_command2"
         android:layout_width="0dp"
-        android:layout_height="350dp"
+        android:layout_height="200dp"
         app:cardBackgroundColor="@color/base_theme_light_secondaryContainer"
         app:cardCornerRadius="15dp"
         app:cardElevation="0dp"
@@ -127,7 +126,7 @@
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cv_command3"
         android:layout_width="0dp"
-        android:layout_height="350dp"
+        android:layout_height="200dp"
         app:cardBackgroundColor="@color/base_theme_light_secondaryContainer"
         app:cardCornerRadius="15dp"
         app:cardElevation="0dp"
@@ -169,7 +168,7 @@
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cv_command4"
         android:layout_width="0dp"
-        android:layout_height="350dp"
+        android:layout_height="200dp"
         app:cardBackgroundColor="@color/base_theme_light_secondaryContainer"
         app:cardCornerRadius="15dp"
         app:cardElevation="0dp"
@@ -210,7 +209,7 @@
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cv_command5"
         android:layout_width="0dp"
-        android:layout_height="350dp"
+        android:layout_height="200dp"
         app:cardBackgroundColor="@color/base_theme_light_secondaryContainer"
         app:cardCornerRadius="15dp"
         app:cardElevation="0dp"
@@ -252,7 +251,7 @@
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cv_command6"
         android:layout_width="0dp"
-        android:layout_height="350dp"
+        android:layout_height="200dp"
         app:cardBackgroundColor="@color/base_theme_light_secondaryContainer"
         app:cardCornerRadius="15dp"
         app:cardElevation="0dp"
@@ -293,7 +292,7 @@
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cv_command7"
         android:layout_width="0dp"
-        android:layout_height="350dp"
+        android:layout_height="200dp"
         app:cardBackgroundColor="@color/base_theme_light_secondaryContainer"
         app:cardCornerRadius="15dp"
         app:cardElevation="0dp"
@@ -334,7 +333,7 @@
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cv_command8"
         android:layout_width="0dp"
-        android:layout_height="350dp"
+        android:layout_height="200dp"
         app:cardBackgroundColor="@color/base_theme_light_secondaryContainer"
         app:cardCornerRadius="15dp"
         app:cardElevation="0dp"
@@ -375,7 +374,7 @@
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cv_command9"
         android:layout_width="0dp"
-        android:layout_height="350dp"
+        android:layout_height="200dp"
         app:cardBackgroundColor="@color/base_theme_light_secondaryContainer"
         app:cardCornerRadius="15dp"
         app:cardElevation="0dp"

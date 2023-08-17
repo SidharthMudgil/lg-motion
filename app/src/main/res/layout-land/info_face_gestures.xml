@@ -10,7 +10,7 @@
         android:layout_height="0dp"
         android:layout_margin="10dp"
         android:orientation="vertical"
-        app:constraint_referenced_ids="flow3,flow4"
+        app:constraint_referenced_ids="flow1,flow2,flow3"
         app:flow_verticalGap="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -18,34 +18,33 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.helper.widget.Flow
-        android:id="@+id/flow3"
+        android:id="@+id/flow1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:constraint_referenced_ids="cv_command1,cv_command2,cv_command3,cv_command4,cv_command5"
+        app:constraint_referenced_ids="cv_command1,cv_command2,cv_command3"
         app:flow_horizontalGap="20dp"
         app:flow_horizontalStyle="spread_inside" />
 
     <androidx.constraintlayout.helper.widget.Flow
-        android:id="@+id/flow4"
+        android:id="@+id/flow2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:constraint_referenced_ids="cv_command6,cv_command7,cv_camera,cv_command8,cv_command9"
+        app:constraint_referenced_ids="cv_command4,cv_command5,cv_command6"
+        app:flow_horizontalGap="20dp"
+        app:flow_horizontalStyle="spread_inside" />
+
+    <androidx.constraintlayout.helper.widget.Flow
+        android:id="@+id/flow3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="cv_command7,cv_command8,cv_command9"
         app:flow_horizontalGap="20dp"
         app:flow_horizontalStyle="spread_inside" />
 
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/cv_camera"
-        android:layout_width="0dp"
-        android:layout_height="150dp"
-        app:cardBackgroundColor="@color/base_theme_light_secondaryContainer"
-        app:cardCornerRadius="15dp"
-        app:cardElevation="0dp"
-        app:strokeWidth="0dp" />
-
-    <com.google.android.material.card.MaterialCardView
         android:id="@+id/cv_command1"
         android:layout_width="0dp"
-        android:layout_height="150dp"
+        android:layout_height="100dp"
         app:cardBackgroundColor="@color/base_theme_light_secondaryContainer"
         app:cardCornerRadius="15dp"
         app:cardElevation="0dp"
@@ -76,7 +75,7 @@
         android:text="@string/move_north"
         android:textColor="@color/base_theme_light_primary"
         android:textFontWeight="700"
-        android:textSize="18sp"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@+id/cv_command1"
         app:layout_constraintEnd_toEndOf="@+id/cv_command1"
         app:layout_constraintStart_toStartOf="@+id/cv_command1"
@@ -86,7 +85,7 @@
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cv_command2"
         android:layout_width="0dp"
-        android:layout_height="150dp"
+        android:layout_height="100dp"
         app:cardBackgroundColor="@color/base_theme_light_secondaryContainer"
         app:cardCornerRadius="15dp"
         app:cardElevation="0dp"
@@ -117,7 +116,7 @@
         android:text="@string/move_south"
         android:textColor="@color/base_theme_light_primary"
         android:textFontWeight="700"
-        android:textSize="18sp"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@+id/cv_command2"
         app:layout_constraintEnd_toEndOf="@+id/cv_command2"
         app:layout_constraintStart_toStartOf="@+id/cv_command2"
@@ -127,7 +126,7 @@
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cv_command3"
         android:layout_width="0dp"
-        android:layout_height="150dp"
+        android:layout_height="100dp"
         app:cardBackgroundColor="@color/base_theme_light_secondaryContainer"
         app:cardCornerRadius="15dp"
         app:cardElevation="0dp"
@@ -158,7 +157,7 @@
         android:text="@string/move_east"
         android:textColor="@color/base_theme_light_primary"
         android:textFontWeight="700"
-        android:textSize="18sp"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@+id/cv_command3"
         app:layout_constraintEnd_toEndOf="@+id/cv_command3"
         app:layout_constraintStart_toStartOf="@+id/cv_command3"
@@ -169,7 +168,7 @@
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cv_command4"
         android:layout_width="0dp"
-        android:layout_height="150dp"
+        android:layout_height="100dp"
         app:cardBackgroundColor="@color/base_theme_light_secondaryContainer"
         app:cardCornerRadius="15dp"
         app:cardElevation="0dp"
@@ -200,7 +199,7 @@
         android:text="@string/move_west"
         android:textColor="@color/base_theme_light_primary"
         android:textFontWeight="700"
-        android:textSize="18sp"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@+id/cv_command4"
         app:layout_constraintEnd_toEndOf="@+id/cv_command4"
         app:layout_constraintStart_toStartOf="@+id/cv_command4"
@@ -210,7 +209,7 @@
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cv_command5"
         android:layout_width="0dp"
-        android:layout_height="150dp"
+        android:layout_height="100dp"
         app:cardBackgroundColor="@color/base_theme_light_secondaryContainer"
         app:cardCornerRadius="15dp"
         app:cardElevation="0dp"
@@ -241,7 +240,7 @@
         android:text="@string/rotate_left"
         android:textColor="@color/base_theme_light_primary"
         android:textFontWeight="700"
-        android:textSize="18sp"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@+id/cv_command5"
         app:layout_constraintEnd_toEndOf="@+id/cv_command5"
         app:layout_constraintStart_toStartOf="@+id/cv_command5"
@@ -252,7 +251,7 @@
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cv_command6"
         android:layout_width="0dp"
-        android:layout_height="150dp"
+        android:layout_height="100dp"
         app:cardBackgroundColor="@color/base_theme_light_secondaryContainer"
         app:cardCornerRadius="15dp"
         app:cardElevation="0dp"
@@ -283,7 +282,7 @@
         android:text="@string/rotate_right"
         android:textColor="@color/base_theme_light_primary"
         android:textFontWeight="700"
-        android:textSize="18sp"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@+id/cv_command6"
         app:layout_constraintEnd_toEndOf="@+id/cv_command6"
         app:layout_constraintStart_toStartOf="@+id/cv_command6"
@@ -293,7 +292,7 @@
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cv_command7"
         android:layout_width="0dp"
-        android:layout_height="150dp"
+        android:layout_height="100dp"
         app:cardBackgroundColor="@color/base_theme_light_secondaryContainer"
         app:cardCornerRadius="15dp"
         app:cardElevation="0dp"
@@ -324,7 +323,7 @@
         android:text="@string/zoom_in"
         android:textColor="@color/base_theme_light_primary"
         android:textFontWeight="700"
-        android:textSize="18sp"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@+id/cv_command7"
         app:layout_constraintEnd_toEndOf="@+id/cv_command7"
         app:layout_constraintStart_toStartOf="@+id/cv_command7"
@@ -334,7 +333,7 @@
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cv_command8"
         android:layout_width="0dp"
-        android:layout_height="150dp"
+        android:layout_height="100dp"
         app:cardBackgroundColor="@color/base_theme_light_secondaryContainer"
         app:cardCornerRadius="15dp"
         app:cardElevation="0dp"
@@ -365,7 +364,7 @@
         android:text="@string/zoom_out"
         android:textColor="@color/base_theme_light_primary"
         android:textFontWeight="700"
-        android:textSize="18sp"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@+id/cv_command8"
         app:layout_constraintEnd_toEndOf="@+id/cv_command8"
         app:layout_constraintStart_toStartOf="@+id/cv_command8"
@@ -375,7 +374,7 @@
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cv_command9"
         android:layout_width="0dp"
-        android:layout_height="150dp"
+        android:layout_height="100dp"
         app:cardBackgroundColor="@color/base_theme_light_secondaryContainer"
         app:cardCornerRadius="15dp"
         app:cardElevation="0dp"
@@ -406,7 +405,7 @@
         android:text="@string/stop"
         android:textColor="@color/base_theme_light_primary"
         android:textFontWeight="700"
-        android:textSize="18sp"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@+id/cv_command9"
         app:layout_constraintEnd_toEndOf="@+id/cv_command9"
         app:layout_constraintStart_toStartOf="@+id/cv_command9"
