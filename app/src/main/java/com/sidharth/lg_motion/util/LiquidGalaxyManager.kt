@@ -118,6 +118,8 @@ class LiquidGalaxyManager(
         for (i in 2..screens) {
             execute("chmod 777 /var/www/html/kml/slave_$i.kml; echo '' > /var/www/html/kml/slave_$i.kml")
         }
+        execute("echo '' > /tmp/query.txt")
+        execute("echo '' > /var/www/html/kmls.txt")
     }
 
     suspend fun uploadFile(name: String, file: File) {
