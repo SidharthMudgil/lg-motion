@@ -34,11 +34,6 @@ class LiquidGalaxyManager(
             return if (screens == 1) 1 else (screens / 2) + 2
         }
 
-    private val rightScreen: Int
-        get() {
-            return if (screens == 1) 1 else (screens / 2) + 1
-        }
-
     val connected: Boolean
         get() {
             return session?.isConnected ?: false
@@ -187,7 +182,7 @@ class LiquidGalaxyManager(
     }
 
     suspend fun relaunch() {
-        for (i in screens downTo 1) {
+        for (i in 1..screens) {
             val command = """/home/$username/bin/lg-relaunch > /home/$username/log.txt;
                 RELAUNCH_CMD="if [ -f /etc/init/lxdm.conf ]; then
                     export SERVICE=lxdm
@@ -208,13 +203,13 @@ class LiquidGalaxyManager(
     }
 
     suspend fun restart() {
-        for (i in screens downTo 1) {
+        for (i in 1..screens) {
             execute("""sshpass -p $password ssh -t lg$i "echo $password | sudo -S reboot"""")
         }
     }
 
     suspend fun shutdown() {
-        for (i in screens downTo 1) {
+        for (i in 1..screens) {
             execute("""sshpass -p $password ssh -t lg$i "echo $password | sudo -S poweroff"""")
         }
     }
