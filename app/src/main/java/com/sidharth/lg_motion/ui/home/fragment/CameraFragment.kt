@@ -150,11 +150,6 @@ class CameraFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _fragmentCameraBinding = FragmentCameraBinding.inflate(inflater)
-//        fragmentCameraBinding.info.setOnClickListener {
-//            view?.findNavController()?.navigate(
-//                CameraFragmentDirections.actionCameraFragmentToInfoFragment(Info.FACE_GESTURES)
-//            )
-//        }
         return fragmentCameraBinding.root
     }
 
