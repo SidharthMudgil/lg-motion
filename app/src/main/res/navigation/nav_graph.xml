@@ -26,7 +26,7 @@
 
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="com.sidharth.lg_motion.ui.settings.fragment.SettingsFragment"
+        android:name="com.sidharth.lg_motion.ui.settings.fragment.RootSettingsFragment"
         android:label="fragment_settings">
         <action
             android:id="@+id/action_settingsFragment_to_aboutFragment"

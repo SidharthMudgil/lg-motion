@@ -116,6 +116,36 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+        android:key="interaction_category"
+        android:title="Interaction"
+        app:iconSpaceReserved="false">
+
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="camera"
+            android:summaryOff="Use the device's back camera"
+            android:summaryOn="Use the device's front camera"
+            android:title="Camera Preference"
+            app:iconSpaceReserved="false" />
+
+        <Preference
+            android:key="face"
+            app:fragment="com.sidharth.lg_motion.ui.settings.fragment.FacialGesturesSettingsFragment"
+            android:summary="Adjust facial detection settings and bindings"
+            android:title="Facial Gestures"
+            app:iconSpaceReserved="false" />
+
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="voice"
+            android:summaryOff="Continuously listen for voice commands"
+            android:summaryOn="Push to listen for voice commands"
+            android:title="Voice Commands"
+            app:iconSpaceReserved="false" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
         android:key="general_category"
         android:title="@string/appearance"
         app:iconSpaceReserved="false">

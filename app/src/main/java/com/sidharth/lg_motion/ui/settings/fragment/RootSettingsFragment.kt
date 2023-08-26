@@ -24,7 +24,7 @@ import com.sidharth.lg_motion.util.TextUtils
 import kotlinx.coroutines.launch
 
 
-class SettingsFragment : PreferenceFragmentCompat() {
+class RootSettingsFragment : PreferenceFragmentCompat() {
     private val connectionStatusPreference by lazy { findPreference<ConnectionStatusPreference>("connection_status")!! }
     private val usernamePreference by lazy { findPreference<EditTextPreference>("username")!! }
     private val passwordPreference by lazy { findPreference<EditTextPreference>("password")!! }
@@ -193,20 +193,20 @@ class SettingsFragment : PreferenceFragmentCompat() {
         }
 
         aboutPreference.setOnPreferenceClickListener {
-            val action = SettingsFragmentDirections.actionSettingsFragmentToAboutFragment()
+            val action = RootSettingsFragmentDirections.actionSettingsFragmentToAboutFragment()
             view?.findNavController()?.navigate(action)
             true
         }
 
         openSourceLicensePreference.setOnPreferenceClickListener {
             val action =
-                SettingsFragmentDirections.actionSettingsFragmentToOpenSourceLicenseFragment()
+                RootSettingsFragmentDirections.actionSettingsFragmentToOpenSourceLicenseFragment()
             view?.findNavController()?.navigate(action)
             true
         }
 
         privacyPolicyPreference.setOnPreferenceClickListener {
-            val action = SettingsFragmentDirections.actionSettingsFragmentToPrivacyPolicyFragment()
+            val action = RootSettingsFragmentDirections.actionSettingsFragmentToPrivacyPolicyFragment()
             view?.findNavController()?.navigate(action)
             true
         }
