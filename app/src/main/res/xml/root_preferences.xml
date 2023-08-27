@@ -120,14 +120,6 @@
         android:title="Interaction"
         app:iconSpaceReserved="false">
 
-        <SwitchPreferenceCompat
-            android:defaultValue="false"
-            android:key="camera"
-            android:summaryOff="Use the device's back camera"
-            android:summaryOn="Use the device's front camera"
-            android:title="Camera Preference"
-            app:iconSpaceReserved="false" />
-
         <Preference
             android:key="face"
             app:fragment="com.sidharth.lg_motion.ui.settings.fragment.FacialGesturesSettingsFragment"

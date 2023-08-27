@@ -1,4 +1,250 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory
+        android:key="landmarker_category"
+        android:title="Landmarker"
+        app:iconSpaceReserved="false">
+
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="camera"
+            android:summaryOff="Use the device's back camera"
+            android:summaryOn="Use the device's front camera"
+            android:title="Camera Preference"
+            app:iconSpaceReserved="false" />
+
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="max_faces"
+            android:summaryOff="Detect multiple faces"
+            android:summaryOn="Detect only single face"
+            android:title="Num Faces"
+            app:iconSpaceReserved="false" />
+
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="delegate"
+            android:summaryOff="Use GPU for image processing"
+            android:summaryOn="Use CPU for image processing"
+            android:title="Delegate"
+            app:iconSpaceReserved="false" />
+
+        <SeekBarPreference
+            android:key="face_detection_confidence"
+            android:max="10"
+            android:summary="Minimum confidence for face detection"
+            android:title="Face Detection Confidence"
+            app:defaultValue="5"
+            app:iconSpaceReserved="false"
+            app:min="1"
+            app:seekBarIncrement="1"
+            app:showSeekBarValue="true" />
+
+        <SeekBarPreference
+            android:key="face_tracking_confidence"
+            android:max="10"
+            android:summary="Minimum confidence for face tracking"
+            android:title="Face Tracking Confidence"
+            app:defaultValue="5"
+            app:iconSpaceReserved="false"
+            app:min="1"
+            app:seekBarIncrement="1"
+            app:showSeekBarValue="true" />
+
+        <SeekBarPreference
+            android:key="face_presence_confidence"
+            android:max="10"
+            android:summary="Minimum confidence for face presence"
+            android:title="Face Presence Confidence"
+            app:defaultValue="5"
+            app:iconSpaceReserved="false"
+            app:min="1"
+            app:seekBarIncrement="1"
+            app:showSeekBarValue="true" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="movement_category"
+        android:title="Movement Gestures"
+        app:iconSpaceReserved="false">
+
+        <ListPreference
+            android:entries="@array/map_styles"
+            android:entryValues="@array/map_styles"
+            android:key="move_north_gesture"
+            android:title="Move North Gesture"
+            app:defaultValue=""
+            app:iconSpaceReserved="false"
+            app:useSimpleSummaryProvider="true" />
+
+        <SeekBarPreference
+            android:key="move_north_sensitivity"
+            android:max="10"
+            android:summary="Adjust the sensitivity of the move north gesture"
+            android:title="Move North Sensitivity"
+            app:defaultValue="5"
+            app:iconSpaceReserved="false"
+            app:min="1"
+            app:seekBarIncrement="1"
+            app:showSeekBarValue="true" />
+
+        <ListPreference
+            android:entries="@array/map_styles"
+            android:entryValues="@array/map_styles"
+            android:key="move_south_gesture"
+            android:title="Move South Gesture"
+            app:defaultValue=""
+            app:iconSpaceReserved="false"
+            app:useSimpleSummaryProvider="true" />
+
+        <SeekBarPreference
+            android:key="move_south_sensitivity"
+            android:max="10"
+            android:summary="Adjust the sensitivity of the move south gesture"
+            android:title="Move South Sensitivity"
+            app:defaultValue="5"
+            app:iconSpaceReserved="false"
+            app:min="1"
+            app:seekBarIncrement="1"
+            app:showSeekBarValue="true" />
+
+        <ListPreference
+            android:entries="@array/map_styles"
+            android:entryValues="@array/map_styles"
+            android:key="move_east_gesture"
+            android:title="Move East Gesture"
+            app:defaultValue=""
+            app:iconSpaceReserved="false"
+            app:useSimpleSummaryProvider="true" />
+
+        <SeekBarPreference
+            android:key="move_east_sensitivity"
+            android:max="10"
+            android:summary="Adjust the sensitivity of the move east gesture"
+            android:title="Move East Sensitivity"
+            app:defaultValue="5"
+            app:iconSpaceReserved="false"
+            app:min="1"
+            app:seekBarIncrement="1"
+            app:showSeekBarValue="true" />
+
+        <ListPreference
+            android:entries="@array/map_styles"
+            android:entryValues="@array/map_styles"
+            android:key="move_west_gesture"
+            android:title="Move West Gesture"
+            app:defaultValue=""
+            app:iconSpaceReserved="false"
+            app:useSimpleSummaryProvider="true" />
+
+        <SeekBarPreference
+            android:key="move_west_sensitivity"
+            android:max="10"
+            android:summary="Adjust the sensitivity of the move west gesture"
+            android:title="Move West Sensitivity"
+            app:defaultValue="5"
+            app:iconSpaceReserved="false"
+            app:min="1"
+            app:seekBarIncrement="1"
+            app:showSeekBarValue="true" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="rotation_category"
+        android:title="Rotation Gestures"
+        app:iconSpaceReserved="false">
+
+        <ListPreference
+            android:entries="@array/map_styles"
+            android:entryValues="@array/map_styles"
+            android:key="rotate_left_gesture"
+            android:title="Rotate Left Gesture"
+            app:defaultValue=""
+            app:iconSpaceReserved="false"
+            app:useSimpleSummaryProvider="true" />
+
+        <SeekBarPreference
+            android:key="rotate_left_sensitivity"
+            android:max="10"
+            android:summary="Adjust the sensitivity of the rotate left gesture"
+            android:title="Rotate Left Sensitivity"
+            app:defaultValue="5"
+            app:iconSpaceReserved="false"
+            app:min="1"
+            app:seekBarIncrement="1"
+            app:showSeekBarValue="true" />
+
+        <ListPreference
+            android:entries="@array/map_styles"
+            android:entryValues="@array/map_styles"
+            android:key="rotate_right_gesture"
+            android:title="Rotate Right Gesture"
+            app:defaultValue=""
+            app:iconSpaceReserved="false"
+            app:useSimpleSummaryProvider="true" />
+
+        <SeekBarPreference
+            android:key="rotate_right_sensitivity"
+            android:max="10"
+            android:summary="Adjust the sensitivity of the rotate right gesture"
+            android:title="Rotate Right Sensitivity"
+            app:defaultValue="5"
+            app:iconSpaceReserved="false"
+            app:min="1"
+            app:seekBarIncrement="1"
+            app:showSeekBarValue="true" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="zoom_category"
+        android:title="Zoom Gestures"
+        app:iconSpaceReserved="false">
+
+        <ListPreference
+            android:entries="@array/map_styles"
+            android:entryValues="@array/map_styles"
+            android:key="zoom_in_gesture"
+            android:title="Zoom In Gesture"
+            app:defaultValue=""
+            app:iconSpaceReserved="false"
+            app:useSimpleSummaryProvider="true" />
+
+        <SeekBarPreference
+            android:key="zoom_in_sensitivity"
+            android:max="10"
+            android:summary="Adjust the sensitivity of the zoom out gesture"
+            android:title="Zoom In Sensitivity"
+            app:defaultValue="5"
+            app:iconSpaceReserved="false"
+            app:min="1"
+            app:seekBarIncrement="1"
+            app:showSeekBarValue="true" />
+
+        <ListPreference
+            android:entries="@array/map_styles"
+            android:entryValues="@array/map_styles"
+            android:key="zoom_out_gesture"
+            android:title="Zoom Out Gesture"
+            app:defaultValue=""
+            app:iconSpaceReserved="false"
+            app:useSimpleSummaryProvider="true" />
+
+        <SeekBarPreference
+            android:key="zoom_out_sensitivity"
+            android:max="10"
+            android:summary="Adjust the sensitivity of the zoom out gesture"
+            android:title="Zoom Out Sensitivity"
+            app:defaultValue="5"
+            app:iconSpaceReserved="false"
+            app:min="1"
+            app:seekBarIncrement="1"
+            app:showSeekBarValue="true" />
+
+    </PreferenceCategory>
 
 </PreferenceScreen>
