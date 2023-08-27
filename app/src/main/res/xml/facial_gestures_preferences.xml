@@ -72,11 +72,11 @@
         app:iconSpaceReserved="false">
 
         <ListPreference
-            android:entries="@array/map_styles"
-            android:entryValues="@array/map_styles"
+            android:entries="@array/facial_gestures"
+            android:entryValues="@array/facial_gestures"
             android:key="move_north_gesture"
             android:title="Move North Gesture"
-            app:defaultValue=""
+            app:defaultValue="Mouth Roll Upper"
             app:iconSpaceReserved="false"
             app:useSimpleSummaryProvider="true" />
 
@@ -92,11 +92,11 @@
             app:showSeekBarValue="true" />
 
         <ListPreference
-            android:entries="@array/map_styles"
-            android:entryValues="@array/map_styles"
+            android:entries="@array/facial_gestures"
+            android:entryValues="@array/facial_gestures"
             android:key="move_south_gesture"
             android:title="Move South Gesture"
-            app:defaultValue=""
+            app:defaultValue="Mouth Roll Lower"
             app:iconSpaceReserved="false"
             app:useSimpleSummaryProvider="true" />
 
@@ -112,11 +112,11 @@
             app:showSeekBarValue="true" />
 
         <ListPreference
-            android:entries="@array/map_styles"
-            android:entryValues="@array/map_styles"
+            android:entries="@array/facial_gestures"
+            android:entryValues="@array/facial_gestures"
             android:key="move_east_gesture"
             android:title="Move East Gesture"
-            app:defaultValue=""
+            app:defaultValue="Jaw Right"
             app:iconSpaceReserved="false"
             app:useSimpleSummaryProvider="true" />
 
@@ -132,11 +132,11 @@
             app:showSeekBarValue="true" />
 
         <ListPreference
-            android:entries="@array/map_styles"
-            android:entryValues="@array/map_styles"
+            android:entries="@array/facial_gestures"
+            android:entryValues="@array/facial_gestures"
             android:key="move_west_gesture"
             android:title="Move West Gesture"
-            app:defaultValue=""
+            app:defaultValue="Jaw Left"
             app:iconSpaceReserved="false"
             app:useSimpleSummaryProvider="true" />
 
@@ -159,11 +159,11 @@
         app:iconSpaceReserved="false">
 
         <ListPreference
-            android:entries="@array/map_styles"
-            android:entryValues="@array/map_styles"
+            android:entries="@array/facial_gestures"
+            android:entryValues="@array/facial_gestures"
             android:key="rotate_left_gesture"
             android:title="Rotate Left Gesture"
-            app:defaultValue=""
+            app:defaultValue="Eye Blink Left"
             app:iconSpaceReserved="false"
             app:useSimpleSummaryProvider="true" />
 
@@ -179,11 +179,11 @@
             app:showSeekBarValue="true" />
 
         <ListPreference
-            android:entries="@array/map_styles"
-            android:entryValues="@array/map_styles"
+            android:entries="@array/facial_gestures"
+            android:entryValues="@array/facial_gestures"
             android:key="rotate_right_gesture"
             android:title="Rotate Right Gesture"
-            app:defaultValue=""
+            app:defaultValue="Eye Blink Right"
             app:iconSpaceReserved="false"
             app:useSimpleSummaryProvider="true" />
 
@@ -206,11 +206,11 @@
         app:iconSpaceReserved="false">
 
         <ListPreference
-            android:entries="@array/map_styles"
-            android:entryValues="@array/map_styles"
+            android:entries="@array/facial_gestures"
+            android:entryValues="@array/facial_gestures"
             android:key="zoom_in_gesture"
             android:title="Zoom In Gesture"
-            app:defaultValue=""
+            app:defaultValue="Mouth Left"
             app:iconSpaceReserved="false"
             app:useSimpleSummaryProvider="true" />
 
@@ -226,11 +226,11 @@
             app:showSeekBarValue="true" />
 
         <ListPreference
-            android:entries="@array/map_styles"
-            android:entryValues="@array/map_styles"
+            android:entries="@array/facial_gestures"
+            android:entryValues="@array/facial_gestures"
             android:key="zoom_out_gesture"
             android:title="Zoom Out Gesture"
-            app:defaultValue=""
+            app:defaultValue="Mouth Right"
             app:iconSpaceReserved="false"
             app:useSimpleSummaryProvider="true" />
 
