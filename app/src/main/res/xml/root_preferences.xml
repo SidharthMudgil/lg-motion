@@ -123,16 +123,16 @@
         <Preference
             android:key="face"
             app:fragment="com.sidharth.lg_motion.ui.settings.fragment.FacialGesturesSettingsFragment"
-            android:summary="Adjust facial detection settings and bindings"
-            android:title="Facial Gestures"
+            android:summary="@string/facial_gestures_summary"
+            android:title="@string/facial_gestures_title"
             app:iconSpaceReserved="false" />
 
         <SwitchPreferenceCompat
             android:defaultValue="false"
             android:key="voice"
-            android:summaryOff="Continuously listen for voice commands"
-            android:summaryOn="Push to listen for voice commands"
-            android:title="Voice Commands"
+            android:summaryOff="@string/voice_commands_summary_off"
+            android:summaryOn="@string/voice_commands_summary_on"
+            android:title="@string/voice_commands_title"
             app:iconSpaceReserved="false" />
 
     </PreferenceCategory>
