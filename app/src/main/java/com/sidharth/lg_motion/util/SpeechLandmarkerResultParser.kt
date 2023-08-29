@@ -37,6 +37,7 @@ object SpeechLandmarkerResultParser {
     }
 
     private val faceGestureMap = mapOf(
+        "null" to "null",
         "Brow Down Left" to "browDownLeft",
         "Brow Down Right" to "browDownRight",
         "Brow Inner Up" to "browInnerUp",
@@ -100,21 +101,21 @@ object SpeechLandmarkerResultParser {
 
         val idleConfidence = blendshapes.getValue("neutral")
         val moveNorthConfidence =
-            blendshapes.getValue(faceGestureMap.getValue(properties.moveNorthGesture))
+            blendshapes.getOrDefault(faceGestureMap.getValue(properties.moveNorthGesture), 0.0F)
         val moveSouthConfidence =
-            blendshapes.getValue(faceGestureMap.getValue(properties.moveSouthGesture))
+            blendshapes.getOrDefault(faceGestureMap.getValue(properties.moveSouthGesture), 0.0F)
         val moveEastConfidence =
-            blendshapes.getValue(faceGestureMap.getValue(properties.moveEastGesture))
+            blendshapes.getOrDefault(faceGestureMap.getValue(properties.moveEastGesture), 0.0F)
         val moveWestConfidence =
-            blendshapes.getValue(faceGestureMap.getValue(properties.moveWestGesture))
+            blendshapes.getOrDefault(faceGestureMap.getValue(properties.moveWestGesture), 0.0F)
         val rotateLeftConfidence =
-            blendshapes.getValue(faceGestureMap.getValue(properties.rotateLeftGesture))
+            blendshapes.getOrDefault(faceGestureMap.getValue(properties.rotateLeftGesture), 0.0F)
         val rotateRightConfidence =
-            blendshapes.getValue(faceGestureMap.getValue(properties.rotateRightGesture))
+            blendshapes.getOrDefault(faceGestureMap.getValue(properties.rotateRightGesture), 0.0F)
         val zoomInConfidence =
-            blendshapes.getValue(faceGestureMap.getValue(properties.zoomInGesture))
+            blendshapes.getOrDefault(faceGestureMap.getValue(properties.zoomInGesture), 0.0F)
         val zoomOutConfidence =
-            blendshapes.getValue(faceGestureMap.getValue(properties.zoomOutGesture))
+            blendshapes.getOrDefault(faceGestureMap.getValue(properties.zoomOutGesture), 0.0F)
 
         return when {
             moveNorthConfidence >= properties.moveNorthSensitivity -> LiquidGalaxyManager.State.MOVE_NORTH
