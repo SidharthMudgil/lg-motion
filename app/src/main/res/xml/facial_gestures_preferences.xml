@@ -9,7 +9,7 @@
 
         <SwitchPreferenceCompat
             android:defaultValue="false"
-            android:key="camera"
+            android:key="rear_facing_camera"
             android:summaryOff="@string/camera_summary_off"
             android:summaryOn="@string/camera_summary_on"
             android:title="@string/camera_preference_title"

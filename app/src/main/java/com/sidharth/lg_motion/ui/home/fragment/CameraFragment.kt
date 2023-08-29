@@ -1,6 +1,10 @@
 package com.sidharth.lg_motion.ui.home.fragment
 
+//import com.sidharth.lg_motion.util.HandLandmarkerHelper
+//import com.sidharth.lg_motion.util.ObjectDetectorHelper
+//import com.sidharth.lg_motion.util.PoseLandmarkerHelper
 import android.annotation.SuppressLint
+import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
@@ -18,16 +22,14 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
+import androidx.preference.PreferenceManager
 import com.sidharth.lg_motion.databinding.FragmentCameraBinding
 import com.sidharth.lg_motion.domain.callback.ProgressIndicatorCallback
 import com.sidharth.lg_motion.domain.model.Feature
 import com.sidharth.lg_motion.util.FaceLandmarkerHelper
-//import com.sidharth.lg_motion.util.HandLandmarkerHelper
 import com.sidharth.lg_motion.util.LiquidGalaxyManager
-import com.sidharth.lg_motion.util.SpeechLandmarkerResultParser
 import com.sidharth.lg_motion.util.NetworkUtils
-//import com.sidharth.lg_motion.util.ObjectDetectorHelper
-//import com.sidharth.lg_motion.util.PoseLandmarkerHelper
+import com.sidharth.lg_motion.util.SpeechLandmarkerResultParser
 import kotlinx.coroutines.launch
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
@@ -39,7 +41,9 @@ class CameraFragment : Fragment() {
     }
 
     private var lastState: LiquidGalaxyManager.State = LiquidGalaxyManager.State.IDLE
-
+    private val preferences: SharedPreferences by lazy {
+        PreferenceManager.getDefaultSharedPreferences(requireContext())
+    }
     private val args: CameraFragmentArgs by navArgs()
 
     private lateinit var faceLandmarkerHelper: FaceLandmarkerHelper
@@ -138,11 +142,18 @@ class CameraFragment : Fragment() {
     override fun onDestroyView() {
         _fragmentCameraBinding = null
         super.onDestroyView()
-
         backgroundExecutor.shutdown()
         backgroundExecutor.awaitTermination(
             Long.MAX_VALUE, TimeUnit.NANOSECONDS
         )
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        cameraFacing = when (preferences.getBoolean("rear_facing_camera", false)) {
+            true -> CameraSelector.LENS_FACING_BACK
+            else -> CameraSelector.LENS_FACING_FRONT
+        }
     }
 
     override fun onCreateView(
@@ -155,7 +166,6 @@ class CameraFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         backgroundExecutor = Executors.newSingleThreadExecutor()
         if (args.feature != Feature.Type.OBJECT.name) {
             fragmentCameraBinding.viewFinder.post {
@@ -307,7 +317,8 @@ class CameraFragment : Fragment() {
 
     private val faceLandMarkerListener = object : FaceLandmarkerHelper.LandmarkerListener {
         override fun onResults(resultBundle: FaceLandmarkerHelper.ResultBundle) {
-            val newState = SpeechLandmarkerResultParser.getStateFromFaceLandmarkerResult(resultBundle)
+            val newState =
+                SpeechLandmarkerResultParser.getStateFromFaceLandmarkerResult(resultBundle)
             if ((lastState == newState).not()) {
                 lastState = newState
                 execute(newState, null)
