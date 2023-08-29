@@ -43,6 +43,7 @@ class RootSettingsFragment : PreferenceFragmentCompat() {
     private val openSourceLicensePreference by lazy { findPreference<Preference>("opensource_license")!! }
     private val privacyPolicyPreference by lazy { findPreference<Preference>("privacy_policy")!! }
     private val appVersionPreference by lazy { findPreference<Preference>("app_version")!! }
+    private val facialGestureSettings by lazy { findPreference<Preference>("face")!! }
 
     private val viewModel: ProgressViewModel by activityViewModels {
         ProgressViewModelFactory()
@@ -206,7 +207,8 @@ class RootSettingsFragment : PreferenceFragmentCompat() {
         }
 
         privacyPolicyPreference.setOnPreferenceClickListener {
-            val action = RootSettingsFragmentDirections.actionSettingsFragmentToPrivacyPolicyFragment()
+            val action =
+                RootSettingsFragmentDirections.actionSettingsFragmentToPrivacyPolicyFragment()
             view?.findNavController()?.navigate(action)
             true
         }
@@ -220,6 +222,12 @@ class RootSettingsFragment : PreferenceFragmentCompat() {
                     ).versionName
                 }"
             )
+            true
+        }
+
+        facialGestureSettings.setOnPreferenceClickListener {
+            val action = RootSettingsFragmentDirections.actionSettingsFragmentToFacialGesturesSettingsFragment()
+            view?.findNavController()?.navigate(action)
             true
         }
     }

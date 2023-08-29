@@ -122,7 +122,6 @@
 
         <Preference
             android:key="face"
-            app:fragment="com.sidharth.lg_motion.ui.settings.fragment.FacialGesturesSettingsFragment"
             android:summary="@string/facial_gestures_summary"
             android:title="@string/facial_gestures_title"
             app:iconSpaceReserved="false" />

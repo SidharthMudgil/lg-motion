@@ -112,7 +112,7 @@ class MainActivity : AppCompatActivity(), ProgressIndicatorCallback {
                     true
             }
 
-            R.id.aboutFragment, R.id.openSourceLicenseFragment, R.id.privacyPolicyFragment -> {
+            R.id.aboutFragment, R.id.openSourceLicenseFragment, R.id.privacyPolicyFragment, R.id.facialGesturesSettingsFragment -> {
                 activityMainBinding.bottomNavigationView?.menu?.findItem(R.id.settingsFragment)?.isChecked =
                     true
                 activityMainBinding.navigationRailView?.menu?.findItem(R.id.settingsFragment)?.isChecked =
