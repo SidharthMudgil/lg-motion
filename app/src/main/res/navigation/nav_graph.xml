@@ -26,7 +26,7 @@
 
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="com.sidharth.lg_motion.ui.settings.fragment.SettingsFragment"
+        android:name="com.sidharth.lg_motion.ui.settings.fragment.RootSettingsFragment"
         android:label="fragment_settings">
         <action
             android:id="@+id/action_settingsFragment_to_aboutFragment"
@@ -37,6 +37,9 @@
         <action
             android:id="@+id/action_settingsFragment_to_openSourceLicenseFragment"
             app:destination="@id/openSourceLicenseFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_facialGesturesSettingsFragment"
+            app:destination="@id/facialGesturesSettingsFragment" />
     </fragment>
 
     <fragment
@@ -49,9 +52,6 @@
             android:defaultValue="@null"
             app:argType="string"
             app:nullable="true" />
-        <action
-            android:id="@+id/action_cameraFragment_to_infoFragment"
-            app:destination="@id/infoFragment" />
     </fragment>
 
     <fragment
@@ -78,12 +78,8 @@
         android:label="fragment_audio"
         tools:layout="@layout/fragment_audio" />
     <fragment
-        android:id="@+id/infoFragment"
-        android:name="com.sidharth.lg_motion.ui.home.fragment.InfoFragment"
-        android:label="InfoFragment" >
-        <argument
-            android:name="info"
-            app:argType="com.sidharth.lg_motion.util.Info" />
-    </fragment>
+        android:id="@+id/facialGesturesSettingsFragment"
+        android:name="com.sidharth.lg_motion.ui.settings.fragment.FacialGesturesSettingsFragment"
+        android:label="FacialGesturesSettingsFragment" />
 
 </navigation>

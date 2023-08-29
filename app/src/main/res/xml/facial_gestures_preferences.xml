@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory
+        android:key="landmarker_category"
+        android:title="@string/landmarker_title"
+        app:iconSpaceReserved="false">
+
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="rear_facing_camera"
+            android:summaryOff="@string/camera_summary_off"
+            android:summaryOn="@string/camera_summary_on"
+            android:title="@string/camera_preference_title"
+            app:iconSpaceReserved="false" />
+
+        <SeekBarPreference
+            android:key="face_detection_confidence"
+            android:max="10"
+            android:summary="@string/face_detection_confidence_summary"
+            android:title="@string/face_detection_confidence_title"
+            app:defaultValue="5"
+            app:iconSpaceReserved="false"
+            app:min="1"
+            app:seekBarIncrement="1"
+            app:showSeekBarValue="true" />
+
+        <SeekBarPreference
+            android:key="face_tracking_confidence"
+            android:max="10"
+            android:summary="@string/face_tracking_confidence_summary"
+            android:title="@string/face_tracking_confidence_title"
+            app:defaultValue="5"
+            app:iconSpaceReserved="false"
+            app:min="1"
+            app:seekBarIncrement="1"
+            app:showSeekBarValue="true" />
+
+        <SeekBarPreference
+            android:key="face_presence_confidence"
+            android:max="10"
+            android:summary="@string/face_presence_confidence_summary"
+            android:title="@string/face_presence_confidence_title"
+            app:defaultValue="5"
+            app:iconSpaceReserved="false"
+            app:min="1"
+            app:seekBarIncrement="1"
+            app:showSeekBarValue="true" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="movement_category"
+        android:title="@string/movement_gestures_title"
+        app:iconSpaceReserved="false">
+
+        <ListPreference
+            android:entries="@array/facial_gestures"
+            android:entryValues="@array/facial_gestures"
+            android:key="move_north_gesture"
+            android:title="@string/move_north_gesture_title"
+            app:defaultValue="Mouth Roll Upper"
+            app:iconSpaceReserved="false"
+            app:useSimpleSummaryProvider="true" />
+
+        <SeekBarPreference
+            android:key="move_north_sensitivity"
+            android:max="10"
+            android:summary="@string/move_north_sensitivity_summary"
+            android:title="@string/move_north_sensitivity_title"
+            app:defaultValue="5"
+            app:iconSpaceReserved="false"
+            app:min="1"
+            app:seekBarIncrement="1"
+            app:showSeekBarValue="true" />
+
+        <ListPreference
+            android:entries="@array/facial_gestures"
+            android:entryValues="@array/facial_gestures"
+            android:key="move_south_gesture"
+            android:title="@string/move_south_gesture_title"
+            app:defaultValue="Mouth Roll Lower"
+            app:iconSpaceReserved="false"
+            app:useSimpleSummaryProvider="true" />
+
+        <SeekBarPreference
+            android:key="move_south_sensitivity"
+            android:max="10"
+            android:summary="@string/move_south_sensitivity_summary"
+            android:title="@string/move_south_sensitivity_title"
+            app:defaultValue="5"
+            app:iconSpaceReserved="false"
+            app:min="1"
+            app:seekBarIncrement="1"
+            app:showSeekBarValue="true" />
+
+        <ListPreference
+            android:entries="@array/facial_gestures"
+            android:entryValues="@array/facial_gestures"
+            android:key="move_east_gesture"
+            android:title="@string/move_east_gesture_title"
+            app:defaultValue="Jaw Right"
+            app:iconSpaceReserved="false"
+            app:useSimpleSummaryProvider="true" />
+
+        <SeekBarPreference
+            android:key="move_east_sensitivity"
+            android:max="10"
+            android:summary="@string/move_east_sensitivity_summary"
+            android:title="@string/move_east_sensitivity_title"
+            app:defaultValue="5"
+            app:iconSpaceReserved="false"
+            app:min="1"
+            app:seekBarIncrement="1"
+            app:showSeekBarValue="true" />
+
+        <ListPreference
+            android:entries="@array/facial_gestures"
+            android:entryValues="@array/facial_gestures"
+            android:key="move_west_gesture"
+            android:title="@string/move_west_gesture_title"
+            app:defaultValue="Jaw Left"
+            app:iconSpaceReserved="false"
+            app:useSimpleSummaryProvider="true" />
+
+        <SeekBarPreference
+            android:key="move_west_sensitivity"
+            android:max="10"
+            android:summary="@string/move_west_sensitivity_summary"
+            android:title="@string/move_west_sensitivity_title"
+            app:defaultValue="5"
+            app:iconSpaceReserved="false"
+            app:min="1"
+            app:seekBarIncrement="1"
+            app:showSeekBarValue="true" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="rotation_category"
+        android:title="@string/rotation_gestures_title"
+        app:iconSpaceReserved="false">
+
+        <ListPreference
+            android:entries="@array/facial_gestures"
+            android:entryValues="@array/facial_gestures"
+            android:key="rotate_left_gesture"
+            android:title="@string/rotate_left_gesture_title"
+            app:defaultValue="Eye Blink Left"
+            app:iconSpaceReserved="false"
+            app:useSimpleSummaryProvider="true" />
+
+        <SeekBarPreference
+            android:key="rotate_left_sensitivity"
+            android:max="10"
+            android:summary="@string/rotate_left_sensitivity_summary"
+            android:title="@string/rotate_left_sensitivity_title"
+            app:defaultValue="5"
+            app:iconSpaceReserved="false"
+            app:min="1"
+            app:seekBarIncrement="1"
+            app:showSeekBarValue="true" />
+
+        <ListPreference
+            android:entries="@array/facial_gestures"
+            android:entryValues="@array/facial_gestures"
+            android:key="rotate_right_gesture"
+            android:title="@string/rotate_right_gesture_title"
+            app:defaultValue="Eye Blink Right"
+            app:iconSpaceReserved="false"
+            app:useSimpleSummaryProvider="true" />
+
+        <SeekBarPreference
+            android:key="rotate_right_sensitivity"
+            android:max="10"
+            android:summary="@string/rotate_right_sensitivity_summary"
+            android:title="@string/rotate_right_sensitivity_title"
+            app:defaultValue="5"
+            app:iconSpaceReserved="false"
+            app:min="1"
+            app:seekBarIncrement="1"
+            app:showSeekBarValue="true" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="zoom_category"
+        android:title="Zoom Gestures"
+        app:iconSpaceReserved="false">
+
+        <ListPreference
+            android:entries="@array/facial_gestures"
+            android:entryValues="@array/facial_gestures"
+            android:key="zoom_in_gesture"
+            android:title="@string/zoom_in_gesture_title"
+            app:defaultValue="Mouth Left"
+            app:iconSpaceReserved="false"
+            app:useSimpleSummaryProvider="true" />
+
+        <SeekBarPreference
+            android:key="zoom_in_sensitivity"
+            android:max="10"
+            android:summary="@string/zoom_in_sensitivity_summary"
+            android:title="@string/zoom_in_sensitivity_title"
+            app:defaultValue="5"
+            app:iconSpaceReserved="false"
+            app:min="1"
+            app:seekBarIncrement="1"
+            app:showSeekBarValue="true" />
+
+        <ListPreference
+            android:entries="@array/facial_gestures"
+            android:entryValues="@array/facial_gestures"
+            android:key="zoom_out_gesture"
+            android:title="@string/zoom_out_gesture_title"
+            app:defaultValue="Mouth Right"
+            app:iconSpaceReserved="false"
+            app:useSimpleSummaryProvider="true" />
+
+        <SeekBarPreference
+            android:key="zoom_out_sensitivity"
+            android:max="10"
+            android:summary="@string/zoom_out_sensitivity_summary"
+            android:title="@string/zoom_out_sensitivity_title"
+            app:defaultValue="5"
+            app:iconSpaceReserved="false"
+            app:min="1"
+            app:seekBarIncrement="1"
+            app:showSeekBarValue="true" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

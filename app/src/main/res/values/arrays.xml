@@ -9,4 +9,59 @@
         <item>Green</item>
         <item>Satellite</item>
     </string-array>
+
+    <string-array name="facial_gestures">
+        <item>Brow Down Left</item>
+        <item>Brow Down Right</item>
+        <item>Brow Inner Up</item>
+        <item>Brow Outer Up Left</item>
+        <item>Brow Outer Up Right</item>
+        <item>Cheek Puff</item>
+        <item>Cheek Squint Left</item>
+        <item>Cheek Squint Right</item>
+        <item>Eye Blink Left</item>
+        <item>Eye Blink Right</item>
+        <item>Eye Look Down Left</item>
+        <item>Eye Look Down Right</item>
+        <item>Eye Look In Left</item>
+        <item>Eye Look In Right</item>
+        <item>Eye Look Out Left</item>
+        <item>Eye Look Out Right</item>
+        <item>Eye Look Up Left</item>
+        <item>Eye Look Up Right</item>
+        <item>Eye Squint Left</item>
+        <item>Eye Squint Right</item>
+        <item>Eye Wide Left</item>
+        <item>Eye Wide Right</item>
+        <item>Jaw Forward</item>
+        <item>Jaw Left</item>
+        <item>Jaw Open</item>
+        <item>Jaw Right</item>
+        <item>Mouth Close</item>
+        <item>Mouth Dimple Left</item>
+        <item>Mouth Dimple Right</item>
+        <item>Mouth Frown Left</item>
+        <item>Mouth Frown Right</item>
+        <item>Mouth Funnel</item>
+        <item>Mouth Left</item>
+        <item>Mouth Lower Down Left</item>
+        <item>Mouth Lower Down Right</item>
+        <item>Mouth Press Left</item>
+        <item>Mouth Press Right</item>
+        <item>Mouth Pucker</item>
+        <item>Mouth Right</item>
+        <item>Mouth Roll Lower</item>
+        <item>Mouth Roll Upper</item>
+        <item>Mouth Shrug Lower</item>
+        <item>Mouth Shrug Upper</item>
+        <item>Mouth Smile Left</item>
+        <item>Mouth Smile Right</item>
+        <item>Mouth Stretch Left</item>
+        <item>Mouth Stretch Right</item>
+        <item>Mouth Upper Up Left</item>
+        <item>Mouth Upper Up Right</item>
+        <item>Nose Sneer Left</item>
+        <item>Nose Sneer Right</item>
+    </string-array>
+
 </resources>

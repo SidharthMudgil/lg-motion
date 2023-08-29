@@ -116,6 +116,27 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+        android:key="interaction_category"
+        android:title="Interaction"
+        app:iconSpaceReserved="false">
+
+        <Preference
+            android:key="face"
+            android:summary="@string/facial_gestures_summary"
+            android:title="@string/facial_gestures_title"
+            app:iconSpaceReserved="false" />
+
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="continuous_listen"
+            android:summaryOff="@string/voice_commands_summary_off"
+            android:summaryOn="@string/voice_commands_summary_on"
+            android:title="@string/voice_commands_title"
+            app:iconSpaceReserved="false" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
         android:key="general_category"
         android:title="@string/appearance"
         app:iconSpaceReserved="false">

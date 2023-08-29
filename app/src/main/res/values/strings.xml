@@ -6,13 +6,14 @@
     <string name="org_label">Organization</string>
     <string name="org_name">Liquid Galaxy</string>
     <string name="developer">Developer</string>
+    <string name="label_credits">Credits</string>
 
     <!-- Navigation Menu -->
     <string name="home">Home</string>
     <string name="settings">Settings</string>
     <string name="maps">Maps</string>
 
-    <!-- Preferences   -->
+    <!-- Root Preferences   -->
     <string name="connection">Connection</string>
     <string name="username">Username</string>
     <string name="username_dialog_title">Liquid Galaxy Username</string>
@@ -44,6 +45,12 @@
     <string name="restart_summary">Restart the Liquid Galaxy application</string>
     <string name="shutdown_title">Shutdown</string>
     <string name="shutdown_summary">Shutdown the Liquid Galaxy application</string>
+
+    <string name="facial_gestures_title">Facial Gestures</string>
+    <string name="facial_gestures_summary">Adjust facial detection settings and bindings</string>
+    <string name="voice_commands_title">Voice Commands</string>
+    <string name="voice_commands_summary_on">Push to listen for voice commands</string>
+    <string name="voice_commands_summary_off">Continuously listen for voice commands</string>
 
     <string name="appearance">Appearance</string>
     <string name="map_style">Map Style</string>
@@ -79,5 +86,46 @@
     <string name="move_east">Move East</string>
     <string name="move_south">Move South</string>
     <string name="move_north">Move North</string>
-    <string name="label_credits">Credits</string>
+
+    <!-- Facial Gestures Preferences   -->
+    <string name="landmarker_title">Landmarker</string>
+    <string name="camera_preference_title">Camera Preference</string>
+    <string name="camera_summary_on">Use the device\'s front camera</string>
+    <string name="camera_summary_off">Use the device\'s back camera</string>
+    <string name="face_detection_confidence_title">Face Detection Confidence</string>
+    <string name="face_detection_confidence_summary">Minimum confidence for face detection</string>
+    <string name="face_tracking_confidence_title">Face Tracking Confidence</string>
+    <string name="face_tracking_confidence_summary">Minimum confidence for face tracking</string>
+    <string name="face_presence_confidence_title">Face Presence Confidence</string>
+    <string name="face_presence_confidence_summary">Minimum confidence for face presence</string>
+
+    <string name="movement_gestures_title">Movement Gestures</string>
+    <string name="move_north_gesture_title">Move North Gesture</string>
+    <string name="move_north_sensitivity_title">Move North Sensitivity</string>
+    <string name="move_north_sensitivity_summary">Adjust the sensitivity of the move north gesture</string>
+    <string name="move_south_gesture_title">Move South Gesture</string>
+    <string name="move_south_sensitivity_title">Move South Sensitivity</string>
+    <string name="move_south_sensitivity_summary">Adjust the sensitivity of the move south gesture</string>
+    <string name="move_east_gesture_title">Move East Gesture</string>
+    <string name="move_east_sensitivity_title">Move East Sensitivity</string>
+    <string name="move_east_sensitivity_summary">Adjust the sensitivity of the move east gesture</string>
+    <string name="move_west_gesture_title">Move West Gesture</string>
+    <string name="move_west_sensitivity_title">Move West Sensitivity</string>
+    <string name="move_west_sensitivity_summary">Adjust the sensitivity of the move west gesture</string>
+
+    <string name="rotation_gestures_title">Rotation Gestures</string>
+    <string name="rotate_left_gesture_title">Rotate Left Gesture</string>
+    <string name="rotate_left_sensitivity_title">Rotate Left Sensitivity</string>
+    <string name="rotate_left_sensitivity_summary">Adjust the sensitivity of the rotate left gesture</string>
+    <string name="rotate_right_gesture_title">Rotate Right Gesture</string>
+    <string name="rotate_right_sensitivity_title">Rotate Right Sensitivity</string>
+    <string name="rotate_right_sensitivity_summary">Adjust the sensitivity of the rotate right gesture</string>
+
+    <string name="zoom_in_gesture_title">Zoom In Gesture</string>
+    <string name="zoom_in_sensitivity_title">Zoom In Sensitivity</string>
+    <string name="zoom_in_sensitivity_summary">Adjust the sensitivity of the zoom out gesture</string>
+    <string name="zoom_out_gesture_title">Zoom Out Gesture</string>
+    <string name="zoom_out_sensitivity_title">Zoom Out Sensitivity</string>
+    <string name="zoom_out_sensitivity_summary">Adjust the sensitivity of the zoom out gesture</string>
+
 </resources>

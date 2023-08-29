@@ -1,6 +1,10 @@
 package com.sidharth.lg_motion.ui.home.fragment
 
+//import com.sidharth.lg_motion.util.HandLandmarkerHelper
+//import com.sidharth.lg_motion.util.ObjectDetectorHelper
+//import com.sidharth.lg_motion.util.PoseLandmarkerHelper
 import android.annotation.SuppressLint
+import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
@@ -18,34 +22,34 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
+import androidx.preference.PreferenceManager
+import com.sidharth.lg_motion.R
 import com.sidharth.lg_motion.databinding.FragmentCameraBinding
 import com.sidharth.lg_motion.domain.callback.ProgressIndicatorCallback
 import com.sidharth.lg_motion.domain.model.Feature
 import com.sidharth.lg_motion.util.FaceLandmarkerHelper
-//import com.sidharth.lg_motion.util.HandLandmarkerHelper
 import com.sidharth.lg_motion.util.LiquidGalaxyManager
-import com.sidharth.lg_motion.util.SpeechLandmarkerResultParser
 import com.sidharth.lg_motion.util.NetworkUtils
-//import com.sidharth.lg_motion.util.ObjectDetectorHelper
-//import com.sidharth.lg_motion.util.PoseLandmarkerHelper
+import com.sidharth.lg_motion.util.SpeechLandmarkerResultParser
 import kotlinx.coroutines.launch
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
 
 class CameraFragment : Fragment() {
-    companion object {
-        private const val TAG = "Landmarker & Detection"
-    }
 
     private var lastState: LiquidGalaxyManager.State = LiquidGalaxyManager.State.IDLE
-
+    private val preferences: SharedPreferences by lazy {
+        PreferenceManager.getDefaultSharedPreferences(requireContext())
+    }
     private val args: CameraFragmentArgs by navArgs()
 
     private lateinit var faceLandmarkerHelper: FaceLandmarkerHelper
 //    private lateinit var handLandmarkerHelper: HandLandmarkerHelper
 //    private lateinit var poseLandmarkerHelper: PoseLandmarkerHelper
 //    private lateinit var objectDetectorHelper: ObjectDetectorHelper
+
+    private lateinit var faceLandmarkerProperties: SpeechLandmarkerResultParser.FaceLandmarkerProperties
 
     private var _fragmentCameraBinding: FragmentCameraBinding? = null
 
@@ -138,10 +142,45 @@ class CameraFragment : Fragment() {
     override fun onDestroyView() {
         _fragmentCameraBinding = null
         super.onDestroyView()
-
         backgroundExecutor.shutdown()
         backgroundExecutor.awaitTermination(
             Long.MAX_VALUE, TimeUnit.NANOSECONDS
+        )
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        cameraFacing = when (preferences.getBoolean("rear_facing_camera", false)) {
+            true -> CameraSelector.LENS_FACING_BACK
+            else -> CameraSelector.LENS_FACING_FRONT
+        }
+        faceLandmarkerProperties = SpeechLandmarkerResultParser.FaceLandmarkerProperties(
+            moveNorthGesture = preferences.getString("move_north_gesture", "null") ?: "null",
+            moveNorthSensitivity = preferences.getInt("move_north_sensitivity", 5) / 10.toFloat(),
+
+            moveSouthGesture = preferences.getString("move_south_gesture", "null") ?: "null",
+            moveSouthSensitivity = preferences.getInt("move_south_sensitivity", 5) / 10.toFloat(),
+
+            moveEastGesture = preferences.getString("move_east_gesture", "null") ?: "null",
+            moveEastSensitivity = preferences.getInt("move_east_sensitivity", 5) / 10.toFloat(),
+
+            moveWestGesture = preferences.getString("move_west_gesture", "null") ?: "null",
+            moveWestSensitivity = preferences.getInt("move_west_sensitivity", 5) / 10.toFloat(),
+
+            rotateLeftGesture = preferences.getString("rotate_left_gesture", "null") ?: "null",
+            rotateLeftSensitivity = preferences.getInt("rotate_left_sensitivity", 5) / 10.toFloat(),
+
+            rotateRightGesture = preferences.getString("rotate_right_gesture", "null") ?: "null",
+            rotateRightSensitivity = preferences.getInt(
+                "rotate_right_sensitivity",
+                5
+            ) / 10.toFloat(),
+
+            zoomInGesture = preferences.getString("zoom_in_gesture", "null") ?: "null",
+            zoomInSensitivity = preferences.getInt("zoom_in_sensitivity", 5) / 10.toFloat(),
+
+            zoomOutGesture = preferences.getString("zoom_out_gesture", "null") ?: "null",
+            zoomOutSensitivity = preferences.getInt("zoom_out_sensitivity", 5) / 10.toFloat()
         )
     }
 
@@ -150,29 +189,120 @@ class CameraFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _fragmentCameraBinding = FragmentCameraBinding.inflate(inflater)
-//        fragmentCameraBinding.info.setOnClickListener {
-//            view?.findNavController()?.navigate(
-//                CameraFragmentDirections.actionCameraFragmentToInfoFragment(Info.FACE_GESTURES)
-//            )
-//        }
+        when (args.feature) {
+            Feature.Type.FACE.name -> setupFacialGestureImages()
+        }
         return fragmentCameraBinding.root
+    }
+
+    private fun setupFacialGestureImages() {
+        _fragmentCameraBinding?.infoLayout?.ivCommand1?.setImageDrawable(
+            ContextCompat.getDrawable(
+                requireContext(),
+                faceGestureDrawableMap.getValue(
+                    preferences.getString("move_north_gesture", "null") ?: "null"
+                )
+            )
+        )
+
+        _fragmentCameraBinding?.infoLayout?.ivCommand2?.setImageDrawable(
+            ContextCompat.getDrawable(
+                requireContext(),
+                faceGestureDrawableMap.getValue(
+                    preferences.getString("move_south_gesture", "null") ?: "null"
+                )
+            )
+        )
+
+        _fragmentCameraBinding?.infoLayout?.ivCommand3?.setImageDrawable(
+            ContextCompat.getDrawable(
+                requireContext(),
+                faceGestureDrawableMap.getValue(
+                    preferences.getString("move_east_gesture", "null") ?: "null"
+                )
+            )
+        )
+
+        _fragmentCameraBinding?.infoLayout?.ivCommand4?.setImageDrawable(
+            ContextCompat.getDrawable(
+                requireContext(),
+                faceGestureDrawableMap.getValue(
+                    preferences.getString("move_west_gesture", "null") ?: "null"
+                )
+            )
+        )
+
+        _fragmentCameraBinding?.infoLayout?.ivCommand5?.setImageDrawable(
+            ContextCompat.getDrawable(
+                requireContext(),
+                faceGestureDrawableMap.getValue(
+                    preferences.getString("rotate_left_gesture", "null") ?: "null"
+                )
+            )
+        )
+
+        _fragmentCameraBinding?.infoLayout?.ivCommand6?.setImageDrawable(
+            ContextCompat.getDrawable(
+                requireContext(),
+                faceGestureDrawableMap.getValue(
+                    preferences.getString("rotate_right_gesture", "null") ?: "null"
+                )
+            )
+        )
+
+        _fragmentCameraBinding?.infoLayout?.ivCommand7?.setImageDrawable(
+            ContextCompat.getDrawable(
+                requireContext(),
+                faceGestureDrawableMap.getValue(
+                    preferences.getString("zoom_in_gesture", "null") ?: "null"
+                )
+            )
+        )
+
+        _fragmentCameraBinding?.infoLayout?.ivCommand8?.setImageDrawable(
+            ContextCompat.getDrawable(
+                requireContext(),
+                faceGestureDrawableMap.getValue(
+                    preferences.getString("zoom_out_gesture", "null") ?: "null"
+                )
+            )
+        )
+
+        _fragmentCameraBinding?.infoLayout?.ivCommand9?.setImageDrawable(
+            ContextCompat.getDrawable(
+                requireContext(),
+                R.drawable.img_neutral,
+            )
+        )
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         backgroundExecutor = Executors.newSingleThreadExecutor()
         if (args.feature != Feature.Type.OBJECT.name) {
             fragmentCameraBinding.viewFinder.post {
                 setUpCamera()
             }
         }
+
         backgroundExecutor.execute {
             when (args.feature) {
                 Feature.Type.FACE.name -> {
                     faceLandmarkerHelper = FaceLandmarkerHelper(
                         context = requireContext(),
                         faceLandmarkerHelperListener = faceLandMarkerListener,
+                        minFaceDetectionConfidence = preferences.getInt(
+                            "face_detection_confidence",
+                            5
+                        ) / 10.toFloat(),
+                        minFaceTrackingConfidence = preferences.getInt(
+                            "face_tracking_confidence",
+                            5
+                        ) / 10.toFloat(),
+                        minFacePresenceConfidence = preferences.getInt(
+                            "face_presence_confidence",
+                            5
+                        ) / 10.toFloat(),
                     )
                 }
 
@@ -312,7 +442,10 @@ class CameraFragment : Fragment() {
 
     private val faceLandMarkerListener = object : FaceLandmarkerHelper.LandmarkerListener {
         override fun onResults(resultBundle: FaceLandmarkerHelper.ResultBundle) {
-            val newState = SpeechLandmarkerResultParser.getStateFromFaceLandmarkerResult(resultBundle)
+            val newState = SpeechLandmarkerResultParser.getStateFromFaceLandmarkerResult(
+                resultBundle,
+                faceLandmarkerProperties
+            )
             if ((lastState == newState).not()) {
                 lastState = newState
                 execute(newState, null)
@@ -422,5 +555,63 @@ class CameraFragment : Fragment() {
         if (activity is ProgressIndicatorCallback) {
             (activity as ProgressIndicatorCallback?)?.showSnackbar(message)
         }
+    }
+
+    companion object {
+        private const val TAG = "Landmarker & Detection"
+        private val faceGestureDrawableMap = mapOf(
+            "null" to R.drawable.img_not_set,
+            "Brow Down Left" to R.drawable.img_brow_down_left,
+            "Brow Down Right" to R.drawable.img_brow_down_right,
+            "Brow Inner Up" to R.drawable.img_brow_inner_up,
+            "Brow Outer Up Left" to R.drawable.img_brow_outer_up_left,
+            "Brow Outer Up Right" to R.drawable.img_brow_outer_up_right,
+            "Cheek Puff" to R.drawable.img_cheek_puff,
+            "Cheek Squint Left" to R.drawable.img_cheek_squint_left,
+            "Cheek Squint Right" to R.drawable.img_cheek_squint_right,
+            "Eye Blink Left" to R.drawable.img_eye_blink_left,
+            "Eye Blink Right" to R.drawable.img_eye_blink_right,
+            "Eye Look Down Left" to R.drawable.img_eye_look_down_left,
+            "Eye Look Down Right" to R.drawable.img_eye_look_down_right,
+            "Eye Look In Left" to R.drawable.img_eye_lookin_left,
+            "Eye Look In Right" to R.drawable.img_eye_lookin_right,
+            "Eye Look Out Left" to R.drawable.img_eye_look_out_left,
+            "Eye Look Out Right" to R.drawable.img_eye_look_out_right,
+            "Eye Look Up Left" to R.drawable.img_eye_look_up_left,
+            "Eye Look Up Right" to R.drawable.img_eye_look_up_right,
+            "Eye Squint Left" to R.drawable.img_eye_squint_left,
+            "Eye Squint Right" to R.drawable.img_eye_squint_right,
+            "Eye Wide Left" to R.drawable.img_eye_wide_left,
+            "Eye Wide Right" to R.drawable.img_eye_wide_right,
+            "Jaw Forward" to R.drawable.img_jaw_forward,
+            "Jaw Left" to R.drawable.img_jaw_left,
+            "Jaw Open" to R.drawable.img_jaw_open,
+            "Jaw Right" to R.drawable.img_jaw_right,
+            "Mouth Close" to R.drawable.img_mouth_close,
+            "Mouth Dimple Left" to R.drawable.img_mouth_dimple_left,
+            "Mouth Dimple Right" to R.drawable.img_mouth_dimple_right,
+            "Mouth Frown Left" to R.drawable.img_mouth_frown_left,
+            "Mouth Frown Right" to R.drawable.img_mouth_frown_right,
+            "Mouth Funnel" to R.drawable.img_mouth_funnel,
+            "Mouth Left" to R.drawable.img_mouth_left,
+            "Mouth Lower Down Left" to R.drawable.img_mouth_lower_down_left,
+            "Mouth Lower Down Right" to R.drawable.img_mouth_lower_down_right,
+            "Mouth Press Left" to R.drawable.img_mouth_press_left,
+            "Mouth Press Right" to R.drawable.img_mouth_press_right,
+            "Mouth Pucker" to R.drawable.img_mouth_pucker,
+            "Mouth Right" to R.drawable.img_mouth_right,
+            "Mouth Roll Lower" to R.drawable.img_mouth_roll_lower,
+            "Mouth Roll Upper" to R.drawable.img_mouth_roll_upper,
+            "Mouth Shrug Lower" to R.drawable.img_mouth_shrug_lower,
+            "Mouth Shrug Upper" to R.drawable.img_mouth_shrug_upper,
+            "Mouth Smile Left" to R.drawable.img_mouth_smile_left,
+            "Mouth Smile Right" to R.drawable.img_mouth_smile_right,
+            "Mouth Stretch Left" to R.drawable.img_mouth_stretch_left,
+            "Mouth Stretch Right" to R.drawable.img_mouth_stretch_right,
+            "Mouth Upper Up Left" to R.drawable.img_mouth_upper_up_left,
+            "Mouth Upper Up Right" to R.drawable.img_mouth_upper_up_right,
+            "Nose Sneer Left" to R.drawable.img_nose_sneer_left,
+            "Nose Sneer Right" to R.drawable.img_nose_sneer_right,
+        )
     }
 }

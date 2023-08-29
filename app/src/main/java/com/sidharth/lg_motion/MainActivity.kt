@@ -105,14 +105,14 @@ class MainActivity : AppCompatActivity(), ProgressIndicatorCallback {
 
     private fun checkBottomNavigationViewMenuItem(id: Int) {
         when (id) {
-            R.id.cameraFragment, R.id.audioFragment, R.id.infoFragment -> {
+            R.id.cameraFragment, R.id.audioFragment -> {
                 activityMainBinding.bottomNavigationView?.menu?.findItem(R.id.homeFragment)?.isChecked =
                     true
                 activityMainBinding.navigationRailView?.menu?.findItem(R.id.homeFragment)?.isChecked =
                     true
             }
 
-            R.id.aboutFragment, R.id.openSourceLicenseFragment, R.id.privacyPolicyFragment -> {
+            R.id.aboutFragment, R.id.openSourceLicenseFragment, R.id.privacyPolicyFragment, R.id.facialGesturesSettingsFragment -> {
                 activityMainBinding.bottomNavigationView?.menu?.findItem(R.id.settingsFragment)?.isChecked =
                     true
                 activityMainBinding.navigationRailView?.menu?.findItem(R.id.settingsFragment)?.isChecked =

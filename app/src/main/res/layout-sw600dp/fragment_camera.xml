@@ -19,6 +19,7 @@
         app:scaleType="fillStart" />
 
     <include
+        android:id="@+id/info_layout"
         layout="@layout/info_face_gestures"
         android:layout_width="0dp"
         android:layout_height="0dp"
