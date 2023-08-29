@@ -15,22 +15,6 @@
             android:title="@string/camera_preference_title"
             app:iconSpaceReserved="false" />
 
-        <SwitchPreferenceCompat
-            android:defaultValue="false"
-            android:key="max_faces"
-            android:summaryOff="@string/num_faces_summary_off"
-            android:summaryOn="@string/num_faces_summary_on"
-            android:title="@string/num_faces_title"
-            app:iconSpaceReserved="false" />
-
-        <SwitchPreferenceCompat
-            android:defaultValue="false"
-            android:key="delegate"
-            android:summaryOff="@string/delegate_summary_off"
-            android:summaryOn="@string/delegate_summary_on"
-            android:title="@string/delegate_title"
-            app:iconSpaceReserved="false" />
-
         <SeekBarPreference
             android:key="face_detection_confidence"
             android:max="10"

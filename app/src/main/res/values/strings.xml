@@ -92,12 +92,6 @@
     <string name="camera_preference_title">Camera Preference</string>
     <string name="camera_summary_on">Use the device\'s front camera</string>
     <string name="camera_summary_off">Use the device\'s back camera</string>
-    <string name="num_faces_title">Num Faces</string>
-    <string name="num_faces_summary_on">Detect only single face</string>
-    <string name="num_faces_summary_off">Detect multiple faces</string>
-    <string name="delegate_title">Delegate</string>
-    <string name="delegate_summary_on">Use CPU for image processing</string>
-    <string name="delegate_summary_off">Use GPU for image processing</string>
     <string name="face_detection_confidence_title">Face Detection Confidence</string>
     <string name="face_detection_confidence_summary">Minimum confidence for face detection</string>
     <string name="face_tracking_confidence_title">Face Tracking Confidence</string>

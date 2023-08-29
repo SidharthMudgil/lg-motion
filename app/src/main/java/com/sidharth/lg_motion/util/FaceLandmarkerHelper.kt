@@ -17,7 +17,10 @@ import com.google.mediapipe.tasks.vision.facelandmarker.FaceLandmarkerResult
 
 class FaceLandmarkerHelper(
     val context: Context,
-    val faceLandmarkerHelperListener: LandmarkerListener? = null
+    val faceLandmarkerHelperListener: LandmarkerListener? = null,
+    val minFaceDetectionConfidence: Float,
+    val minFaceTrackingConfidence: Float,
+    val minFacePresenceConfidence: Float,
 ) {
     private var faceLandmarker: FaceLandmarker? = null
 
@@ -43,9 +46,9 @@ class FaceLandmarkerHelper(
 
             val options = FaceLandmarker.FaceLandmarkerOptions.builder()
                 .setBaseOptions(baseOptions)
-                .setMinFaceDetectionConfidence(MIN_FACE_DETECTION_CONFIDENCE)
-                .setMinTrackingConfidence(MIN_FACE_TRACKING_CONFIDENCE)
-                .setMinFacePresenceConfidence(MIN_FACE_PRESENCE_CONFIDENCE)
+                .setMinFaceDetectionConfidence(minFaceDetectionConfidence)
+                .setMinTrackingConfidence(minFaceTrackingConfidence)
+                .setMinFacePresenceConfidence(minFacePresenceConfidence)
                 .setNumFaces(MAX_NUM_FACES)
                 .setRunningMode(RUNNING_MODE)
                 .setOutputFaceBlendshapes(true)
@@ -138,13 +141,10 @@ class FaceLandmarkerHelper(
     companion object {
         const val TAG = "FaceLandmarkerHelper"
         const val MP_FACE_LANDMARKER_TASK = "face_landmarker.task"
-        const val MIN_FACE_DETECTION_CONFIDENCE = 0.5F
-        const val MIN_FACE_TRACKING_CONFIDENCE = 0.5F
-        const val MIN_FACE_PRESENCE_CONFIDENCE = 0.5F
+        val DELEGATE = Delegate.CPU
         const val MAX_NUM_FACES = 1
         const val OTHER_ERROR = 0
         const val GPU_ERROR = 1
-        val DELEGATE = Delegate.CPU
         val RUNNING_MODE = RunningMode.LIVE_STREAM
     }
 
