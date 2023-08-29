@@ -105,7 +105,7 @@ class MainActivity : AppCompatActivity(), ProgressIndicatorCallback {
 
     private fun checkBottomNavigationViewMenuItem(id: Int) {
         when (id) {
-            R.id.cameraFragment, R.id.audioFragment, R.id.infoFragment -> {
+            R.id.cameraFragment, R.id.audioFragment -> {
                 activityMainBinding.bottomNavigationView?.menu?.findItem(R.id.homeFragment)?.isChecked =
                     true
                 activityMainBinding.navigationRailView?.menu?.findItem(R.id.homeFragment)?.isChecked =

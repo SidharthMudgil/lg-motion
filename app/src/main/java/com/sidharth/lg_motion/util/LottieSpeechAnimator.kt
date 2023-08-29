@@ -11,6 +11,7 @@ import com.airbnb.lottie.LottieAnimationView
 class LottieSpeechAnimator(
     private val context: Context,
     private val animationView: LottieAnimationView,
+    private val listenContinuously: Boolean,
 ) {
 
     interface OnSpeechRecognitionListener {
@@ -70,12 +71,18 @@ class LottieSpeechAnimator(
             matches?.get(0)?.let { result ->
                 listener?.onSpeechRecognitionResult(result.lowercase())
                 stop()
+                if (listenContinuously) {
+                    start()
+                }
             }
         }
 
         override fun onError(error: Int) {
             listener?.onSpeechRecognitionError("Speech recognition error occurred.")
             stop()
+            if (listenContinuously) {
+                start()
+            }
         }
 
         override fun onEndOfSpeech() {
