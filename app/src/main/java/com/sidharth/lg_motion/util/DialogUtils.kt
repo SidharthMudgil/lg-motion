@@ -1,16 +1,21 @@
 package com.sidharth.lg_motion.util
 
-import android.app.Dialog
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.WindowManager
 import androidx.preference.PreferenceManager
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_EXPANDED
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.sidesheet.SideSheetDialog
 import com.sidharth.lg_motion.R
 import com.sidharth.lg_motion.databinding.ConnectionDialogBinding
 
 object DialogUtils {
-    private var dialog: Dialog? = null
+
+    @SuppressLint("StaticFieldLeak")
+    private var bottomSheetDialog: BottomSheetDialog? = null
+    @SuppressLint("StaticFieldLeak")
+    private var sideSheetDialog: SideSheetDialog? = null
 
     private fun init(context: Context, callback: () -> Unit) {
         val view = LayoutInflater.from(context).inflate(R.layout.connection_dialog, null)
@@ -24,6 +29,11 @@ object DialogUtils {
         var port = preferences.getString("port", "") ?: ""
         var screens = preferences.getInt("screens", 3)
 
+        if (context.isTablet() || !context.isPortrait())
+            sideSheetDialog = SideSheetDialog(context)
+        else
+            bottomSheetDialog = BottomSheetDialog(context)
+
         binding.username.setText(username)
         binding.password.setText(password)
         binding.ip.setText(ip)
@@ -32,14 +42,8 @@ object DialogUtils {
 
         binding.port.filters = arrayOf(RangeInputFilter(max = 65536))
 
-        dialog = MaterialAlertDialogBuilder(context)
-            .setView(view)
-            .setTitle(context.getString(R.string.connection_dialog_title))
-            .setMessage(context.getString(R.string.connection_dialog_message))
-            .setNegativeButton("Cancel") { dialog, _ ->
-                dialog.dismiss()
-            }
-            .setPositiveButton("Connect") { dialog, _ ->
+        binding.btnConnect.setOnClickListener {
+            (if (context.isTablet() || !context.isPortrait()) sideSheetDialog else bottomSheetDialog)?.apply {
                 username = binding.username.text.toString()
                 password = binding.password.text.toString()
                 ip = binding.ip.text.toString()
@@ -63,22 +67,65 @@ object DialogUtils {
 
                     callback()
                 }
-                dialog.dismiss()
-            }.create()
-        dialog?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
+                dismiss()
+            }
+        }
+
+        binding.btnCancel.setOnClickListener {
+            (if (context.isTablet() || !context.isPortrait()) sideSheetDialog else bottomSheetDialog)?.dismiss()
+        }
+
+        if (context.isTablet() || !context.isPortrait()) {
+            sideSheetDialog?.apply {
+                setContentView(view)
+                behavior.isDraggable = false
+                create()
+            }
+        } else {
+            bottomSheetDialog?.apply {
+                setContentView(view)
+                behavior.state = STATE_EXPANDED
+                create()
+            }
+        }
     }
 
     fun show(context: Context, callback: () -> Unit) {
-        if (dialog == null) {
-            init(context, callback)
+        if (context.isTablet() || !context.isPortrait()) {
+            if (sideSheetDialog == null) {
+                init(context, callback)
+            }
+            sideSheetDialog?.show()
+        } else {
+            if (bottomSheetDialog == null) {
+                init(context, callback)
+            }
+            bottomSheetDialog?.show()
         }
-        dialog?.show()
     }
 
-    fun dismiss() {
-        if (dialog != null && dialog?.isShowing == true) {
-            dialog?.dismiss()
+    fun dismiss(context: Context) {
+        if (context.isTablet() || !context.isPortrait()) {
+            if (sideSheetDialog != null && sideSheetDialog?.isShowing == true) {
+                sideSheetDialog?.dismiss()
+            }
+
+            sideSheetDialog = null
+        } else {
+            if (bottomSheetDialog != null && bottomSheetDialog?.isShowing == true) {
+                bottomSheetDialog?.dismiss()
+            }
+
+            bottomSheetDialog = null
         }
-        dialog = null
     }
+
+    private fun Context.isTablet(): Boolean {
+        return resources.getBoolean(R.bool.tablet)
+    }
+
+    private fun Context.isPortrait(): Boolean {
+        return resources.getBoolean(R.bool.portrait)
+    }
+
 }

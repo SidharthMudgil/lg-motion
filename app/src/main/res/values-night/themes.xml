@@ -29,6 +29,10 @@
         <item name="colorPrimaryInverse">@color/base_theme_dark_inversePrimary</item>
         <item name="android:statusBarColor">@color/base_theme_dark_background</item>
         <item name="android:windowLightStatusBar">false</item>
+
+        <!-- for BottomSheet & SideSheet Dialog -->
+        <item name="bottomSheetDialogTheme">@style/ThemeOverlay.App.BottomSheetDialog</item>
+        <item name="sideSheetDialogTheme">@style/ThemeOverlay.App.SideSheetDialog</item>
     </style>
 
     <style name="Theme.Lgmotion" parent="Base.Theme.Lgmotion">

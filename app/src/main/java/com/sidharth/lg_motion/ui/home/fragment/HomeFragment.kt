@@ -15,7 +15,6 @@ import androidx.navigation.NavDirections
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearSnapHelper
 import com.google.android.material.carousel.CarouselLayoutManager
-import com.sidharth.lg_motion.R
 import com.sidharth.lg_motion.databinding.FragmentHomeBinding
 import com.sidharth.lg_motion.domain.callback.OnFeatureClickCallback
 import com.sidharth.lg_motion.domain.callback.OnFunActivityClickCallback
@@ -50,12 +49,12 @@ class HomeFragment : Fragment(), OnFunActivityClickCallback, OnFeatureClickCallb
 
     override fun onDestroy() {
         super.onDestroy()
-        DialogUtils.dismiss()
+        DialogUtils.dismiss(requireContext())
     }
 
     override fun onPause() {
         super.onPause()
-        DialogUtils.dismiss()
+        DialogUtils.dismiss(requireContext())
     }
 
     override fun onCreateView(
@@ -114,15 +113,8 @@ class HomeFragment : Fragment(), OnFunActivityClickCallback, OnFeatureClickCallb
                     view?.findNavController()?.navigate(it)
                 }
             } else {
-                val isPortrait = resources.getBoolean(R.bool.portrait)
-                val isTablet = resources.getBoolean(R.bool.tablet)
-
-                if (isTablet || isPortrait) {
-                    DialogUtils.show(requireContext()) {
-                        connect()
-                    }
-                } else {
-                    showSnackbar("No LG Connection")
+                DialogUtils.show(requireContext()) {
+                    connect()
                 }
             }
         } else {
