@@ -30,6 +30,20 @@
         <item name="fontFamily">@font/noto_sans</item>
         <item name="android:statusBarColor">@color/base_theme_light_background</item>
         <item name="android:windowLightStatusBar">true</item>
+
+        <!-- for BottomSheet & SideSheet Dialog -->
+        <item name="bottomSheetDialogTheme">@style/ThemeOverlay.App.BottomSheetDialog</item>
+        <item name="sideSheetDialogTheme">@style/ThemeOverlay.App.SideSheetDialog</item>
+    </style>
+
+    <style name="ThemeOverlay.App.BottomSheetDialog" parent="ThemeOverlay.Material3.BottomSheetDialog">
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowSoftInputMode">adjustResize</item>
+    </style>
+
+    <style name="ThemeOverlay.App.SideSheetDialog" parent="ThemeOverlay.Material3.SideSheetDialog">
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowSoftInputMode">adjustResize</item>
     </style>
 
     <style name="Theme.Lgmotion" parent="Base.Theme.Lgmotion">

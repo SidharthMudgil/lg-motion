@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <dimen name="m3_side_sheet_width" tools:override="true">450dp</dimen>
+</resources>

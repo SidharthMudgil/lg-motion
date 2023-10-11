@@ -67,6 +67,7 @@
 
     <!-- Connection Dialog-->
     <string name="connect">Connect</string>
+    <string name="cancel">Cancel</string>
     <string name="connection_dialog_title">Liquid Galaxy Connection</string>
     <string name="connection_dialog_message">This feature requires a connection to Liquid Galaxy to function properly</string>
 
