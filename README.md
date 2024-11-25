@@ -85,4 +85,4 @@ git push origin your-branch-name
 
 Please provide clear and descriptive pull request messages, along with before and after screenshots, to help with the review process.
 
-Let's build LG Motion together and make Liquid Galaxy control even more exciting and accessible for everyone!
+Let's build *LG Motion* together and make Liquid Galaxy control even more exciting and accessible for everyone!
